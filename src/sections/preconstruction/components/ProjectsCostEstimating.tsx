@@ -4,6 +4,7 @@ import CarouselArrowIcon from '../../../utils/icons/carousel/CarouselArrowIcon'
 export default function ProjectsCostEstimating() {
   const [earthworkIndex, setEarthworkIndex] = useState(0)
   const [undergroundIndex, setUndergroundIndex] = useState(0)
+  const [aerialIndex, setAerialIndex] = useState(0)
 
   return (
     <>
@@ -178,53 +179,80 @@ export default function ProjectsCostEstimating() {
       </section>
 
       <section className="mt-14">
-        <div className="relative">
-          <div className="flex items-stretch justify-center gap-6">
-            <div className="relative hidden h-[22rem] w-full max-w-[34rem] overflow-hidden rounded-3xl bg-neutral-200 md:block">
-              <div className="absolute inset-0 bg-gradient-to-br from-neutral-900/65 via-neutral-700/40 to-neutral-300/40" />
-              <div className="absolute left-10 top-10 text-xs font-semibold text-white/70">Estas van aca</div>
-              <div className="absolute bottom-10 left-10 right-10">
-                <p className="text-sm font-semibold uppercase tracking-[0.22em] text-white/70">Aerial Site Intelligence</p>
-                <h4 className="mt-3 text-3xl font-bold text-white">Aerial Site Intelligence</h4>
-                <p className="mt-5 text-sm leading-relaxed text-white/80">
-                  Drone-based site capture provides accurate verification of existing conditions and project assumptions. By
-                  analyzing post-processed digital information captured from the field, we transform raw data into actionable
-                  insights.
-                </p>
-                <p className="mt-4 text-sm leading-relaxed text-white/80">
-                  Leveraging this real-time data allows us to refine quantities, adjust scope, and improve bid accuracy,
-                  dramatically reducing uncertainty and risk before construction even begins.
-                </p>
+        <div className="mx-auto grid max-w-[95rem] items-start gap-10 md:grid-cols-[1fr_1fr]">
+          <div className="relative h-90 w-full overflow-hidden rounded-3xl">
+            <img
+              src="/images/preconstruction/project-cost/aerial.png"
+              alt="Aerial site view"
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/45 to-black/25" />
+            <div className="absolute inset-x-0 bottom-0 p-8 text-left md:p-10">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/80">Aerial Site Intelligence</p>
+              <h3 className="mt-3 text-3xl font-bold leading-tight text-white md:text-4xl">Aerial Site Intelligence</h3>
+              <p className="mt-5 text-sm leading-relaxed text-white/90 md:text-[15px]">
+                Drone-based site capture provides accurate verification of existing conditions and project assumptions. By
+                analyzing post-processed digital information captured from the field, we transform raw data into actionable
+                insights. Leveraging this real-time data allows us to refine quantities, adjust scope, and improve bid
+                accuracy—drastically reducing uncertainty and risk before construction even begins.
+              </p>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <div className="relative h-90 w-full overflow-visible">
+              <div className="h-full w-full overflow-hidden rounded-3xl border border-[#E4611F]/35 bg-neutral-100 shadow-[0_0_0_1px_rgba(228,97,31,0.12),0_12px_40px_rgba(0,0,0,0.12)]">
+                <div
+                  className="flex h-full w-[300%] transition-transform duration-500 ease-in-out"
+                  style={{ transform: `translateX(-${(aerialIndex * 100) / 3}%)` }}
+                >
+                  {[0, 1, 2].map((i) => (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <div key={i} className="relative h-full w-full flex-shrink-0">
+                      <img
+                        src="/images/preconstruction/project-cost/aerial.png"
+                        alt="Aerial site carousel"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
+
+              <button
+                type="button"
+                aria-label="Slide anterior"
+                className="absolute left-[-1.5rem] top-1/2 z-10 flex h-14 w-14 -translate-y-1/2 items-center justify-center transition-transform duration-200 hover:scale-110"
+                onClick={() => setAerialIndex((prev) => (prev + 2) % 3)}
+              >
+                <CarouselArrowIcon direction="left" />
+              </button>
+
+              <button
+                type="button"
+                aria-label="Slide siguiente"
+                className="absolute right-[-1.5rem] top-1/2 z-10 flex h-14 w-14 -translate-y-1/2 items-center justify-center transition-transform duration-200 hover:scale-110"
+                onClick={() => setAerialIndex((prev) => (prev + 1) % 3)}
+              >
+                <CarouselArrowIcon direction="right" />
+              </button>
             </div>
 
-            <div className="relative h-[22rem] w-full max-w-[26rem] overflow-hidden rounded-3xl bg-neutral-200 md:block">
-              <div className="absolute inset-0 bg-gradient-to-r from-neutral-800/40 via-neutral-300/60 to-neutral-100/70" />
-              <div className="absolute left-4 top-1/2 h-3 w-3 -translate-y-1/2 rounded-full border-2 border-[#E4611F] bg-white/10" />
-              <div className="absolute right-4 top-1/2 h-3 w-3 -translate-y-1/2 rounded-full border-2 border-[#E4611F] bg-white/10" />
-              <div className="absolute inset-0 opacity-30">
-                <div className="absolute left-[18%] top-10 h-36 w-5 rounded-md bg-[#0B2B6E]" />
-                <div className="absolute left-[18%] top-10 h-36 w-1 bg-[#E4611F]" />
-                <div className="absolute right-[18%] top-10 h-36 w-5 rounded-md bg-[#0B2B6E]" />
-                <div className="absolute right-[18%] top-10 h-36 w-1 bg-[#E4611F]" />
-              </div>
-            </div>
-
-            <div className="relative hidden h-[22rem] w-24 overflow-hidden rounded-3xl bg-neutral-200/70 md:block">
-              <div className="absolute inset-0 bg-gradient-to-r from-neutral-300/60 to-neutral-50/80" />
+            <div className="mt-6 flex items-center justify-center gap-3">
+              {[0, 1, 2].map((i) => (
+                <span
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={i}
+                  className={`h-2.5 w-2.5 rounded-full ${i === aerialIndex ? 'bg-[#E4611F]' : 'border border-[#E4611F] bg-white'}`}
+                />
+              ))}
             </div>
           </div>
+        </div>
 
-          <div className="mt-8 flex items-center justify-start gap-3 px-2 text-[#E4611F]">
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#E4611F] text-white">↻</span>
-            <span className="text-sm font-semibold">Contact Us</span>
-          </div>
-
-          <div className="mt-6 flex items-center justify-center gap-3">
-            <span className="h-2 w-2 rounded-full bg-[#E4611F]" />
-            <span className="h-2 w-2 rounded-full bg-neutral-300" />
-            <span className="h-2 w-2 rounded-full bg-neutral-300" />
-          </div>
+        <div className="mx-auto mt-10 flex max-w-[95rem] items-center justify-start gap-3 text-[#E4611F]">
+          <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#E4611F] text-white">↻</span>
+          <span className="text-sm font-semibold">Contact Us</span>
         </div>
       </section>
     </>
