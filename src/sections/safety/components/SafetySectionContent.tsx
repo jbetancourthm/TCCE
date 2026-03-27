@@ -11,16 +11,18 @@ export default function SafetySectionContent() {
   return (
     <div className="bg-white text-neutral-700">
       <Container className="py-12 md:py-14">
-        <div className="mx-auto w-[90%]">
-          <div className="flex items-center gap-3">
+        <div className="mx-auto w-[90%] text-left">
+          <div className="flex items-center justify-start gap-3">
             <span className="h-[2px] w-12 bg-neutral-500/70" aria-hidden />
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-neutral-600">Safety</p>
           </div>
 
           <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-[1fr_1.2fr] md:gap-12">
-            <div className="pl-14">
-              <h2 className="mt-14 mb-16 text-4xl font-bold tracking-tight text-neutral-700">SAFETY</h2>
-              <p className="mt-8 max-w-[24rem] text-[1.75rem] font-semibold leading-[1.2] text-neutral-700">
+            <div className="max-md:pl-0 md:pl-14">
+              <h2 className="mt-8 mb-8 text-left text-4xl font-bold tracking-tight text-neutral-700 md:mt-14 md:mb-16">
+                SAFETY
+              </h2>
+              <p className="mt-6 max-w-[24rem] text-left text-[1.35rem] font-semibold leading-[1.2] text-neutral-700 max-md:max-w-none md:mt-8 md:text-[1.75rem]">
                 Safety is how we plan, communicate, and execute.
               </p>
             </div>
@@ -49,17 +51,20 @@ export default function SafetySectionContent() {
             </div>
           </div>
 
-          <div className="mt-12 flex items-center justify-center gap-6">
-            <div className="relative inline-flex w-full max-w-[58rem] overflow-hidden rounded-xl border border-[#E4611F]/40 bg-white">
-              <span
+          <div className="mt-12">
+            <div className="relative mx-auto flex w-full max-w-full overflow-hidden rounded-xl bg-white ring-1 ring-[#E4611F]/40 md:inline-flex md:w-full md:max-w-[min(100%_58rem)]">
+              <div
                 aria-hidden
-                className={`absolute inset-y-0 left-0 w-1/3 rounded-xl bg-[#E4611F] transition-transform duration-500 ease-in-out ${pillTransform}`}
+                className={`absolute top-0 bottom-0 left-0 w-1/3 rounded-xl bg-[#E4611F] transition-transform duration-500 ease-in-out ${pillTransform}`}
               />
               <button
                 type="button"
                 onClick={() => setActiveTab(0)}
                 aria-pressed={activeTab === 0}
-                className={`relative z-10 w-1/3 px-8 py-4 text-sm font-semibold transition-colors duration-300 ${activeTab === 0 ? 'text-white' : 'text-[#b37249]'}`}
+                className={
+                  'relative z-10 w-1/3 rounded-xl px-2 py-2.5 text-[0.6875rem] font-semibold leading-snug transition-colors duration-300 max-md:text-balance md:whitespace-nowrap md:px-8 md:py-4 md:text-sm ' +
+                  (activeTab === 0 ? 'text-white' : 'text-[#b37249]')
+                }
               >
                 Safety Planning
               </button>
@@ -67,7 +72,10 @@ export default function SafetySectionContent() {
                 type="button"
                 onClick={() => setActiveTab(1)}
                 aria-pressed={activeTab === 1}
-                className={`relative z-10 w-1/3 border-l border-[#E4611F]/40 px-8 py-4 text-sm font-semibold transition-colors duration-300 ${activeTab === 1 ? 'text-white' : 'text-[#b37249]'}`}
+                className={
+                  'relative z-10 w-1/3 rounded-xl px-2 py-2.5 text-[0.6875rem] font-semibold leading-snug transition-colors duration-300 max-md:text-balance md:whitespace-nowrap md:px-8 md:py-4 md:text-sm ' +
+                  (activeTab === 1 ? 'text-white' : 'text-[#b37249]')
+                }
               >
                 Safety Construction
               </button>
@@ -75,7 +83,10 @@ export default function SafetySectionContent() {
                 type="button"
                 onClick={() => setActiveTab(2)}
                 aria-pressed={activeTab === 2}
-                className={`relative z-10 w-1/3 border-l border-[#E4611F]/40 px-8 py-4 text-sm font-semibold transition-colors duration-300 ${activeTab === 2 ? 'text-white' : 'text-[#b37249]'}`}
+                className={
+                  'relative z-10 w-1/3 rounded-xl px-2 py-2.5 text-[0.6875rem] font-semibold leading-snug transition-colors duration-300 max-md:text-balance md:whitespace-nowrap md:px-8 md:py-4 md:text-sm ' +
+                  (activeTab === 2 ? 'text-white' : 'text-[#b37249]')
+                }
               >
                 Totally Safe
               </button>

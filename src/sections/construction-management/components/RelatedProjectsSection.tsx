@@ -31,9 +31,53 @@ export default function RelatedProjectsSection() {
   const showLeftEllipsis = pageNumbers.length > 0 && pageNumbers[0] > 1
   const showRightEllipsis = pageNumbers.length > 0 && pageNumbers[pageNumbers.length - 1] < totalPages
 
+  const renderPaginationBar = () => (
+    <div className="flex flex-wrap items-center justify-center gap-3 text-sm text-neutral-500 md:mt-4 md:justify-end">
+      <button
+        type="button"
+        onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+        disabled={currentPage === 1}
+        aria-label="Página anterior"
+        className="h-9 w-9 transition-transform duration-200 hover:scale-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:scale-100"
+      >
+        <CarouselArrowIcon direction="left" />
+      </button>
+      <div className="flex flex-wrap items-center justify-center gap-2 md:flex-nowrap">
+        {showLeftEllipsis ? <span className="text-neutral-400">...</span> : null}
+        {pageNumbers.map((page) => {
+          const isActive = page === currentPage
+          return (
+            <span key={page} className="inline-flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setCurrentPage(page)}
+                className={`transition-colors duration-200 ${isActive ? 'font-semibold text-[#E4611F]' : 'text-neutral-500 hover:text-[#E4611F]'}`}
+                aria-label={`Go to page ${page}`}
+                aria-current={isActive ? 'page' : undefined}
+              >
+                {page}
+              </button>
+              {page < pageNumbers[pageNumbers.length - 1] ? <span className="text-neutral-400">|</span> : null}
+            </span>
+          )
+        })}
+        {showRightEllipsis ? <span className="text-neutral-400">...</span> : null}
+      </div>
+      <button
+        type="button"
+        onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
+        disabled={currentPage === totalPages}
+        aria-label="Página siguiente"
+        className="h-9 w-9 transition-transform duration-200 hover:scale-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:scale-100"
+      >
+        <CarouselArrowIcon direction="right" />
+      </button>
+    </div>
+  )
+
   return (
     <section id="construction-management-projects" className="mx-auto w-[90%] text-left">
-      <div className="flex items-start justify-between gap-6">
+      <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between md:gap-6">
         <div>
           <div className="flex items-center gap-3">
             <span className="h-[2px] w-14 bg-neutral-500/70" aria-hidden />
@@ -42,50 +86,10 @@ export default function RelatedProjectsSection() {
           <h3 className="mt-3 text-3xl font-bold tracking-tight text-neutral-700">Related Projects</h3>
         </div>
 
-        <div className="mt-4 flex items-center gap-3 text-sm text-neutral-500">
-          <button
-            type="button"
-            onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
-            disabled={currentPage === 1}
-            aria-label="Página anterior"
-            className="h-9 w-9 transition-transform duration-200 hover:scale-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:scale-100"
-          >
-            <CarouselArrowIcon direction="left" />
-          </button>
-          <div className="flex items-center gap-2">
-            {showLeftEllipsis ? <span className="text-neutral-400">...</span> : null}
-            {pageNumbers.map((page) => {
-              const isActive = page === currentPage
-              return (
-                <span key={page} className="inline-flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setCurrentPage(page)}
-                    className={`transition-colors duration-200 ${isActive ? 'font-semibold text-[#E4611F]' : 'text-neutral-500 hover:text-[#E4611F]'}`}
-                    aria-label={`Go to page ${page}`}
-                    aria-current={isActive ? 'page' : undefined}
-                  >
-                    {page}
-                  </button>
-                  {page < pageNumbers[pageNumbers.length - 1] ? <span className="text-neutral-400">|</span> : null}
-                </span>
-              )
-            })}
-            {showRightEllipsis ? <span className="text-neutral-400">...</span> : null}
-          </div>
-          <button
-            type="button"
-            onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
-            disabled={currentPage === totalPages}
-            aria-label="Página siguiente"
-            className="h-9 w-9 transition-transform duration-200 hover:scale-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:scale-100"
-          >
-            <CarouselArrowIcon direction="right" />
-          </button>
-        </div>
+        <div className="hidden md:block">{renderPaginationBar()}</div>
       </div>
 
-      <div className="mt-8 grid gap-8 md:grid-cols-3">
+      <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-3">
         {visibleProjects.map((project) => (
           <article key={project.id} className="flex flex-col items-start text-left">
             <div className="mb-6 h-72 overflow-hidden rounded-lg bg-neutral-200">
@@ -128,6 +132,8 @@ export default function RelatedProjectsSection() {
           </article>
         ))}
       </div>
+
+      <div className="mt-10 md:hidden">{renderPaginationBar()}</div>
     </section>
   )
 }

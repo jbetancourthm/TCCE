@@ -7,18 +7,23 @@ const METHODOLOGY_ITEMS = [
   'Proactive risk identification and mitigation',
 ] as const
 
+const CM_INTRO_IMG = {
+  src: '/images/construction-management/construction.png',
+  alt: 'Construction management',
+} as const
+
 export default function ConstructionManagementIntro() {
   return (
     <div className="col-span-full mx-auto grid w-[90%] min-w-0 mt-10 max-w-[95rem] grid-cols-1 gap-1 md:grid-cols-[1.1fr_1fr] md:gap-x-6 lg:gap-x-8">
-      <div className="h-[12rem] w-full max-w-2xl overflow-hidden rounded-2xl border border-transparent bg-neutral-100 md:h-[28rem]">
+      <div className="hidden h-[12rem] w-full max-w-2xl overflow-hidden rounded-2xl border border-transparent bg-neutral-100 md:block md:h-[28rem]">
         <img
-          src="/images/construction-management/construction.png"
-          alt="Construction management"
+          src={CM_INTRO_IMG.src}
+          alt={CM_INTRO_IMG.alt}
           className="h-full w-full rounded-2xl object-cover"
         />
       </div>
 
-      <div className="flex min-w-0 flex-col mt-10 gap-10 text-left md:gap-12">
+      <div className="flex min-w-0 flex-col gap-10 text-left max-md:mt-0 md:mt-10 md:gap-12">
         <div>
           <p className="flex items-center gap-4 text-sm font-semibold uppercase tracking-[0.25em] text-neutral-700">
             <span aria-hidden className="h-[3px] w-18 bg-neutral-500" />
@@ -34,6 +39,15 @@ export default function ConstructionManagementIntro() {
               </li>
             ))}
           </ul>
+        </div>
+
+        <div className="h-[12rem] w-full max-w-2xl overflow-hidden rounded-2xl border border-transparent bg-neutral-100 md:hidden">
+          <img
+            src={CM_INTRO_IMG.src}
+            alt=""
+            className="h-full w-full rounded-2xl object-cover"
+            aria-hidden
+          />
         </div>
 
         <p className="text-lg leading-relaxed text-neutral-500">
