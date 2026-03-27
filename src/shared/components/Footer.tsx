@@ -5,6 +5,7 @@ import FooterEmailIcon from '../../utils/icons/footer/FooterEmailIcon'
 import FooterFacebookIcon from '../../utils/icons/footer/FooterFacebookIcon'
 import FooterInstagramIcon from '../../utils/icons/footer/FooterInstagramIcon'
 import useScrollToSection from '../hooks/useScrollToSection'
+import { useContactUsModal } from './contact/ContactUsModalProvider'
 
 const footerNavItems = [
   { label: 'Our Expertise', id: 'expertise' },
@@ -16,6 +17,7 @@ const footerNavItems = [
 
 export default function Footer() {
   const scrollTo = useScrollToSection()
+  const { open: openContactModal } = useContactUsModal()
 
   const setLandingModule = (module: 'expertise' | 'safety') => {
     window.dispatchEvent(new CustomEvent('landing:set-module', { detail: { module } }))
@@ -76,7 +78,7 @@ export default function Footer() {
                   />
                   <button
                     type="button"
-                    onClick={() => scrollTo('contact')}
+                    onClick={() => openContactModal()}
                     className="box-border rounded-md border border-white px-4 py-2.5 text-left text-sm font-medium leading-snug text-white transition hover:border-[#E4611F] hover:text-[#E4611F] sm:text-[0.9375rem]"
                   >
                     Contact Us
@@ -111,7 +113,7 @@ export default function Footer() {
 
               <button
                 type="button"
-                onClick={() => scrollTo('contact')}
+                onClick={() => openContactModal()}
                 className="min-w-0 shrink-0 rounded-lg border border-white px-4 py-2.5 text-sm font-medium text-white transition hover:border-[#E4611F] hover:text-[#E4611F]"
               >
                 Contact Us

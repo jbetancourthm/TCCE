@@ -17,7 +17,7 @@ export default function Hero() {
         <div className="translate-x-0 translate-y-2 flex min-h-0 flex-1 flex-col justify-end pt-4 md:-translate-x-20 md:translate-y-10 md:pt-12 lg:pt-14">
           <div className="mb-3 max-w-3xl px-1 text-center text-white sm:mb-4 md:mb-5 md:ml-[4vw] md:text-left lg:ml-[6vw] xl:ml-[8vw] mx-auto md:mx-0">
             <h1
-              className="font-sans text-balance text-[2.45rem] font-extrabold leading-[1.08] tracking-[-0.02em] sm:text-5xl md:text-6xl lg:text-7xl"
+              className="font-sans text-balance text-[2.45rem] font-extrabold leading-[1.08] tracking-[-0.02em] text-white sm:text-5xl md:text-6xl lg:text-7xl"
               style={{ textShadow: '0 2px 12px rgba(0,0,0,0.45)' }}
             >
               We don&apos;t just build

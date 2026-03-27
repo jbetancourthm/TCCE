@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import useScrollToSection from '../hooks/useScrollToSection'
+import { useContactUsModal } from './contact/ContactUsModalProvider'
 import HeaderLogo from '../../utils/icons/header/Logo'
 import HeaderPhoneIcon from '../../utils/icons/header/Phone'
 import NavItemCaret from '../../utils/icons/header/NavItemCaret'
@@ -70,6 +71,7 @@ const panelPositionClass = {
 
 export default function Header() {
   const scrollTo = useScrollToSection()
+  const { open: openContactModal } = useContactUsModal()
   const [activeItem, setActiveItem] = useState<(typeof navItems)[number]['id'] | null>(null)
   const [isHeaderVisible, setIsHeaderVisible] = useState(true)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -224,7 +226,7 @@ export default function Header() {
             <button
               type="button"
               className="hidden md:inline-block -ml-3 min-w-[8.5rem] origin-center rounded-lg border border-white bg-transparent px-5 py-1.5 text-xs font-sans font-medium text-white transition-all duration-200 ease-out hover:scale-[1.04] hover:border-[#E4611F] hover:text-[#E4611F] sm:-ml-4 sm:min-w-[9.75rem] sm:px-5 sm:py-2 sm:text-sm md:min-w-[10.5rem] md:px-8"
-              onClick={() => scrollTo('contact')}
+              onClick={() => openContactModal()}
             >
               Contact Us
             </button>
@@ -279,7 +281,7 @@ export default function Header() {
                 className="w-full rounded-lg border border-white py-3 text-center text-sm font-sans font-medium text-white transition hover:border-[#E4611F] hover:text-[#E4611F]"
                 onClick={() => {
                   setIsMobileMenuOpen(false)
-                  scrollTo('contact')
+                  openContactModal()
                 }}
               >
                 Contact Us

@@ -1,15 +1,23 @@
 import type { ComponentPropsWithoutRef } from 'react'
 import ContactUsPhoneCircleIcon from '../../utils/icons/contact/ContactUsPhoneCircleIcon'
+import { useContactUsModal } from './contact/ContactUsModalProvider'
 
 export default function ContactUsPillButton({
   className,
   children = 'Contact Us',
+  onClick,
   ...props
 }: ComponentPropsWithoutRef<'button'>) {
+  const { open } = useContactUsModal()
+
   return (
     <button
       type="button"
       className={`group relative inline-flex h-14 select-none items-stretch overflow-hidden rounded-full border-2 border-transparent bg-transparent px-3 text-base font-semibold text-[#E4611F] transition-[color,border-color] duration-300 ease-out motion-reduce:transition-none hover:border-[#E4611F] hover:text-white focus-visible:border-[#E4611F] focus-visible:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E4611F] focus-visible:ring-offset-2 ${className ?? ''}`}
+      onClick={(e) => {
+        onClick?.(e)
+        open()
+      }}
       {...props}
     >
       <span
