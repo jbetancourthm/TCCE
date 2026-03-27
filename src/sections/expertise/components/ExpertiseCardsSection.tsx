@@ -38,10 +38,15 @@ function cardImageWhenExpanded(cardIndex: number, active: number) {
   return cardIndex === 0 ? CARD_IMAGES_OPEN.preconstructionClosed : CARD_IMAGES_OPEN.constructionOpen
 }
 
+const CARD_H_FULL = 'h-80 md:h-130'
+/** Solo móvil: mitad de altura cuando la otra card está abierta; en md+ misma altura que siempre. */
+const CARD_H_HALF = 'h-40 md:h-130'
+
 export default function ExpertiseCardsSection() {
   const [activeCard, setActiveCard] = useState<number | null>(null)
   const showExpandedCardImages = EXPAND_ALL_SECTIONS || activeCard !== null
   const activeForImages = (activeCard ?? 0) as 0 | 1
+  const useSplitHeights = !EXPAND_ALL_SECTIONS && activeCard !== null
 
   useEffect(() => {
     const handleOpenCard = (event: Event) => {
@@ -60,7 +65,7 @@ export default function ExpertiseCardsSection() {
     <div className="bg-white">
       <Container className="pt-1 pb-0">
         <div
-          className={`grid gap-6 transition-all duration-300 ${
+          className={`mx-auto grid w-full max-w-[22rem] items-start gap-6 transition-all duration-300 sm:max-w-md md:max-w-none ${
             EXPAND_ALL_SECTIONS || activeCard === null
               ? 'md:grid-cols-2'
               : activeCard === 0
@@ -68,12 +73,16 @@ export default function ExpertiseCardsSection() {
                 : 'md:grid-cols-[1fr_4fr]'
           }`}
         >
-          {cards.map((card, index) => (
+          {cards.map((card, index) => {
+            const isActive = activeCard === index
+            const heightClass = useSplitHeights && !isActive ? CARD_H_HALF : CARD_H_FULL
+
+            return (
             <button
               key={card.title}
               type="button"
               onClick={() => setActiveCard(index)}
-              className="group relative h-80 w-full overflow-hidden rounded-3xl border border-black/10 shadow-[0_8px_24px_rgba(0,0,0,0.22)] md:h-130"
+              className={`group relative w-full overflow-hidden rounded-3xl border border-black/10 shadow-[0_8px_24px_rgba(0,0,0,0.22)] transition-[height] duration-300 ease-out motion-reduce:transition-none ${heightClass}`}
               aria-pressed={activeCard === index}
             >
               {showExpandedCardImages ? (
@@ -136,7 +145,8 @@ export default function ExpertiseCardsSection() {
                 </>
               )}
             </button>
-          ))}
+            )
+          })}
         </div>
 
         {EXPAND_ALL_SECTIONS ? (

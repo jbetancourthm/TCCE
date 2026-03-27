@@ -3,6 +3,7 @@ import useScrollToSection from '../hooks/useScrollToSection'
 import HeaderLogo from '../../utils/icons/header/Logo'
 import HeaderPhoneIcon from '../../utils/icons/header/Phone'
 import NavItemCaret from '../../utils/icons/header/NavItemCaret'
+import HeaderMenuToggleIcon from '../../utils/icons/header/HeaderMenuToggleIcon'
 
 const BRAND_ORANGE = '#E4611F'
 
@@ -71,6 +72,7 @@ export default function Header() {
   const scrollTo = useScrollToSection()
   const [activeItem, setActiveItem] = useState<(typeof navItems)[number]['id'] | null>(null)
   const [isHeaderVisible, setIsHeaderVisible] = useState(true)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const setLandingModule = (module: 'expertise' | 'safety') => {
     window.dispatchEvent(new CustomEvent('landing:set-module', { detail: { module } }))
@@ -93,6 +95,51 @@ export default function Header() {
       scrollTo('construction-management-projects')
     }, 380)
   }
+
+  const runNavItemAction = (itemId: (typeof navItems)[number]['id']) => {
+    if (itemId === 'expertise') {
+      setLandingModule('expertise')
+      scrollTo('expertise')
+      return
+    }
+    if (itemId === 'projects') {
+      goToConstructionProjects()
+      return
+    }
+    if (itemId === 'safety') {
+      setLandingModule('safety')
+      scrollTo('expertise')
+      return
+    }
+    scrollTo(itemId)
+  }
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)')
+    const onMq = () => {
+      if (mq.matches) setIsMobileMenuOpen(false)
+    }
+    mq.addEventListener('change', onMq)
+    return () => mq.removeEventListener('change', onMq)
+  }, [])
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = prev
+    }
+  }, [isMobileMenuOpen])
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsMobileMenuOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [isMobileMenuOpen])
 
   useEffect(() => {
     let lastY = window.scrollY
@@ -124,14 +171,14 @@ export default function Header() {
       }`}
     >
       <div
-        className="pointer-events-auto w-full border-2 bg-black/70 backdrop-blur-md px-3 py-2.5 shadow-lg transition-[padding] duration-200 sm:px-5 sm:py-3 md:px-6 md:py-3.5 lg:px-8"
+        className="pointer-events-auto box-border w-full max-w-[100vw] border-2 bg-black/70 backdrop-blur-md pl-3 pr-4 py-2.5 shadow-lg transition-[padding] duration-200 sm:pl-5 sm:pr-5 sm:py-3 md:px-6 md:py-3.5 lg:px-8"
         style={{ borderColor: BRAND_ORANGE }}
         onMouseLeave={() => {
           setActiveItem(null)
         }}
       >
         <div className="flex min-h-[3.75rem] items-center gap-3 sm:min-h-[4.15rem] sm:gap-4 md:min-h-[4.5rem] lg:min-h-[4.75rem]">
-          <div className="ml-5 flex min-w-0 shrink-0 items-center gap-2.5 sm:ml-6 sm:gap-3 md:ml-10">
+          <div className="ml-3 flex min-w-0 shrink-0 items-center gap-2.5 sm:ml-6 sm:gap-3 md:ml-10">
             <button
               type="button"
               onClick={() => scrollTo('home')}
@@ -149,23 +196,7 @@ export default function Header() {
                 key={item.id}
                 type="button"
                 className={`relative mx-auto inline-flex items-center gap-1.5 pb-2 text-sm font-sans transition ${activeItem === item.id ? 'text-[#E4611F]' : 'text-white/90 hover:text-white'}`}
-                onClick={() => {
-                  if (item.id === 'expertise') {
-                    setLandingModule('expertise')
-                    scrollTo('expertise')
-                    return
-                  }
-                  if (item.id === 'projects') {
-                    goToConstructionProjects()
-                    return
-                  }
-                  if (item.id === 'safety') {
-                    setLandingModule('safety')
-                    scrollTo('expertise')
-                    return
-                  }
-                  scrollTo(item.id)
-                }}
+                onClick={() => runNavItemAction(item.id)}
                 onMouseEnter={() => {
                   setActiveItem(item.id)
                 }}
@@ -181,20 +212,81 @@ export default function Header() {
             </div>
           </nav>
 
-          <div className="ml-auto mr-3 flex shrink-0 items-center gap-3 sm:mr-5 sm:gap-4 md:mr-10 md:gap-10">
-            <a href="tel:+13014597484" className="hidden items-center gap-2 text-sm font-sans text-white/90 transition hover:text-white sm:inline-flex" aria-label="Llamar (301) 459 7484">
+          <div className="ml-auto flex min-w-0 shrink-0 items-center gap-2 sm:gap-4 md:mr-10 md:gap-10">
+            <a
+              href="tel:+13014597484"
+              className="hidden min-w-0 max-w-[min(11rem,42vw)] items-center gap-2 text-sm font-sans text-white/90 transition hover:text-white sm:inline-flex md:max-w-none"
+              aria-label="Llamar (301) 459 7484"
+            >
               <HeaderPhoneIcon className="shrink-0 text-white mt-2" />
-              <span className="whitespace-nowrap">(301) 459 7484</span>
+              <span className="truncate">(301) 459 7484</span>
             </a>
             <button
               type="button"
-              className="-ml-3 min-w-[8.5rem] origin-center rounded-lg border border-white bg-transparent px-5 py-1.5 text-xs font-sans font-medium text-white transition-all duration-200 ease-out hover:scale-[1.04] hover:border-[#E4611F] hover:text-[#E4611F] sm:-ml-4 sm:min-w-[9.75rem] sm:px-5 sm:py-2 sm:text-sm md:min-w-[10.5rem] md:px-8"
+              className="hidden md:inline-block -ml-3 min-w-[8.5rem] origin-center rounded-lg border border-white bg-transparent px-5 py-1.5 text-xs font-sans font-medium text-white transition-all duration-200 ease-out hover:scale-[1.04] hover:border-[#E4611F] hover:text-[#E4611F] sm:-ml-4 sm:min-w-[9.75rem] sm:px-5 sm:py-2 sm:text-sm md:min-w-[10.5rem] md:px-8"
               onClick={() => scrollTo('contact')}
             >
               Contact Us
             </button>
+            <button
+              type="button"
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white p-1.5 text-white transition hover:border-[#E4611F] hover:text-[#E4611F] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E4611F] md:hidden"
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-header-nav"
+              aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+              onClick={() => {
+                setIsMobileMenuOpen((open) => {
+                  const next = !open
+                  if (next) setActiveItem(null)
+                  return next
+                })
+              }}
+            >
+              <HeaderMenuToggleIcon open={isMobileMenuOpen} className="h-[1.15rem] w-[1.15rem] shrink-0" />
+            </button>
           </div>
         </div>
+
+        <nav
+          id="mobile-header-nav"
+          aria-label="Navegación principal"
+          aria-hidden={!isMobileMenuOpen}
+          className={`md:hidden border-t transition-all duration-200 motion-reduce:transition-none ${
+            isMobileMenuOpen
+              ? 'max-h-[min(32rem,85vh)] overflow-y-auto border-white/20 pt-1 opacity-100'
+              : 'pointer-events-none max-h-0 overflow-hidden border-transparent py-0 opacity-0'
+          }`}
+        >
+          <ul className="flex flex-col pb-2">
+            {navItems.map((item) => (
+              <li key={item.id}>
+                <button
+                  type="button"
+                  className="flex w-full items-center justify-between gap-2 py-3.5 text-left text-sm font-sans text-white/90 transition hover:text-white"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false)
+                    runNavItemAction(item.id)
+                  }}
+                >
+                  <span>{item.label}</span>
+                  {'chevron' in item && item.chevron ? <NavItemCaret className="h-4 w-4 shrink-0 opacity-70" /> : null}
+                </button>
+              </li>
+            ))}
+            <li className="border-t border-white/15 pt-2">
+              <button
+                type="button"
+                className="w-full rounded-lg border border-white py-3 text-center text-sm font-sans font-medium text-white transition hover:border-[#E4611F] hover:text-[#E4611F]"
+                onClick={() => {
+                  setIsMobileMenuOpen(false)
+                  scrollTo('contact')
+                }}
+              >
+                Contact Us
+              </button>
+            </li>
+          </ul>
+        </nav>
 
         <div
           className={`hidden transition-all duration-200 md:block ${
