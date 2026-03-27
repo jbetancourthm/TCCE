@@ -1,0 +1,40 @@
+import type { SVGProps } from 'react'
+
+const phonePaths = (
+  <>
+    <path
+      d="M16.058 5.838a.947.947 0 0 0-.359 1.86 3.808 3.808 0 0 1 3.018 3.025.945.945 0 0 0 .925.765 1.026 1.026 0 0 0 .182-.016.951.951 0 0 0 .744-1.111 5.692 5.692 0 0 0-4.51-4.523Z"
+      fill="inherit"
+    />
+    <path
+      d="M15.989 2.491a.9.9 0 0 0-.688.191.949.949 0 0 0 .478 1.69 7.6 7.6 0 0 1 6.738 6.752.943.943 0 0 0 .936.841.879.879 0 0 0 .107-.007.932.932 0 0 0 .632-.35.942.942 0 0 0 .2-.7 9.478 9.478 0 0 0-8.403-8.417Z"
+      fill="inherit"
+    />
+    <path
+      fillRule="evenodd"
+      d="M11.935 14.07c4.388 4.387 5.383-.688 8.177 2.1 2.693 2.693 4.242 3.232.829 6.644-.427.344-3.143 4.476-12.688-5.066S2.838 5.49 3.181 5.062C6.6 1.641 7.132 3.2 9.826 5.891c2.794 2.793-2.279 3.792 2.109 8.179Z"
+      fill="inherit"
+    />
+  </>
+)
+
+/** Círculo naranja con teléfono blanco; en el padre con `.group` el círculo se funde y el teléfono usa `currentColor`. */
+export default function ContactUsPhoneCircleIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 48 48" className={className} aria-hidden {...props}>
+      <g className="origin-center transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none group-hover:opacity-0 group-focus-visible:opacity-0">
+        <rect width="48" height="48" rx="24" fill="#E4611F" />
+        <g transform="translate(8, 8)" fill="#fff">
+          <g transform="translate(1.75, 2.25)">{phonePaths}</g>
+        </g>
+      </g>
+      <g
+        className="opacity-0 transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none group-hover:opacity-100 group-focus-visible:opacity-100"
+        transform="translate(8, 8)"
+        fill="currentColor"
+      >
+        <g transform="translate(1.75, 2.25)">{phonePaths}</g>
+      </g>
+    </svg>
+  )
+}
