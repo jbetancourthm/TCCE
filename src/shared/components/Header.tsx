@@ -72,9 +72,16 @@ export default function Header() {
   const [activeItem, setActiveItem] = useState<(typeof navItems)[number]['id'] | null>(null)
   const [isHeaderVisible, setIsHeaderVisible] = useState(true)
 
+  const setLandingModule = (module: 'expertise' | 'safety') => {
+    window.dispatchEvent(new CustomEvent('landing:set-module', { detail: { module } }))
+  }
+
   const openExpertiseCard = (card: 0 | 1) => {
+    setLandingModule('expertise')
     scrollTo('expertise')
-    window.dispatchEvent(new CustomEvent('expertise:open-card', { detail: { card } }))
+    window.setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('expertise:open-card', { detail: { card } }))
+    }, 80)
     setActiveItem(null)
   }
 
@@ -143,8 +150,18 @@ export default function Header() {
                 type="button"
                 className={`relative mx-auto inline-flex items-center gap-1.5 pb-2 text-sm font-sans transition ${activeItem === item.id ? 'text-[#E4611F]' : 'text-white/90 hover:text-white'}`}
                 onClick={() => {
+                  if (item.id === 'expertise') {
+                    setLandingModule('expertise')
+                    scrollTo('expertise')
+                    return
+                  }
                   if (item.id === 'projects') {
                     goToConstructionProjects()
+                    return
+                  }
+                  if (item.id === 'safety') {
+                    setLandingModule('safety')
+                    scrollTo('expertise')
                     return
                   }
                   scrollTo(item.id)

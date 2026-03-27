@@ -1,18 +1,80 @@
+import { useState } from 'react'
 import Container from '../../../shared/components/Container'
 
 export default function SafetySectionContent() {
-  return (
-    <div className="flex min-h-screen items-center bg-neutral-950 text-white">
-      <Container className="py-16">
-        <h2 className="text-4xl font-semibold tracking-tight">Safety</h2>
-        <p className="mt-3 max-w-2xl text-neutral-300">
-          Placeholder modular para políticas y enfoque de seguridad. Lo conectaremos al diseño cuando nos confirmes la sección exacta.
-        </p>
+  const [activeTab, setActiveTab] = useState<0 | 1 | 2>(0)
+  const pillTransform = activeTab === 0 ? 'translate-x-0' : activeTab === 1 ? 'translate-x-full' : 'translate-x-[200%]'
 
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
-          <div className="h-24 rounded-2xl bg-white/5" />
-          <div className="h-24 rounded-2xl bg-white/5" />
-          <div className="h-24 rounded-2xl bg-white/5" />
+  return (
+    <div className="bg-white text-neutral-700">
+      <Container className="py-12 md:py-14">
+        <div className="mx-auto w-[90%]">
+          <div className="flex items-center gap-3">
+            <span className="h-px w-12 bg-neutral-500/70" aria-hidden />
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-neutral-600">Safety</p>
+          </div>
+
+          <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-[1fr_1.2fr] md:gap-12">
+            <div>
+              <h2 className="text-4xl font-bold tracking-tight text-neutral-700">SAFETY</h2>
+              <p className="mt-8 max-w-[24rem] text-[2.1rem] font-semibold leading-[1.2] text-neutral-700">
+                Safety is how we plan, communicate, and execute.
+              </p>
+            </div>
+
+            <div className="text-[1.65rem] leading-relaxed text-neutral-600">
+              <p>
+                At Total Civil Construction &amp; Engineering, safety is fully integrated into every stage of our
+                projects from early analysis and planning to field execution.
+              </p>
+              <p className="mt-6">
+                Our approach is structured, disciplined, and designed to provide certainty. We plan the work in detail,
+                communicate it clearly with control, and take immediate action when conditions change.
+              </p>
+              <p className="mt-6">
+                Through this approach, we reduce risk, improve performance, and ensure consistent, safe execution across
+                all operations.
+              </p>
+              <p className="mt-6 font-semibold text-neutral-700">
+                Our goal is simple:
+                <br />
+                every employee goes home safe every project, every day.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-12 flex items-center justify-center gap-6">
+            <div className="relative inline-flex w-full max-w-[58rem] overflow-hidden rounded-xl border border-[#E4611F]/40 bg-white">
+              <span
+                aria-hidden
+                className={`absolute inset-y-0 left-0 w-1/3 rounded-xl bg-[#E4611F] transition-transform duration-500 ease-in-out ${pillTransform}`}
+              />
+              <button
+                type="button"
+                onClick={() => setActiveTab(0)}
+                aria-pressed={activeTab === 0}
+                className={`relative z-10 w-1/3 px-8 py-4 text-sm font-semibold transition-colors duration-300 ${activeTab === 0 ? 'text-white' : 'text-[#b37249]'}`}
+              >
+                Safety Planning
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab(1)}
+                aria-pressed={activeTab === 1}
+                className={`relative z-10 w-1/3 border-l border-[#E4611F]/40 px-8 py-4 text-sm font-semibold transition-colors duration-300 ${activeTab === 1 ? 'text-white' : 'text-[#b37249]'}`}
+              >
+                Safety Construction
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab(2)}
+                aria-pressed={activeTab === 2}
+                className={`relative z-10 w-1/3 border-l border-[#E4611F]/40 px-8 py-4 text-sm font-semibold transition-colors duration-300 ${activeTab === 2 ? 'text-white' : 'text-[#b37249]'}`}
+              >
+                Totally Safe
+              </button>
+            </div>
+          </div>
         </div>
       </Container>
     </div>
