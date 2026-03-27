@@ -1,24 +1,46 @@
+import CmListArrowIcon from '../../../utils/icons/construction/CmListArrowIcon'
+
+const METHODOLOGY_ITEMS = [
+  'Engineering-based decision making',
+  'Continuous coordination with project stakeholders',
+  'Strong operational oversight',
+  'Proactive risk identification and mitigation',
+] as const
+
 export default function ConstructionManagementIntro() {
   return (
-    <>
-      <div className="h-72 rounded-2xl bg-neutral-200" />
+    <div className="col-span-full mx-auto grid w-[90%] min-w-0 mt-10 max-w-[95rem] grid-cols-1 gap-1 md:grid-cols-[1.1fr_1fr] md:gap-x-6 lg:gap-x-8">
+      <div className="h-[12rem] w-full max-w-2xl overflow-hidden rounded-2xl border border-transparent bg-neutral-100 md:h-[28rem]">
+        <img
+          src="/images/construction-management/construction.png"
+          alt="Construction management"
+          className="h-full w-full rounded-2xl object-cover"
+        />
+      </div>
 
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-neutral-500">Construction Management</p>
-        <h3 className="mt-4 text-5xl font-bold leading-tight text-neutral-700">Our work metodology is based on:</h3>
+      <div className="flex min-w-0 flex-col mt-10 gap-10 text-left md:gap-12">
+        <div>
+          <p className="flex items-center gap-4 text-sm font-semibold uppercase tracking-[0.25em] text-neutral-700">
+            <span aria-hidden className="h-[3px] w-18 bg-neutral-500" />
+            Construction Management
+          </p>
+          <h4 className="mt-4 mb-6 text-4xl font-bold leading-tight text-neutral-600">Our work methodology is based on:</h4>
 
-        <ul className="mt-6 space-y-3 text-lg text-neutral-600">
-          <li>Engineering-based decision making</li>
-          <li>Continuous coordination with project stakeholders</li>
-          <li>Strong operational oversight</li>
-          <li>Proactive risk identification and mitigation</li>
-        </ul>
+          <ul className="list-none space-y-1 text-lg leading-relaxed text-neutral-600">
+            {METHODOLOGY_ITEMS.map((text) => (
+              <li key={text} className="flex items-start gap-3">
+                <CmListArrowIcon className="mt-2 h-[11px] w-[9px] shrink-0 text-[#E4611F]" />
+                <span>{text}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-        <p className="mt-7 text-lg leading-relaxed text-neutral-500">
+        <p className="text-lg leading-relaxed text-neutral-500">
           Through this structured approach, we ensure that every phase of the project is carefully planned, monitored, and
           executed to maintain schedule, budget, and quality objectives.
         </p>
       </div>
-    </>
+    </div>
   )
 }

@@ -12,10 +12,10 @@ export default function ConstructionManagementPage() {
   const [activeTab, setActiveTab] = useState<ConstructionTab>(0)
 
   return (
-    <section className="mt-12 grid items-start gap-8 md:grid-cols-[1.1fr_1fr]">
+    <section className="mt-0 grid grid-cols-1 gap-y-10 md:grid-cols-2">
       <ConstructionManagementIntro />
 
-      <div className="col-span-2 mt-10 flex flex-col items-center text-center">
+      <div className="col-span-full mt-10 flex flex-col items-center text-center">
         {EXPAND_ALL_SECTIONS ? null : (
           <ConstructionManagementSwitch activeTab={activeTab} onTabChange={setActiveTab} />
         )}

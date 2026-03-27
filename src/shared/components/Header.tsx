@@ -72,6 +72,21 @@ export default function Header() {
   const [activeItem, setActiveItem] = useState<(typeof navItems)[number]['id'] | null>(null)
   const [isHeaderVisible, setIsHeaderVisible] = useState(true)
 
+  const openExpertiseCard = (card: 0 | 1) => {
+    scrollTo('expertise')
+    window.dispatchEvent(new CustomEvent('expertise:open-card', { detail: { card } }))
+    setActiveItem(null)
+  }
+
+  const goToConstructionProjects = () => {
+    openExpertiseCard(1)
+
+    // Wait for the expertise card to mount expanded content before scrolling.
+    window.setTimeout(() => {
+      scrollTo('construction-management-projects')
+    }, 380)
+  }
+
   useEffect(() => {
     let lastY = window.scrollY
 
@@ -110,7 +125,14 @@ export default function Header() {
       >
         <div className="flex min-h-[3.75rem] items-center gap-3 sm:min-h-[4.15rem] sm:gap-4 md:min-h-[4.5rem] lg:min-h-[4.75rem]">
           <div className="ml-5 flex min-w-0 shrink-0 items-center gap-2.5 sm:ml-6 sm:gap-3 md:ml-10">
-            <HeaderLogo className="h-9 w-auto text-white sm:h-10 md:h-11" aria-label="TOTAL Civil Construction" role="img" />
+            <button
+              type="button"
+              onClick={() => scrollTo('home')}
+              aria-label="Ir al inicio"
+              className="transition-transform duration-200 hover:scale-[1.02] focus:outline-none"
+            >
+              <HeaderLogo className="h-9 w-auto text-white sm:h-10 md:h-11" aria-label="TOTAL Civil Construction" role="img" />
+            </button>
           </div>
 
           <nav className="hidden min-w-0 flex-1 md:flex md:justify-center">
@@ -120,7 +142,13 @@ export default function Header() {
                 key={item.id}
                 type="button"
                 className={`relative mx-auto inline-flex items-center gap-1.5 pb-2 text-sm font-sans transition ${activeItem === item.id ? 'text-[#E4611F]' : 'text-white/90 hover:text-white'}`}
-                onClick={() => scrollTo(item.id)}
+                onClick={() => {
+                  if (item.id === 'projects') {
+                    goToConstructionProjects()
+                    return
+                  }
+                  scrollTo(item.id)
+                }}
                 onMouseEnter={() => {
                   setActiveItem(item.id)
                 }}
@@ -138,7 +166,7 @@ export default function Header() {
 
           <div className="ml-auto mr-3 flex shrink-0 items-center gap-3 sm:mr-5 sm:gap-4 md:mr-10 md:gap-10">
             <a href="tel:+13014597484" className="hidden items-center gap-2 text-sm font-sans text-white/90 transition hover:text-white sm:inline-flex" aria-label="Llamar (301) 459 7484">
-              <HeaderPhoneIcon className="shrink-0 text-white" />
+              <HeaderPhoneIcon className="shrink-0 text-white mt-2" />
               <span className="whitespace-nowrap">(301) 459 7484</span>
             </a>
             <button
@@ -186,6 +214,9 @@ export default function Header() {
                       {activeItem === 'expertise' ? (
                         <button
                           type="button"
+                          onClick={() => {
+                            if (columnIndex === 0) openExpertiseCard(0)
+                          }}
                           className={`origin-left transform-gpu inline-flex items-center gap-1.5 text-left text-sm font-medium text-white/90 transition duration-150 ease-out hover:scale-[1.03] hover:text-white hover:underline hover:decoration-1 hover:underline-offset-2 ${
                             columnIndex === 0 ? 'group' : ''
                           }`}
@@ -203,6 +234,11 @@ export default function Header() {
                           <li key={entry}>
                             <button
                               type="button"
+                              onClick={() => {
+                                if (activeItem === 'expertise' && columnIndex === 0) {
+                                  openExpertiseCard(1)
+                                }
+                              }}
                               className={`origin-left transform-gpu whitespace-pre-line text-left text-sm font-medium text-white/90 transition duration-150 ease-out hover:scale-[1.03] hover:text-white ${
                                 activeItem === 'expertise' && columnIndex === 0
                                   ? 'group inline-flex items-center gap-1.5 hover:underline hover:decoration-1 hover:underline-offset-2'

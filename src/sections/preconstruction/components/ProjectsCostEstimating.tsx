@@ -262,7 +262,7 @@ export default function ProjectsCostEstimating() {
         <div className="mx-auto flex w-full max-w-[95rem] flex-col items-stretch gap-6 md:flex-row md:items-stretch md:gap-4 lg:gap-5">
           {/* Sangrado al borde izquierdo del viewport: compensar el padding del Container (px-4 sm:px-6 lg:px-8 xl:px-10) */}
           <div
-            className="relative flex-shrink-0 overflow-hidden rounded-3xl
+            className="relative flex-shrink-0 overflow-hidden rounded-3xl bg-white md:self-start
               max-sm:w-[calc(100%+1rem)] max-sm:-ml-4
               sm:max-md:w-[calc(100%+1.5rem)] sm:max-md:-ml-6
               md:w-[50vw] md:max-w-none md:rounded-l-none md:rounded-r-3xl
@@ -271,13 +271,13 @@ export default function ProjectsCostEstimating() {
             <img
               src="/images/preconstruction/project-cost/aerial.png"
               alt="Aerial site view"
-              className="block h-auto w-full max-w-full"
+              className="relative z-0 block h-auto w-full max-w-full"
             />
             <div
-              className="pointer-events-none absolute inset-x-0 bottom-0 h-[min(58%,20rem)] rounded-t-[2rem] bg-gradient-to-t from-black/28 via-black/8 to-transparent md:h-[min(52%,22rem)] md:rounded-t-[2.5rem]"
+              className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[min(58%,20rem)] rounded-t-[2rem] bg-gradient-to-t from-black/28 via-black/8 to-transparent [mask-image:linear-gradient(to_right,transparent_0%,black_2.5rem)] [-webkit-mask-image:linear-gradient(to_right,transparent_0%,black_2.5rem)] md:h-[min(52%,22rem)] md:rounded-t-[2.5rem] md:[mask-image:linear-gradient(to_right,transparent_0%,black_3rem)] md:[-webkit-mask-image:linear-gradient(to_right,transparent_0%,black_3rem)]"
               aria-hidden
             />
-            <div className="absolute inset-x-0 bottom-0 p-8 text-left md:p-10">
+            <div className="absolute inset-x-0 bottom-0 z-[2] bg-transparent p-8 text-left md:p-10">
               <h3 className="text-2xl font-bold leading-tight text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.65),0_2px_16px_rgba(0,0,0,0.35)] md:text-3xl">
                 Aerial Site Intelligence
               </h3>

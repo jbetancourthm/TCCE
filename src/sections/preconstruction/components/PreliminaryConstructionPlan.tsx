@@ -85,15 +85,13 @@ export default function PreliminaryConstructionPlan() {
         onClose={() => setGalleryOpen(false)}
       />
 
-      {/* Capa decorativa superpuesta en la junta entre galería y bloque siguiente (no añade altura al layout) */}
+      {/* Capa decorativa: ancho viewport, altura intrínseca del SVG (sin recorte) */}
       <div className="relative h-0 w-full overflow-visible">
         <div
-          className="pointer-events-none absolute inset-x-0 top-5 z-[1] flex -translate-y-1/2 justify-center select-none sm:top-6"
+          className="pointer-events-none absolute left-1/2 top-5 z-[1] w-screen max-w-[100vw] -translate-x-1/2 -translate-y-1/2 select-none sm:top-6"
           aria-hidden
         >
-          <div className="w-screen max-w-[100vw] overflow-hidden px-0">
-            <PreliminaryConstructionPlanWatermark className="block h-auto w-full min-h-[8rem] max-h-[17rem] sm:min-h-[10rem] sm:max-h-[20rem]" />
-          </div>
+          <PreliminaryConstructionPlanWatermark className="block h-auto w-full max-w-none" />
         </div>
       </div>
 

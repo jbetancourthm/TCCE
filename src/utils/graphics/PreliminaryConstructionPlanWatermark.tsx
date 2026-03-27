@@ -15,7 +15,7 @@ export default function PreliminaryConstructionPlanWatermark({
       height="272"
       viewBox="0 0 1920 272"
       className={className}
-      preserveAspectRatio="xMidYMid slice"
+      preserveAspectRatio="xMidYMid meet"
       aria-hidden
       {...props}
     >

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { EXPAND_ALL_SECTIONS } from '../../../config/devExpandSections'
 import Container from '../../../shared/components/Container'
 import { PreconstructionPage } from '../../preconstruction'
@@ -43,9 +43,22 @@ export default function ExpertiseCardsSection() {
   const showExpandedCardImages = EXPAND_ALL_SECTIONS || activeCard !== null
   const activeForImages = (activeCard ?? 0) as 0 | 1
 
+  useEffect(() => {
+    const handleOpenCard = (event: Event) => {
+      const customEvent = event as CustomEvent<{ card?: number }>
+      const targetCard = customEvent.detail?.card
+      if (targetCard === 0 || targetCard === 1) {
+        setActiveCard(targetCard)
+      }
+    }
+
+    window.addEventListener('expertise:open-card', handleOpenCard as EventListener)
+    return () => window.removeEventListener('expertise:open-card', handleOpenCard as EventListener)
+  }, [])
+
   return (
     <div className="bg-white">
-      <Container className={`pt-1 ${EXPAND_ALL_SECTIONS || activeCard !== null ? 'pb-16' : 'pb-8'}`}>
+      <Container className="pt-1 pb-0">
         <div
           className={`grid gap-6 transition-all duration-300 ${
             EXPAND_ALL_SECTIONS || activeCard === null
