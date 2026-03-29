@@ -1,37 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
 import Hero from '../components/Hero'
+import { useHomeScrollIndicator } from '../hooks/useHome'
 import Header from '../../../shared/components/Header'
 import ScrollIndicator from '../../../utils/icons/scroll/ScrollIndicator'
 
 export default function HomePage() {
-  const [showScrollIndicator, setShowScrollIndicator] = useState(true)
-  const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-  useEffect(() => {
-    const scheduleShow = () => {
-      if (idleTimerRef.current) {
-        clearTimeout(idleTimerRef.current)
-      }
-      idleTimerRef.current = setTimeout(() => {
-        setShowScrollIndicator(true)
-      }, 5000)
-    }
-
-    const handleScroll = () => {
-      setShowScrollIndicator(false)
-      scheduleShow()
-    }
-
-    scheduleShow()
-    window.addEventListener('scroll', handleScroll, { passive: true })
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-      if (idleTimerRef.current) {
-        clearTimeout(idleTimerRef.current)
-      }
-    }
-  }, [])
+  const { showScrollIndicator } = useHomeScrollIndicator()
 
   return (
     <div className="relative">
@@ -47,4 +20,3 @@ export default function HomePage() {
     </div>
   )
 }
-

@@ -1,6 +1,13 @@
+import { HelmetProvider } from 'react-helmet-async'
 import LandingPage from './app/LandingPage'
+import SecurityHead from './shared/components/SecurityHead'
 
 export default function App() {
-  return <LandingPage />
+  return (
+    <HelmetProvider>
+      <SecurityHead />
+      <LandingPage />
+    </HelmetProvider>
+  )
 }
 

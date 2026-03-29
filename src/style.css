@@ -314,3 +314,25 @@ code {
 .scroll-indicator-bob {
   animation: scroll-indicator-bob 1.8s ease-in-out infinite;
 }
+
+/* Marquesina infinita — Safety Planning (bucle seamless al duplicar el carril) */
+@keyframes safety-planning-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.safety-planning-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: safety-planning-marquee 28s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .safety-planning-marquee-track {
+    animation: none;
+  }
+}

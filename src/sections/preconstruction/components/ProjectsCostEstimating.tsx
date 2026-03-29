@@ -1,39 +1,9 @@
-import { useState } from 'react'
 import ContactUsPillButton from '../../../shared/components/ContactUsPillButton'
 import CarouselArrowIcon from '../../../utils/icons/carousel/CarouselArrowIcon'
-
-const AERIAL_CAROUSEL_IMAGES = [
-  '/images/preconstruction/project-cost/last1.png',
-  '/images/preconstruction/project-cost/last2.png',
-  '/images/preconstruction/project-cost/last3.png',
-] as const
-
-const aerialSlideBasisPct = 100 / AERIAL_CAROUSEL_IMAGES.length
-
-const EARTHWORK_CAROUSEL_IMAGES = [
-  '/images/preconstruction/project-cost/first1.png',
-  '/images/preconstruction/project-cost/first1.png',
-  '/images/preconstruction/project-cost/first1.png',
-] as const
-
-const earthworkSlideBasisPct = 100 / EARTHWORK_CAROUSEL_IMAGES.length
-
-const UNDERGROUND_CAROUSEL_IMAGES = [
-  '/images/preconstruction/project-cost/second1.png',
-  '/images/preconstruction/project-cost/second2.png',
-] as const
-
-const undergroundSlideBasisPct = 100 / UNDERGROUND_CAROUSEL_IMAGES.length
+import { useProjectsCostEstimatingCarousels } from '../hooks/useProjectsCostEstimatingCarousels'
 
 export default function ProjectsCostEstimating() {
-  const [earthworkIndex, setEarthworkIndex] = useState(0)
-  const [undergroundIndex, setUndergroundIndex] = useState(0)
-  const [aerialIndex, setAerialIndex] = useState(0)
-  /** Proporción natural de la primera imagen del carrusel (visor). */
-  const [earthworkFirstSlideNatural, setEarthworkFirstSlideNatural] = useState<{ w: number; h: number } | null>(null)
-  const [undergroundFirstSlideNatural, setUndergroundFirstSlideNatural] = useState<{ w: number; h: number } | null>(null)
-  /** Tamaño del visor del carrusel = proporción natural de last1 (no la altura máx. de las 3). */
-  const [aerialFirstSlideNatural, setAerialFirstSlideNatural] = useState<{ w: number; h: number } | null>(null)
+  const { earthwork: ew, underground: ug, aerial: ar } = useProjectsCostEstimatingCarousels()
 
   return (
     <>
@@ -77,38 +47,29 @@ export default function ProjectsCostEstimating() {
               <div
                 className="w-full overflow-hidden rounded-3xl border border-transparent bg-neutral-100"
                 style={
-                  earthworkFirstSlideNatural
-                    ? { aspectRatio: `${earthworkFirstSlideNatural.w} / ${earthworkFirstSlideNatural.h}` }
+                  ew.firstSlideNatural
+                    ? { aspectRatio: `${ew.firstSlideNatural.w} / ${ew.firstSlideNatural.h}` }
                     : { minHeight: '12rem' }
                 }
               >
                 <div
                   className="flex h-full transition-transform duration-500 ease-in-out"
                   style={{
-                    width: `${EARTHWORK_CAROUSEL_IMAGES.length * 100}%`,
-                    transform: `translateX(-${earthworkIndex * earthworkSlideBasisPct}%)`,
+                    width: `${ew.images.length * 100}%`,
+                    transform: `translateX(-${ew.index * ew.slideBasisPct}%)`,
                   }}
                 >
-                  {EARTHWORK_CAROUSEL_IMAGES.map((src, i) => (
+                  {ew.images.map((src, i) => (
                     <div
                       key={`${src}-${i}`}
                       className="relative flex h-full min-h-0 flex-shrink-0 items-center justify-center overflow-hidden"
-                      style={{ flex: `0 0 ${earthworkSlideBasisPct}%` }}
+                      style={{ flex: `0 0 ${ew.slideBasisPct}%` }}
                     >
                       <img
                         src={src}
                         alt={`Digital earthwork slide ${i + 1}`}
                         className="max-h-full max-w-full object-contain"
-                        onLoad={
-                          i === 0
-                            ? (e) => {
-                                const img = e.currentTarget
-                                if (img.naturalWidth > 0) {
-                                  setEarthworkFirstSlideNatural({ w: img.naturalWidth, h: img.naturalHeight })
-                                }
-                              }
-                            : undefined
-                        }
+                        onLoad={i === 0 ? ew.onFirstSlideLoad : undefined}
                       />
                     </div>
                   ))}
@@ -119,9 +80,7 @@ export default function ProjectsCostEstimating() {
                 type="button"
                 aria-label="Slide anterior"
                 className="absolute left-[-1.5rem] top-1/2 z-10 flex h-14 w-14 -translate-y-1/2 items-center justify-center transition-transform duration-200 hover:scale-110"
-                onClick={() =>
-                  setEarthworkIndex((prev) => (prev + EARTHWORK_CAROUSEL_IMAGES.length - 1) % EARTHWORK_CAROUSEL_IMAGES.length)
-                }
+                onClick={ew.goPrevious}
               >
                 <CarouselArrowIcon direction="left" />
               </button>
@@ -130,17 +89,17 @@ export default function ProjectsCostEstimating() {
                 type="button"
                 aria-label="Slide siguiente"
                 className="absolute right-[-1.5rem] top-1/2 z-10 flex h-14 w-14 -translate-y-1/2 items-center justify-center transition-transform duration-200 hover:scale-110"
-                onClick={() => setEarthworkIndex((prev) => (prev + 1) % EARTHWORK_CAROUSEL_IMAGES.length)}
+                onClick={ew.goNext}
               >
                 <CarouselArrowIcon direction="right" />
               </button>
             </div>
 
             <div className="mt-6 flex items-center justify-center gap-3">
-              {EARTHWORK_CAROUSEL_IMAGES.map((src, i) => (
+              {ew.images.map((src, i) => (
                 <span
                   key={`dot-${src}-${i}`}
-                  className={`h-2.5 w-2.5 rounded-full ${i === earthworkIndex ? 'bg-[#E4611F]' : 'border border-[#E4611F] bg-white'}`}
+                  className={`h-2.5 w-2.5 rounded-full ${i === ew.index ? 'bg-[#E4611F]' : 'border border-[#E4611F] bg-white'}`}
                 />
               ))}
             </div>
@@ -184,38 +143,29 @@ export default function ProjectsCostEstimating() {
             <div
               className="w-full overflow-hidden rounded-3xl border border-transparent bg-neutral-100"
               style={
-                undergroundFirstSlideNatural
-                  ? { aspectRatio: `${undergroundFirstSlideNatural.w} / ${undergroundFirstSlideNatural.h}` }
+                ug.firstSlideNatural
+                  ? { aspectRatio: `${ug.firstSlideNatural.w} / ${ug.firstSlideNatural.h}` }
                   : { minHeight: '12rem' }
               }
             >
               <div
                 className="flex h-full transition-transform duration-500 ease-in-out"
                 style={{
-                  width: `${UNDERGROUND_CAROUSEL_IMAGES.length * 100}%`,
-                  transform: `translateX(-${undergroundIndex * undergroundSlideBasisPct}%)`,
+                  width: `${ug.images.length * 100}%`,
+                  transform: `translateX(-${ug.index * ug.slideBasisPct}%)`,
                 }}
               >
-                {UNDERGROUND_CAROUSEL_IMAGES.map((src, i) => (
+                {ug.images.map((src, i) => (
                   <div
                     key={src}
                     className="relative flex h-full min-h-0 flex-shrink-0 items-center justify-center overflow-hidden"
-                    style={{ flex: `0 0 ${undergroundSlideBasisPct}%` }}
+                    style={{ flex: `0 0 ${ug.slideBasisPct}%` }}
                   >
                     <img
                       src={src}
                       alt={`Underground systems slide ${i + 1}`}
                       className="max-h-full max-w-full object-contain"
-                      onLoad={
-                        i === 0
-                          ? (e) => {
-                              const img = e.currentTarget
-                              if (img.naturalWidth > 0) {
-                                setUndergroundFirstSlideNatural({ w: img.naturalWidth, h: img.naturalHeight })
-                              }
-                            }
-                          : undefined
-                      }
+                      onLoad={i === 0 ? ug.onFirstSlideLoad : undefined}
                     />
                   </div>
                 ))}
@@ -226,11 +176,7 @@ export default function ProjectsCostEstimating() {
               type="button"
               aria-label="Slide anterior"
               className="absolute left-[-1.5rem] top-1/2 z-10 flex h-14 w-14 -translate-y-1/2 items-center justify-center transition-transform duration-200 hover:scale-110"
-              onClick={() =>
-                setUndergroundIndex(
-                  (prev) => (prev + UNDERGROUND_CAROUSEL_IMAGES.length - 1) % UNDERGROUND_CAROUSEL_IMAGES.length,
-                )
-              }
+              onClick={ug.goPrevious}
             >
               <CarouselArrowIcon direction="left" />
             </button>
@@ -239,17 +185,17 @@ export default function ProjectsCostEstimating() {
               type="button"
               aria-label="Slide siguiente"
               className="absolute right-[-1.5rem] top-1/2 z-10 flex h-14 w-14 -translate-y-1/2 items-center justify-center transition-transform duration-200 hover:scale-110"
-              onClick={() => setUndergroundIndex((prev) => (prev + 1) % UNDERGROUND_CAROUSEL_IMAGES.length)}
+              onClick={ug.goNext}
             >
               <CarouselArrowIcon direction="right" />
             </button>
 
             <div className="mt-6 flex items-center justify-center gap-3">
-              {UNDERGROUND_CAROUSEL_IMAGES.map((src, i) => (
+              {ug.images.map((src, i) => (
                 <span
                   key={src}
                   className={`h-2.5 w-2.5 rounded-full ${
-                    i === undergroundIndex ? 'bg-[#E4611F]' : 'border border-[#E4611F] bg-white'
+                    i === ug.index ? 'bg-[#E4611F]' : 'border border-[#E4611F] bg-white'
                   }`}
                 />
               ))}
@@ -295,38 +241,29 @@ export default function ProjectsCostEstimating() {
               <div
                 className="w-full overflow-hidden rounded-3xl border border-transparent bg-white"
                 style={
-                  aerialFirstSlideNatural
-                    ? { aspectRatio: `${aerialFirstSlideNatural.w} / ${aerialFirstSlideNatural.h}` }
+                  ar.firstSlideNatural
+                    ? { aspectRatio: `${ar.firstSlideNatural.w} / ${ar.firstSlideNatural.h}` }
                     : { minHeight: '12rem' }
                 }
               >
                 <div
                   className="flex h-full transition-transform duration-500 ease-in-out"
                   style={{
-                    width: `${AERIAL_CAROUSEL_IMAGES.length * 100}%`,
-                    transform: `translateX(-${aerialIndex * aerialSlideBasisPct}%)`,
+                    width: `${ar.images.length * 100}%`,
+                    transform: `translateX(-${ar.index * ar.slideBasisPct}%)`,
                   }}
                 >
-                  {AERIAL_CAROUSEL_IMAGES.map((src, i) => (
+                  {ar.images.map((src, i) => (
                     <div
                       key={src}
                       className="relative flex h-full flex-shrink-0 items-center justify-center"
-                      style={{ flex: `0 0 ${aerialSlideBasisPct}%` }}
+                      style={{ flex: `0 0 ${ar.slideBasisPct}%` }}
                     >
                       <img
                         src={src}
                         alt={`Project cost gallery ${i + 1}`}
                         className="max-h-full max-w-full object-contain"
-                        onLoad={
-                          i === 0
-                            ? (e) => {
-                                const img = e.currentTarget
-                                if (img.naturalWidth > 0) {
-                                  setAerialFirstSlideNatural({ w: img.naturalWidth, h: img.naturalHeight })
-                                }
-                              }
-                            : undefined
-                        }
+                        onLoad={i === 0 ? ar.onFirstSlideLoad : undefined}
                       />
                     </div>
                   ))}
@@ -337,7 +274,7 @@ export default function ProjectsCostEstimating() {
                 type="button"
                 aria-label="Slide anterior"
                 className="absolute left-[-1.5rem] top-1/2 z-10 flex h-14 w-14 -translate-y-1/2 items-center justify-center transition-transform duration-200 hover:scale-110"
-                onClick={() => setAerialIndex((prev) => (prev + AERIAL_CAROUSEL_IMAGES.length - 1) % AERIAL_CAROUSEL_IMAGES.length)}
+                onClick={ar.goPrevious}
               >
                 <CarouselArrowIcon direction="left" />
               </button>
@@ -346,17 +283,17 @@ export default function ProjectsCostEstimating() {
                 type="button"
                 aria-label="Slide siguiente"
                 className="absolute right-[-1.5rem] top-1/2 z-10 flex h-14 w-14 -translate-y-1/2 items-center justify-center transition-transform duration-200 hover:scale-110"
-                onClick={() => setAerialIndex((prev) => (prev + 1) % AERIAL_CAROUSEL_IMAGES.length)}
+                onClick={ar.goNext}
               >
                 <CarouselArrowIcon direction="right" />
               </button>
             </div>
 
             <div className="mt-6 flex items-center justify-center gap-3">
-              {AERIAL_CAROUSEL_IMAGES.map((src, i) => (
+              {ar.images.map((src, i) => (
                 <span
                   key={src}
-                  className={`h-2.5 w-2.5 rounded-full ${i === aerialIndex ? 'bg-[#E4611F]' : 'border border-[#E4611F] bg-white'}`}
+                  className={`h-2.5 w-2.5 rounded-full ${i === ar.index ? 'bg-[#E4611F]' : 'border border-[#E4611F] bg-white'}`}
                 />
               ))}
             </div>

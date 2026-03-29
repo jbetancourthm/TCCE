@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
 import { EXPAND_ALL_SECTIONS } from '../../../config/devExpandSections'
 import Container from '../../../shared/components/Container'
 import { PreconstructionPage } from '../../preconstruction'
 import { ConstructionManagementPage } from '../../construction-management'
+import { useExpertiseCards } from '../hooks/useExpertise'
 
 const OPEN_PRECONSTRUCTION_COPY = {
   title: 'Preconstruction',
@@ -43,23 +43,7 @@ const CARD_H_FULL = 'h-80 md:h-130'
 const CARD_H_HALF = 'h-40 md:h-130'
 
 export default function ExpertiseCardsSection() {
-  const [activeCard, setActiveCard] = useState<number | null>(null)
-  const showExpandedCardImages = EXPAND_ALL_SECTIONS || activeCard !== null
-  const activeForImages = (activeCard ?? 0) as 0 | 1
-  const useSplitHeights = !EXPAND_ALL_SECTIONS && activeCard !== null
-
-  useEffect(() => {
-    const handleOpenCard = (event: Event) => {
-      const customEvent = event as CustomEvent<{ card?: number }>
-      const targetCard = customEvent.detail?.card
-      if (targetCard === 0 || targetCard === 1) {
-        setActiveCard(targetCard)
-      }
-    }
-
-    window.addEventListener('expertise:open-card', handleOpenCard as EventListener)
-    return () => window.removeEventListener('expertise:open-card', handleOpenCard as EventListener)
-  }, [])
+  const { activeCard, setActiveCard, showExpandedCardImages, activeForImages, useSplitHeights } = useExpertiseCards()
 
   return (
     <div className="bg-white">

@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import CarouselArrowIcon from '../../../utils/icons/carousel/CarouselArrowIcon'
+import { usePreliminaryGalleryModal } from '../hooks/usePreliminaryGalleryModal'
 
 type PreliminaryGalleryModalProps = {
   images: readonly string[]
@@ -15,42 +15,12 @@ export default function PreliminaryGalleryModal({
   initialIndex,
   onClose,
 }: PreliminaryGalleryModalProps) {
-  const [index, setIndex] = useState(initialIndex)
-  const titleId = useId()
-  const slideRefs = useRef<(HTMLDivElement | null)[]>([])
-
-  useEffect(() => {
-    if (isOpen) setIndex(initialIndex)
-  }, [isOpen, initialIndex])
-
-  useEffect(() => {
-    if (!isOpen) return
-    const t = requestAnimationFrame(() => {
-      slideRefs.current[index]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
-    })
-    return () => cancelAnimationFrame(t)
-  }, [isOpen, index])
-
-  useEffect(() => {
-    if (!isOpen) return
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-    }
-    window.addEventListener('keydown', onKey)
-    return () => {
-      document.body.style.overflow = prev
-      window.removeEventListener('keydown', onKey)
-    }
-  }, [isOpen, onClose])
-
-  const go = useCallback(
-    (dir: -1 | 1) => {
-      setIndex((i) => (i + dir + images.length) % images.length)
-    },
-    [images.length],
-  )
+  const { index, titleId, slideRefs, go, scrollToIndex } = usePreliminaryGalleryModal({
+    images,
+    isOpen,
+    initialIndex,
+    onClose,
+  })
 
   if (!isOpen || typeof document === 'undefined') return null
 
@@ -129,10 +99,7 @@ export default function PreliminaryGalleryModal({
               aria-label={`Ir a la imagen ${i + 1}`}
               aria-current={i === index}
               className={`h-2.5 w-2.5 rounded-full transition ${i === index ? 'bg-[#E4611F]' : 'border border-[#E4611F] bg-white'}`}
-              onClick={() => {
-                setIndex(i)
-                slideRefs.current[i]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
-              }}
+              onClick={() => scrollToIndex(i)}
             />
           ))}
         </div>

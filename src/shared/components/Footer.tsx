@@ -144,20 +144,20 @@ export default function Footer() {
                 <span>contact@tcce.biz</span>
               </a>
               <div className="flex items-center gap-8 pt-1">
-                <a
-                  href="#"
-                  aria-label="Facebook"
-                  className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#E46425] text-white transition hover:brightness-110"
+                <button
+                  type="button"
+                  aria-label="Facebook (próximamente)"
+                  className="inline-flex h-8 w-8 shrink-0 cursor-default items-center justify-center rounded-full bg-[#E46425] text-white transition hover:brightness-110"
                 >
                   <FooterFacebookIcon className="h-[1.1rem] w-[1.1rem]" />
-                </a>
-                <a
-                  href="#"
-                  aria-label="Instagram"
-                  className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#E46425] text-white transition hover:brightness-110"
+                </button>
+                <button
+                  type="button"
+                  aria-label="Instagram (próximamente)"
+                  className="inline-flex h-8 w-8 shrink-0 cursor-default items-center justify-center rounded-full bg-[#E46425] text-white transition hover:brightness-110"
                 >
                   <FooterInstagramIcon className="h-[1.05rem] w-[1.05rem]" />
-                </a>
+                </button>
               </div>
             </div>
 
@@ -187,20 +187,20 @@ export default function Footer() {
               </div>
 
               <div className="flex items-center gap-8">
-                <a
-                  href="#"
-                  aria-label="Facebook"
-                  className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#E46425] text-white transition hover:brightness-110"
+                <button
+                  type="button"
+                  aria-label="Facebook (próximamente)"
+                  className="inline-flex h-8 w-8 shrink-0 cursor-default items-center justify-center rounded-full bg-[#E46425] text-white transition hover:brightness-110"
                 >
                   <FooterFacebookIcon className="h-[1.1rem] w-[1.1rem]" />
-                </a>
-                <a
-                  href="#"
-                  aria-label="Instagram"
-                  className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#E46425] text-white transition hover:brightness-110"
+                </button>
+                <button
+                  type="button"
+                  aria-label="Instagram (próximamente)"
+                  className="inline-flex h-8 w-8 shrink-0 cursor-default items-center justify-center rounded-full bg-[#E46425] text-white transition hover:brightness-110"
                 >
                   <FooterInstagramIcon className="h-[1.05rem] w-[1.05rem]" />
-                </a>
+                </button>
               </div>
             </div>
           </div>

@@ -1,12 +1,11 @@
-import { useState } from 'react'
 import Container from '../../../shared/components/Container'
-import SafetyPlanning from '../safety-planning/SafetyPlanning'
-import SafetyConstruction from '../safety-construction/SafetyConstruction'
-import TotallySafe from '../totally-safe/TotallySafe'
+import { useSafetySectionTabs } from '../hooks/useSafety'
+import SafetyPlanning from './SafetyPlanning'
+import SafetyConstruction from './SafetyConstruction'
+import TotallySafe from './TotallySafe'
 
 export default function SafetySectionContent() {
-  const [activeTab, setActiveTab] = useState<0 | 1 | 2>(0)
-  const pillTransform = activeTab === 0 ? 'translate-x-0' : activeTab === 1 ? 'translate-x-full' : 'translate-x-[200%]'
+  const { activeTab, setActiveTab, pillTransform } = useSafetySectionTabs()
 
   return (
     <div className="bg-white text-neutral-700">
@@ -51,8 +50,8 @@ export default function SafetySectionContent() {
             </div>
           </div>
 
-          <div className="mt-12">
-            <div className="relative mx-auto flex w-full max-w-full overflow-hidden rounded-xl bg-white ring-1 ring-[#E4611F]/40 md:inline-flex md:w-full md:max-w-[min(100%_58rem)]">
+          <div className="mt-12 flex justify-center">
+            <div className="relative w-full max-w-full flex overflow-hidden rounded-xl bg-white ring-1 ring-[#E4611F]/40 md:inline-flex md:w-auto md:max-w-none">
               <div
                 aria-hidden
                 className={`absolute top-0 bottom-0 left-0 w-1/3 rounded-xl bg-[#E4611F] transition-transform duration-500 ease-in-out ${pillTransform}`}
@@ -62,7 +61,7 @@ export default function SafetySectionContent() {
                 onClick={() => setActiveTab(0)}
                 aria-pressed={activeTab === 0}
                 className={
-                  'relative z-10 w-1/3 rounded-xl px-2 py-2.5 text-[0.6875rem] font-semibold leading-snug transition-colors duration-300 max-md:text-balance md:whitespace-nowrap md:px-8 md:py-4 md:text-sm ' +
+                  'relative z-10 flex flex-1 basis-0 min-w-0 items-center justify-center rounded-xl px-2 py-2.5 text-center text-[0.6875rem] font-semibold leading-snug transition-colors duration-300 max-md:text-balance md:whitespace-nowrap md:px-8 md:py-4 md:text-sm ' +
                   (activeTab === 0 ? 'text-white' : 'text-[#b37249]')
                 }
               >
@@ -73,7 +72,7 @@ export default function SafetySectionContent() {
                 onClick={() => setActiveTab(1)}
                 aria-pressed={activeTab === 1}
                 className={
-                  'relative z-10 w-1/3 rounded-xl px-2 py-2.5 text-[0.6875rem] font-semibold leading-snug transition-colors duration-300 max-md:text-balance md:whitespace-nowrap md:px-8 md:py-4 md:text-sm ' +
+                  'relative z-10 flex flex-1 basis-0 min-w-0 items-center justify-center rounded-xl px-2 py-2.5 text-center text-[0.6875rem] font-semibold leading-snug transition-colors duration-300 max-md:text-balance md:whitespace-nowrap md:px-8 md:py-4 md:text-sm ' +
                   (activeTab === 1 ? 'text-white' : 'text-[#b37249]')
                 }
               >
@@ -84,7 +83,7 @@ export default function SafetySectionContent() {
                 onClick={() => setActiveTab(2)}
                 aria-pressed={activeTab === 2}
                 className={
-                  'relative z-10 w-1/3 rounded-xl px-2 py-2.5 text-[0.6875rem] font-semibold leading-snug transition-colors duration-300 max-md:text-balance md:whitespace-nowrap md:px-8 md:py-4 md:text-sm ' +
+                  'relative z-10 flex flex-1 basis-0 min-w-0 items-center justify-center rounded-xl px-2 py-2.5 text-center text-[0.6875rem] font-semibold leading-snug transition-colors duration-300 max-md:text-balance md:whitespace-nowrap md:px-8 md:py-4 md:text-sm ' +
                   (activeTab === 2 ? 'text-white' : 'text-[#b37249]')
                 }
               >

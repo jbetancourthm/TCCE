@@ -1,41 +1,24 @@
-import { useMemo, useState } from 'react'
 import CarouselArrowIcon from '../../../utils/icons/carousel/CarouselArrowIcon'
-
-const PROJECTS_PER_PAGE = 3
-const projects = Array.from({ length: 20 }, (_, idx) => ({
-  id: idx + 1,
-  location: 'United States, Washington D. C.',
-  title: `Lorem ipsum ${idx + 1}`,
-  image: '/images/construction-management/construction.png',
-}))
+import { useRelatedProjectsPagination } from '../hooks/useRelatedProjectsPagination'
 
 export default function RelatedProjectsSection() {
-  const [currentPage, setCurrentPage] = useState(1)
-  const totalPages = Math.ceil(projects.length / PROJECTS_PER_PAGE)
-  const MAX_VISIBLE_PAGE_NUMBERS = 4
-
-  const visibleProjects = useMemo(() => {
-    const start = (currentPage - 1) * PROJECTS_PER_PAGE
-    return projects.slice(start, start + PROJECTS_PER_PAGE)
-  }, [currentPage])
-
-  const pageNumbers = useMemo(() => {
-    if (totalPages <= MAX_VISIBLE_PAGE_NUMBERS) {
-      return Array.from({ length: totalPages }, (_, idx) => idx + 1)
-    }
-
-    const start = Math.max(1, Math.min(currentPage - 1, totalPages - MAX_VISIBLE_PAGE_NUMBERS + 1))
-    return Array.from({ length: MAX_VISIBLE_PAGE_NUMBERS }, (_, idx) => start + idx)
-  }, [currentPage, totalPages])
-
-  const showLeftEllipsis = pageNumbers.length > 0 && pageNumbers[0] > 1
-  const showRightEllipsis = pageNumbers.length > 0 && pageNumbers[pageNumbers.length - 1] < totalPages
+  const {
+    visibleProjects,
+    pageNumbers,
+    showLeftEllipsis,
+    showRightEllipsis,
+    currentPage,
+    totalPages,
+    goToPreviousPage,
+    goToNextPage,
+    goToPage,
+  } = useRelatedProjectsPagination()
 
   const renderPaginationBar = () => (
     <div className="flex flex-wrap items-center justify-center gap-3 text-sm text-neutral-500 md:mt-4 md:justify-end">
       <button
         type="button"
-        onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+        onClick={goToPreviousPage}
         disabled={currentPage === 1}
         aria-label="Página anterior"
         className="h-9 w-9 transition-transform duration-200 hover:scale-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:scale-100"
@@ -50,7 +33,7 @@ export default function RelatedProjectsSection() {
             <span key={page} className="inline-flex items-center gap-2">
               <button
                 type="button"
-                onClick={() => setCurrentPage(page)}
+                onClick={() => goToPage(page)}
                 className={`transition-colors duration-200 ${isActive ? 'font-semibold text-[#E4611F]' : 'text-neutral-500 hover:text-[#E4611F]'}`}
                 aria-label={`Go to page ${page}`}
                 aria-current={isActive ? 'page' : undefined}
@@ -65,7 +48,7 @@ export default function RelatedProjectsSection() {
       </div>
       <button
         type="button"
-        onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
+        onClick={goToNextPage}
         disabled={currentPage === totalPages}
         aria-label="Página siguiente"
         className="h-9 w-9 transition-transform duration-200 hover:scale-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:scale-100"

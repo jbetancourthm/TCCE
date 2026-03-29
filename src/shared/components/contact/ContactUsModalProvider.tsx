@@ -123,7 +123,9 @@ function ContactUsModalDialog() {
       toast.success('Gracias. Tu mensaje fue enviado correctamente.')
       close()
     } catch (err) {
-      console.error(err)
+      if (import.meta.env.DEV) {
+        console.error('[contact]', err)
+      }
       toast.error(err instanceof Error ? err.message : 'No se pudo enviar el mensaje.')
     } finally {
       setIsSubmitting(false)

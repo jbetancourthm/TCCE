@@ -1,4 +1,9 @@
-export default function useExpertise() {
-  // Hook stub para lógica/estado de la sección (cuando pasemos al diseño real).
-}
+/**
+ * Hooks del módulo Expertise — reexportaciones centralizadas.
+ *
+ * | Hook | Rol |
+ * |------|-----|
+ * | `useExpertiseCards` | Estado y efectos de las tarjetas (grid, evento `expertise:open-card`, derivados para UI). |
+ */
 
+export { useExpertiseCards } from './useExpertiseCards'

@@ -1,1 +1,1 @@
-export { default as ConstructionManagementPage } from './ConstructionManagementPage'
+export { default as ConstructionManagementPage } from './pages/ConstructionManagementPage'

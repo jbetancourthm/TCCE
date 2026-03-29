@@ -1,7 +1,7 @@
-import { useState } from 'react'
 import ContactUsPillButton from '../../../shared/components/ContactUsPillButton'
 import PreliminaryConstructionPlanWatermark from '../../../utils/graphics/PreliminaryConstructionPlanWatermark'
 import GalleryExpandIcon from '../../../utils/icons/gallery/GalleryExpandIcon'
+import { usePreliminaryPlanGallery } from '../hooks/usePreliminaryPlanGallery'
 import PreliminaryGalleryModal from './PreliminaryGalleryModal'
 
 const PRELIMINARY_GALLERY_IMAGES = [
@@ -11,8 +11,7 @@ const PRELIMINARY_GALLERY_IMAGES = [
 ] as const
 
 export default function PreliminaryConstructionPlan() {
-  const [galleryOpen, setGalleryOpen] = useState(false)
-  const [galleryIndex, setGalleryIndex] = useState(0)
+  const { galleryOpen, galleryIndex, openGalleryAt, closeGallery } = usePreliminaryPlanGallery()
 
   return (
     <>
@@ -66,10 +65,7 @@ export default function PreliminaryConstructionPlan() {
               type="button"
               className="group absolute right-2 top-2 z-10 flex items-center justify-center rounded-lg bg-transparent p-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E4611F] focus-visible:ring-offset-2"
               aria-label={`Ampliar imagen ${i + 1}`}
-              onClick={() => {
-                setGalleryIndex(i)
-                setGalleryOpen(true)
-              }}
+              onClick={() => openGalleryAt(i)}
             >
               <GalleryExpandIcon className="h-11 w-11 origin-center transform-gpu drop-shadow-md transition-transform duration-300 ease-out group-hover:scale-125 group-active:scale-110 sm:h-12 sm:w-12" />
             </button>
@@ -82,7 +78,7 @@ export default function PreliminaryConstructionPlan() {
         images={PRELIMINARY_GALLERY_IMAGES}
         isOpen={galleryOpen}
         initialIndex={galleryIndex}
-        onClose={() => setGalleryOpen(false)}
+        onClose={closeGallery}
       />
 
       {/* Capa decorativa: ancho viewport, altura intrínseca del SVG (sin recorte) */}

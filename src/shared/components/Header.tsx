@@ -8,6 +8,9 @@ import HeaderMenuToggleIcon from '../../utils/icons/header/HeaderMenuToggleIcon'
 
 const BRAND_ORANGE = '#E4611F'
 
+/** Orden = pestaña 0, 1, 2 del switch en Safety. */
+const SAFETY_SUBNAV_ITEMS = ['Safety Planning', 'Safety Construction', 'Totally Safe'] as const
+
 const navItems = [
   { label: 'Our Expertise', id: 'expertise', chevron: true },
   { label: 'Projects', id: 'projects', chevron: true },
@@ -46,7 +49,7 @@ const navPanels = {
   safety: [
     {
       title: '',
-      items: ['Safety Planing', 'Safety Construction', 'Totally Safe'],
+      items: [...SAFETY_SUBNAV_ITEMS],
     },
   ],
   careers: [
@@ -96,6 +99,16 @@ export default function Header() {
     window.setTimeout(() => {
       scrollTo('construction-management-projects')
     }, 380)
+  }
+
+  const goToSafetyTab = (tab: 0 | 1 | 2) => {
+    setLandingModule('safety')
+    scrollTo('expertise')
+    // Dar tiempo a que monte SafetySection antes del evento (p. ej. viniendo desde Expertise).
+    window.setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('safety:set-tab', { detail: { tab } }))
+    }, 120)
+    setActiveItem(null)
   }
 
   const runNavItemAction = (itemId: (typeof navItems)[number]['id']) => {
@@ -273,6 +286,24 @@ export default function Header() {
                   <span>{item.label}</span>
                   {'chevron' in item && item.chevron ? <NavItemCaret className="h-4 w-4 shrink-0 opacity-70" /> : null}
                 </button>
+                {item.id === 'safety' ? (
+                  <ul className="mb-2 space-y-1 border-l border-white/20 pl-3">
+                    {SAFETY_SUBNAV_ITEMS.map((label, idx) => (
+                      <li key={label}>
+                        <button
+                          type="button"
+                          className="w-full py-2 text-left text-xs font-medium text-white/80 transition hover:text-white"
+                          onClick={() => {
+                            setIsMobileMenuOpen(false)
+                            goToSafetyTab(idx as 0 | 1 | 2)
+                          }}
+                        >
+                          {label}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
               </li>
             ))}
             <li className="border-t border-white/15 pt-2">
@@ -341,13 +372,17 @@ export default function Header() {
                         <p className="text-xs font-semibold uppercase tracking-[0.1em] text-white/75">{column.title}</p>
                       ) : null}
                       <ul className={`${column.title ? 'mt-3' : 'mt-0'} space-y-2.5`}>
-                        {column.items.map((entry) => (
+                        {column.items.map((entry, itemIndex) => (
                           <li key={entry}>
                             <button
                               type="button"
                               onClick={() => {
                                 if (activeItem === 'expertise' && columnIndex === 0) {
                                   openExpertiseCard(1)
+                                  return
+                                }
+                                if (activeItem === 'safety' && itemIndex >= 0 && itemIndex <= 2) {
+                                  goToSafetyTab(itemIndex as 0 | 1 | 2)
                                 }
                               }}
                               className={`origin-left transform-gpu whitespace-pre-line text-left text-sm font-medium text-white/90 transition duration-150 ease-out hover:scale-[1.03] hover:text-white ${

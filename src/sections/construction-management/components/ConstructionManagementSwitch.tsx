@@ -1,4 +1,4 @@
-type ConstructionTab = 0 | 1 | 2
+import type { ConstructionTab } from '../hooks/useConstructionManagementTabs'
 
 type ConstructionManagementSwitchProps = {
   activeTab: ConstructionTab
@@ -19,7 +19,7 @@ export default function ConstructionManagementSwitch({ activeTab, onTabChange }:
         delivered with confidence.
       </p>
 
-      <div className="relative mx-auto mt-8 flex w-full max-w-full overflow-hidden rounded-xl bg-white ring-1 ring-[#E4611F]/40 md:inline-flex md:w-full md:max-w-[min(100%_52rem)]">
+      <div className="relative mx-auto mt-8 flex w-full max-w-full overflow-hidden rounded-xl bg-white ring-1 ring-[#E4611F]/40 md:inline-flex md:w-auto md:max-w-none">
         <div
           aria-hidden
           className={`absolute top-0 bottom-0 left-0 w-1/3 rounded-xl bg-[#E4611F] transition-transform duration-500 ease-in-out ${pillTransform}`}

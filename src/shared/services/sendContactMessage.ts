@@ -31,6 +31,8 @@ export async function sendContactMessage(payload: ContactMessagePayload): Promis
         message: payload.message,
         website: payload.website ?? '',
       }),
+      credentials: 'omit',
+      mode: 'cors',
       signal: controller.signal,
     })
 

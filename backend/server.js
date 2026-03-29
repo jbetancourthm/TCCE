@@ -91,7 +91,7 @@ app.post('/api/contact', async (req, res) => {
       return res.status(400).json({
         ok: false,
         error: first,
-        details: parsed.error.issues,
+        ...(process.env.NODE_ENV !== 'production' ? { details: parsed.error.issues } : {}),
       })
     }
 
