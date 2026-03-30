@@ -28,7 +28,17 @@ const navItems = [
   { label: 'Careers', id: 'careers', chevron: false },
 ] as const
 
-const NAV_ITEMS_WITH_DESKTOP_MEGA = new Set(['expertise', 'about', 'safety'])
+type NavItemId = (typeof navItems)[number]['id']
+type DesktopMegaItemId = 'expertise' | 'about' | 'safety'
+type NavPanelItemId = keyof typeof navPanels
+
+const NAV_ITEMS_WITH_DESKTOP_MEGA = new Set<DesktopMegaItemId>(['expertise', 'about', 'safety'])
+
+const isDesktopMegaItem = (item: NavItemId | null): item is DesktopMegaItemId =>
+  item !== null && NAV_ITEMS_WITH_DESKTOP_MEGA.has(item as DesktopMegaItemId)
+
+const isNavPanelItem = (item: NavItemId | null): item is NavPanelItemId =>
+  item === 'about' || item === 'safety' || item === 'projects'
 
 const EXPERTISE_PRECONSTRUCTION_LINKS = [
   { label: 'Engineering-Led Insight', section: 'engineering' as const },
@@ -82,7 +92,7 @@ const navPanels = {
 export default function Header() {
   const scrollTo = useScrollToSection()
   const { open: openContactModal } = useContactUsModal()
-  const [activeItem, setActiveItem] = useState<(typeof navItems)[number]['id'] | null>(null)
+  const [activeItem, setActiveItem] = useState<NavItemId | null>(null)
   const [expertiseMenuHover, setExpertiseMenuHover] = useState<null | 'precon' | 'cm'>(null)
   const [expertisePreconSubHover, setExpertisePreconSubHover] = useState<null | 'projects' | 'preliminary'>(null)
   const [isHeaderVisible, setIsHeaderVisible] = useState(true)
@@ -199,7 +209,7 @@ export default function Header() {
     setActiveItem(null)
   }
 
-  const runNavItemAction = (itemId: (typeof navItems)[number]['id']) => {
+  const runNavItemAction = (itemId: NavItemId) => {
     if (itemId === 'expertise') {
       setLandingModule('expertise')
       scrollTo('expertise')
@@ -293,7 +303,7 @@ export default function Header() {
   }, [])
 
   useLayoutEffect(() => {
-    if (!activeItem || !NAV_ITEMS_WITH_DESKTOP_MEGA.has(activeItem)) {
+    if (!isDesktopMegaItem(activeItem)) {
       setDesktopMegaPadPx(0)
       return
     }
@@ -416,11 +426,11 @@ export default function Header() {
 
         <div
           className={`hidden transition-all duration-200 xl:row-start-2 xl:col-start-2 xl:col-end-3 xl:block xl:min-w-0 ${
-            activeItem && NAV_ITEMS_WITH_DESKTOP_MEGA.has(activeItem) ? 'max-h-[min(34rem,90vh)] opacity-100' : 'pointer-events-none max-h-0 opacity-0'
+            isDesktopMegaItem(activeItem) ? 'max-h-[min(34rem,90vh)] opacity-100' : 'pointer-events-none max-h-0 opacity-0'
           }`}
         >
           <div ref={desktopMegaTrackRef} className="w-full py-5">
-            {activeItem && NAV_ITEMS_WITH_DESKTOP_MEGA.has(activeItem) ? (
+            {isDesktopMegaItem(activeItem) ? (
               <div className="text-white" style={{ paddingLeft: desktopMegaPadPx }}>
                 <div
                   className={`grid justify-items-start gap-6 ${
@@ -540,7 +550,7 @@ export default function Header() {
                       ) : null}
                     </>
                   ) : (
-                    navPanels[activeItem].map((column, columnIndex) => (
+                    (isNavPanelItem(activeItem) ? navPanels[activeItem] : []).map((column, columnIndex) => (
                       <div key={column.title || `col-${columnIndex}`} className="text-white">
                         {column.title ? (
                           <p className="text-xs font-semibold uppercase tracking-[0.1em] text-white/75">{column.title}</p>
