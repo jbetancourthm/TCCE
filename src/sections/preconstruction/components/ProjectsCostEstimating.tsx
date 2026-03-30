@@ -8,7 +8,7 @@ export default function ProjectsCostEstimating() {
   const { earthwork: ew, underground: ug, aerial: ar } = useProjectsCostEstimatingCarousels()
 
   return (
-    <>
+    <div id="preconstruction-projects-cost-estimating" className="w-full">
       <div className="mt-12 mx-auto grid max-w-[95rem] items-start gap-8 text-left md:grid-cols-[2fr_3fr]">
         <div>
           <p className="flex items-center gap-4 text-sm font-semibold uppercase tracking-[0.25em] text-neutral-700">
@@ -42,7 +42,7 @@ export default function ProjectsCostEstimating() {
         </div>
       </div>
 
-      <section className="mt-14">
+      <section id="preconstruction-digital-earthwork" className="mt-14 scroll-mt-28">
         <div className="mx-auto grid max-w-[95rem] items-center gap-10 md:grid-cols-[1fr_1fr]">
           <div className="text-center">
             <div className="w-full overflow-hidden rounded-3xl border border-transparent bg-neutral-100">
@@ -80,7 +80,7 @@ export default function ProjectsCostEstimating() {
         </div>
       </section>
 
-      <section className="mt-14">
+      <section id="preconstruction-underground-systems" className="mt-14 scroll-mt-28">
         <div className="mx-auto grid max-w-[95rem] items-center gap-10 md:grid-cols-[1fr_1.2fr]">
           <div className="text-left">
             <h3 className="text-3xl font-bold mb-10 tracking-tight text-neutral-700 md:text-4xl">Underground Systems Analysis</h3>
@@ -163,7 +163,7 @@ export default function ProjectsCostEstimating() {
         </div>
       </section>
 
-      <section className="mt-14 w-full self-stretch">
+      <section id="preconstruction-aerial-site-intelligence" className="mt-14 w-full scroll-mt-28 self-stretch">
         <div className="mx-auto flex w-full max-w-[95rem] flex-col items-stretch gap-6 max-md:items-center md:flex-row md:items-stretch md:gap-4 lg:gap-5">
           {/* Móvil: ancho contenido, centrado. md+: mitad del ancho; esquinas redondeadas en ambos lados. */}
           <div
@@ -268,6 +268,6 @@ export default function ProjectsCostEstimating() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }

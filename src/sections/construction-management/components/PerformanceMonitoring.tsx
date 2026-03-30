@@ -71,7 +71,7 @@ export default function PerformanceMonitoring() {
   }
 
   return (
-    <div className="mt-10 w-full rounded-3xl bg-neutral-50/60 p-6">
+    <div id="construction-management-performance-monitoring" className="mt-10 w-full rounded-3xl bg-neutral-50/60 p-6">
       <div className="w-full">
         <div className="mx-auto flex w-[98%] max-w-[85rem] flex-col gap-6 md:flex-row md:items-stretch md:justify-center md:gap-6">
           {cardShell('performance', 'Performance Monitoring', {
@@ -102,7 +102,11 @@ export default function PerformanceMonitoring() {
 
           {cardShell('cost-schedule', 'Cost and Schedule Control', {
             media: (
-              <div className="absolute inset-0 bg-gradient-to-br from-[#0B2B6E]/70 via-neutral-900/40 to-[#E4611F]/20" />
+              <img
+                src="/images/construction-management/performance/cost.jpeg"
+                alt="Cost and Schedule Control"
+                className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+              />
             ),
             title: (
               <span className="block text-xl font-semibold text-white drop-shadow">Cost and Schedule Control</span>
@@ -129,7 +133,11 @@ export default function PerformanceMonitoring() {
 
           {cardShell('scan-bim', 'Scan-to-BIM', {
             media: (
-              <div className="absolute inset-0 bg-gradient-to-br from-neutral-100 via-neutral-200 to-[#E4611F]/25" />
+              <img
+                src="/images/construction-management/performance/scan.jpeg"
+                alt="Scan-to-BIM"
+                className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+              />
             ),
             title: <span className="block text-xl font-semibold text-white drop-shadow">Scan-to-BIM</span>,
             titleShiftClasses:

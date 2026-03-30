@@ -2,8 +2,6 @@ import HeaderLogo from '../../utils/icons/header/Logo'
 import FooterLocationIcon from '../../utils/icons/footer/FooterLocationIcon'
 import FooterPhoneIcon from '../../utils/icons/footer/FooterPhoneIcon'
 import FooterEmailIcon from '../../utils/icons/footer/FooterEmailIcon'
-import FooterFacebookIcon from '../../utils/icons/footer/FooterFacebookIcon'
-import FooterInstagramIcon from '../../utils/icons/footer/FooterInstagramIcon'
 import useScrollToSection from '../hooks/useScrollToSection'
 import { useContactUsModal } from './contact/ContactUsModalProvider'
 
@@ -12,7 +10,6 @@ const footerNavItems = [
   { label: 'Projects', id: 'projects' },
   { label: 'About', id: 'about' },
   { label: 'Safety', id: 'safety' },
-  { label: 'Careers', id: 'careers' },
 ] as const
 
 export default function Footer() {
@@ -148,22 +145,7 @@ export default function Footer() {
                 <FooterEmailIcon className="h-5 w-5 text-white" />
                 <span>contact@tcce.biz</span>
               </a>
-              <div className="flex items-center gap-8 pt-1">
-                <button
-                  type="button"
-                  aria-label="Facebook (próximamente)"
-                  className="inline-flex h-8 w-8 shrink-0 cursor-default items-center justify-center rounded-full bg-[#E46425] text-white transition hover:brightness-110"
-                >
-                  <FooterFacebookIcon className="h-[1.1rem] w-[1.1rem]" />
-                </button>
-                <button
-                  type="button"
-                  aria-label="Instagram (próximamente)"
-                  className="inline-flex h-8 w-8 shrink-0 cursor-default items-center justify-center rounded-full bg-[#E46425] text-white transition hover:brightness-110"
-                >
-                  <FooterInstagramIcon className="h-[1.05rem] w-[1.05rem]" />
-                </button>
-              </div>
+              <div className="hidden" aria-hidden />
             </div>
 
             <div className="hidden flex-wrap items-center justify-between gap-6 md:flex">
@@ -191,22 +173,7 @@ export default function Footer() {
                 </a>
               </div>
 
-              <div className="flex items-center gap-8">
-                <button
-                  type="button"
-                  aria-label="Facebook (próximamente)"
-                  className="inline-flex h-8 w-8 shrink-0 cursor-default items-center justify-center rounded-full bg-[#E46425] text-white transition hover:brightness-110"
-                >
-                  <FooterFacebookIcon className="h-[1.1rem] w-[1.1rem]" />
-                </button>
-                <button
-                  type="button"
-                  aria-label="Instagram (próximamente)"
-                  className="inline-flex h-8 w-8 shrink-0 cursor-default items-center justify-center rounded-full bg-[#E46425] text-white transition hover:brightness-110"
-                >
-                  <FooterInstagramIcon className="h-[1.05rem] w-[1.05rem]" />
-                </button>
-              </div>
+              <div className="hidden" aria-hidden />
             </div>
           </div>
 

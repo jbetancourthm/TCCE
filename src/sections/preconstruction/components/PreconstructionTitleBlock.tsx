@@ -11,7 +11,7 @@ export default function PreconstructionTitleBlock({
   hideTabs = false,
 }: PreconstructionTitleBlockProps) {
   return (
-    <>
+    <div id="preconstruction-engineering-led" className="w-full">
       <h3 className="mb-10 text-4xl font-bold tracking-tight text-neutral-700">
         Engineering-Led Insight
       </h3>
@@ -56,6 +56,6 @@ export default function PreconstructionTitleBlock({
           </button>
         </div>
       )}
-    </>
+    </div>
   )
 }

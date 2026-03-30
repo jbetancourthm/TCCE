@@ -17,7 +17,7 @@ export default function FieldOperations() {
   } = useFieldOperationsCarousel()
 
   return (
-    <div className="mt-10 w-full rounded-3xl bg-neutral-50/60 p-6">
+    <div id="construction-management-field-operations" className="mt-10 w-full rounded-3xl bg-neutral-50/60 p-6">
       <div className="w-full">
         <div className="relative mx-auto w-[98%] max-w-[85rem]">
           <button

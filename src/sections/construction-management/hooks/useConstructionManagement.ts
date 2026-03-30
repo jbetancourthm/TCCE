@@ -3,7 +3,7 @@
  *
  * | Hook | Rol |
  * |------|-----|
- * | `useConstructionManagementTabs` | Pestaña activa (Field / VDC / Performance). |
+ * | `useConstructionManagementTabs` | Pestaña activa (Field / VDC / Performance) + listener `construction-management:set-tab`. |
  * | `useTouchExpandableCards` | Expansión táctil en móvil + reset al pasar a desktop (VDC, Performance). |
  * | `useFieldOperationsCarousel` | Páginas del carrusel Field Operations y estado de tarjetas expandibles. |
  * | `useRelatedProjectsPagination` | Paginación de Related Projects. |

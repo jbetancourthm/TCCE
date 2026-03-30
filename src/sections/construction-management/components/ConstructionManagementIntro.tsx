@@ -14,7 +14,10 @@ const CM_INTRO_IMG = {
 
 export default function ConstructionManagementIntro() {
   return (
-    <div className="col-span-full mx-auto grid w-[90%] min-w-0 mt-10 max-w-[95rem] grid-cols-1 gap-1 md:grid-cols-[1.1fr_1fr] md:gap-x-6 lg:gap-x-8">
+    <div
+      id="construction-management-methodology"
+      className="col-span-full mx-auto grid w-[90%] min-w-0 mt-10 max-w-[95rem] grid-cols-1 gap-1 md:grid-cols-[1.1fr_1fr] md:gap-x-6 lg:gap-x-8"
+    >
       <div className="hidden h-[12rem] w-full max-w-2xl overflow-hidden rounded-2xl border border-transparent bg-neutral-100 md:block md:h-[28rem]">
         <img
           src={CM_INTRO_IMG.src}

@@ -93,10 +93,16 @@ export default function PreliminaryConstructionPlan() {
         </div>
       </div>
 
-      <div className="relative z-[2] mx-auto mt-16 w-[85%] max-w-[95rem]">
+      <div
+        id="preconstruction-preliminary-plan"
+        className="relative z-[2] mx-auto mt-16 w-[85%] max-w-[95rem] scroll-mt-28"
+      >
         <div className="grid items-start gap-8 md:grid-cols-[1fr_1.8fr]">
           <div className="text-left">
-            <h4 className="mt-10 text-3xl font-bold leading-tight text-neutral-600 mb-8">
+            <h4
+              id="preliminary-build-before-ground"
+              className="mt-10 scroll-mt-28 text-3xl font-bold leading-tight text-neutral-600 mb-8"
+            >
               We build your project before breaking ground.
             </h4>
             <p className="mt-6 text-lg leading-relaxed text-neutral-600">
@@ -127,7 +133,8 @@ export default function PreliminaryConstructionPlan() {
 
       <div className="mx-auto mt-12 w-[95%] max-w-[95rem]">
         <section
-          className="relative w-full overflow-hidden rounded-3xl border border-black/10 shadow-[0_8px_24px_rgba(0,0,0,0.22)]"
+          id="preliminary-engineer-progress"
+          className="relative w-full scroll-mt-28 overflow-hidden rounded-3xl border border-black/10 shadow-[0_8px_24px_rgba(0,0,0,0.22)]"
           aria-labelledby="preliminary-every-milestone-heading"
         >
           <img

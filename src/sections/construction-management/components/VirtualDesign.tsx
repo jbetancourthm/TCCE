@@ -71,7 +71,7 @@ export default function VirtualDesign() {
   }
 
   return (
-    <div className="mt-10 w-full rounded-3xl bg-neutral-50/60 p-6">
+    <div id="construction-management-virtual-design" className="mt-10 w-full rounded-3xl bg-neutral-50/60 p-6">
       <div className="w-full">
         <div className="mx-auto flex w-[98%] max-w-[85rem] flex-col gap-6 md:flex-row md:items-stretch md:justify-center md:gap-6">
           {cardShell('vdc', 'Virtual Design & Construction', {
@@ -103,7 +103,13 @@ export default function VirtualDesign() {
           })}
 
           {cardShell('bim', 'BIM Coordination', {
-            media: <div className="absolute inset-0 bg-gradient-to-br from-[#0B2B6E]/70 via-neutral-900/40 to-[#E4611F]/20" />,
+            media: (
+              <img
+                src="/images/construction-management/virtual/bim.jpeg"
+                alt="BIM Coordination"
+                className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+              />
+            ),
             title: <span className="block text-xl font-semibold text-white drop-shadow">BIM Coordination</span>,
             titleShiftClasses:
               'max-md:group-data-[expanded=true]:translate-y-[-10rem] md:group-hover:translate-y-[-11rem]',
@@ -118,7 +124,11 @@ export default function VirtualDesign() {
 
           {cardShell('ar', 'Augmented Reality', {
             media: (
-              <div className="absolute inset-0 bg-gradient-to-br from-neutral-100 via-neutral-200 to-[#E4611F]/25" />
+              <img
+                src="/images/construction-management/virtual/augmented.jpeg"
+                alt="Augmented Reality"
+                className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+              />
             ),
             title: <span className="block text-xl font-semibold text-white drop-shadow">Augmented Reality</span>,
             titleShiftClasses:
