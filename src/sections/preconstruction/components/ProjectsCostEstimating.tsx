@@ -2,6 +2,8 @@ import ContactUsPillButton from '../../../shared/components/ContactUsPillButton'
 import CarouselArrowIcon from '../../../utils/icons/carousel/CarouselArrowIcon'
 import { useProjectsCostEstimatingCarousels } from '../hooks/useProjectsCostEstimatingCarousels'
 
+const AERIAL_SITE_VIDEO_SRC = '/videos/preconstruction/TCC_Drone_v3.mp4'
+
 export default function ProjectsCostEstimating() {
   const { earthwork: ew, underground: ug, aerial: ar } = useProjectsCostEstimatingCarousels()
 
@@ -43,65 +45,22 @@ export default function ProjectsCostEstimating() {
       <section className="mt-14">
         <div className="mx-auto grid max-w-[95rem] items-center gap-10 md:grid-cols-[1fr_1fr]">
           <div className="text-center">
-            <div className="relative w-full overflow-visible">
+            <div className="w-full overflow-hidden rounded-3xl border border-transparent bg-neutral-100">
               <div
-                className="w-full overflow-hidden rounded-3xl border border-transparent bg-neutral-100"
+                className="w-full"
                 style={
                   ew.firstSlideNatural
                     ? { aspectRatio: `${ew.firstSlideNatural.w} / ${ew.firstSlideNatural.h}` }
                     : { minHeight: '12rem' }
                 }
               >
-                <div
-                  className="flex h-full transition-transform duration-500 ease-in-out"
-                  style={{
-                    width: `${ew.images.length * 100}%`,
-                    transform: `translateX(-${ew.index * ew.slideBasisPct}%)`,
-                  }}
-                >
-                  {ew.images.map((src, i) => (
-                    <div
-                      key={`${src}-${i}`}
-                      className="relative flex h-full min-h-0 flex-shrink-0 items-center justify-center overflow-hidden"
-                      style={{ flex: `0 0 ${ew.slideBasisPct}%` }}
-                    >
-                      <img
-                        src={src}
-                        alt={`Digital earthwork slide ${i + 1}`}
-                        className="max-h-full max-w-full object-contain"
-                        onLoad={i === 0 ? ew.onFirstSlideLoad : undefined}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <button
-                type="button"
-                aria-label="Slide anterior"
-                className="absolute left-[-1.5rem] top-1/2 z-10 flex h-14 w-14 -translate-y-1/2 items-center justify-center transition-transform duration-200 hover:scale-110"
-                onClick={ew.goPrevious}
-              >
-                <CarouselArrowIcon direction="left" />
-              </button>
-
-              <button
-                type="button"
-                aria-label="Slide siguiente"
-                className="absolute right-[-1.5rem] top-1/2 z-10 flex h-14 w-14 -translate-y-1/2 items-center justify-center transition-transform duration-200 hover:scale-110"
-                onClick={ew.goNext}
-              >
-                <CarouselArrowIcon direction="right" />
-              </button>
-            </div>
-
-            <div className="mt-6 flex items-center justify-center gap-3">
-              {ew.images.map((src, i) => (
-                <span
-                  key={`dot-${src}-${i}`}
-                  className={`h-2.5 w-2.5 rounded-full ${i === ew.index ? 'bg-[#E4611F]' : 'border border-[#E4611F] bg-white'}`}
+                <img
+                  src={ew.images[0]}
+                  alt="Digital earthwork"
+                  className="h-full w-full object-contain"
+                  onLoad={ew.onFirstSlideLoad}
                 />
-              ))}
+              </div>
             </div>
           </div>
 
@@ -206,20 +165,29 @@ export default function ProjectsCostEstimating() {
 
       <section className="mt-14 w-full self-stretch">
         <div className="mx-auto flex w-full max-w-[95rem] flex-col items-stretch gap-6 max-md:items-center md:flex-row md:items-stretch md:gap-4 lg:gap-5">
-          {/* Móvil: ancho contenido, centrado. md+: sangrado al borde izquierdo del viewport. */}
+          {/* Móvil: ancho contenido, centrado. md+: mitad del ancho; esquinas redondeadas en ambos lados. */}
           <div
-            className="relative w-full max-w-full flex-shrink-0 overflow-hidden rounded-3xl bg-white max-md:mx-auto md:self-start md:w-[50vw] md:max-w-none md:rounded-l-none md:rounded-r-3xl md:-ml-6 lg:-ml-8 xl:-ml-10"
+            className="relative w-full max-w-full min-w-0 flex-shrink-0 overflow-hidden rounded-3xl bg-white max-md:mx-auto md:self-start md:w-[50vw] md:max-w-none md:-ml-6 lg:-ml-8 xl:-ml-10"
           >
-            <img
-              src="/images/preconstruction/project-cost/aerial.png"
-              alt="Aerial site view"
-              className="relative z-0 mx-auto block h-auto w-full max-w-full object-cover object-center"
-            />
+            <video
+              className="relative z-0 block h-auto w-full max-w-full object-cover object-center"
+              autoPlay
+              loop
+              muted
+              playsInline
+              aria-label="Aerial site view, drone footage"
+            >
+              <source src={AERIAL_SITE_VIDEO_SRC} type="video/mp4" />
+            </video>
             <div
-              className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[min(58%,20rem)] rounded-t-[2rem] bg-gradient-to-t from-black/28 via-black/8 to-transparent [mask-image:linear-gradient(to_right,transparent_0%,black_2.5rem)] [-webkit-mask-image:linear-gradient(to_right,transparent_0%,black_2.5rem)] max-md:h-[min(72%,24rem)] max-md:min-h-[15rem] max-md:rounded-t-xl md:h-[min(52%,22rem)] md:rounded-t-[2.5rem] md:[mask-image:linear-gradient(to_right,transparent_0%,black_3rem)] md:[-webkit-mask-image:linear-gradient(to_right,transparent_0%,black_3rem)]"
+              className="pointer-events-none absolute inset-0 z-[1] bg-black/20"
               aria-hidden
             />
-            <div className="absolute inset-x-0 bottom-0 z-[2] max-w-full bg-transparent px-4 pb-5 pt-2 text-left sm:px-6 sm:pb-6 md:p-10">
+            <div
+              className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[min(58%,20rem)] rounded-t-[2rem] bg-gradient-to-t from-black/28 via-black/8 to-transparent [mask-image:linear-gradient(to_right,transparent_0%,black_2.5rem)] [-webkit-mask-image:linear-gradient(to_right,transparent_0%,black_2.5rem)] max-md:h-[min(72%,24rem)] max-md:min-h-[15rem] max-md:rounded-t-xl md:h-[min(52%,22rem)] md:rounded-t-[2.5rem] md:[mask-image:linear-gradient(to_right,transparent_0%,black_3rem)] md:[-webkit-mask-image:linear-gradient(to_right,transparent_0%,black_3rem)]"
+              aria-hidden
+            />
+            <div className="absolute inset-x-0 bottom-0 z-[3] max-w-full bg-transparent px-4 pb-5 pt-2 text-left sm:px-6 sm:pb-6 md:p-10">
               <h3 className="text-lg font-bold leading-snug text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.65),0_2px_16px_rgba(0,0,0,0.35)] sm:text-xl md:text-3xl md:leading-tight">
                 Aerial Site Intelligence
               </h3>

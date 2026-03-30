@@ -3,12 +3,38 @@ import { useMemo, useState } from 'react'
 const PROJECTS_PER_PAGE = 3
 const MAX_VISIBLE_PAGE_NUMBERS = 4
 
-const projects = Array.from({ length: 20 }, (_, idx) => ({
-  id: idx + 1,
-  location: 'United States, Washington D. C.',
-  title: `Lorem ipsum ${idx + 1}`,
-  image: '/images/construction-management/construction.png',
-}))
+export type RelatedProject = {
+  id: number
+  location: string
+  category: string
+  title: string
+  image: string
+}
+
+/** Proyectos reales; la paginación sigue lista para cuando se añadan más entradas. */
+const projects: RelatedProject[] = [
+  {
+    id: 1,
+    location: 'Brambleton, VA',
+    category: 'Mission Critical',
+    title: 'Confidential Data Center Project',
+    image: '/images/projects/brambleton.JPG',
+  },
+  {
+    id: 2,
+    location: 'Washington D.C',
+    category: 'Public Sector Infrastructure',
+    title: 'Bladensburg Bus Garage Replacement',
+    image: '/images/projects/washington.png',
+  },
+  {
+    id: 3,
+    location: "Cosner's Corner, VA.",
+    category: 'Mission Critical',
+    title: 'Confidential Data Center Project',
+    image: '/images/construction-management/construction.png',
+  },
+]
 
 /**
  * Paginación de la sección Related Projects (índice de página 1-based, ventana de números visibles).

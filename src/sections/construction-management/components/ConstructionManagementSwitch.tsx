@@ -22,7 +22,7 @@ export default function ConstructionManagementSwitch({ activeTab, onTabChange }:
       <div className="relative mx-auto mt-8 flex w-full max-w-full overflow-hidden rounded-xl bg-white ring-1 ring-[#E4611F]/40 md:inline-flex md:w-auto md:max-w-none">
         <div
           aria-hidden
-          className={`absolute top-0 bottom-0 left-0 w-1/3 rounded-xl bg-[#E4611F] transition-transform duration-500 ease-in-out ${pillTransform}`}
+          className={`absolute top-0 bottom-0 left-0 w-[calc(100%/3)] rounded-xl bg-[#E4611F] transition-transform duration-500 ease-in-out ${pillTransform}`}
         />
 
         <button
@@ -30,7 +30,7 @@ export default function ConstructionManagementSwitch({ activeTab, onTabChange }:
           onClick={() => onTabChange(0)}
           aria-pressed={activeTab === 0}
           className={
-            'relative z-10 w-1/3 rounded-xl px-2 py-2.5 text-[0.6875rem] font-semibold leading-snug transition-colors duration-300 max-md:text-balance md:whitespace-nowrap md:px-14 md:py-4 md:text-sm ' +
+            'relative z-10 flex min-w-0 flex-1 basis-0 items-center justify-center rounded-xl px-2 py-2.5 text-center text-[0.6875rem] font-semibold leading-snug transition-colors duration-300 max-md:text-balance md:whitespace-nowrap md:px-14 md:py-4 md:text-sm ' +
             (activeTab === 0 ? 'text-white' : 'text-[#b37249]')
           }
         >
@@ -41,7 +41,7 @@ export default function ConstructionManagementSwitch({ activeTab, onTabChange }:
           onClick={() => onTabChange(1)}
           aria-pressed={activeTab === 1}
           className={
-            'relative z-10 w-1/3 rounded-xl px-2 py-2.5 text-[0.6875rem] font-semibold leading-snug transition-colors duration-300 max-md:text-balance md:whitespace-nowrap md:px-14 md:py-4 md:text-sm ' +
+            'relative z-10 flex min-w-0 flex-1 basis-0 items-center justify-center rounded-xl px-2 py-2.5 text-center text-[0.6875rem] font-semibold leading-snug transition-colors duration-300 max-md:text-balance md:whitespace-nowrap md:px-14 md:py-4 md:text-sm ' +
             (activeTab === 1 ? 'text-white' : 'text-[#b37249]')
           }
         >
@@ -52,7 +52,7 @@ export default function ConstructionManagementSwitch({ activeTab, onTabChange }:
           onClick={() => onTabChange(2)}
           aria-pressed={activeTab === 2}
           className={
-            'relative z-10 w-1/3 rounded-xl px-2 py-2.5 text-[0.6875rem] font-semibold leading-snug transition-colors duration-300 max-md:text-balance md:whitespace-nowrap md:px-14 md:py-4 md:text-sm ' +
+            'relative z-10 flex min-w-0 flex-1 basis-0 items-center justify-center rounded-xl px-2 py-2.5 text-center text-[0.6875rem] font-semibold leading-snug transition-colors duration-300 max-md:text-balance md:whitespace-nowrap md:px-14 md:py-4 md:text-sm ' +
             (activeTab === 2 ? 'text-white' : 'text-[#b37249]')
           }
         >

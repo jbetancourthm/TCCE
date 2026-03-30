@@ -79,39 +79,15 @@ export default function RelatedProjectsSection() {
               <img src={project.image} alt={`${project.title} preview`} className="h-full w-full object-cover" />
             </div>
 
-            <p className="mt-0 text-sm font-medium tracking-[0.24em] text-neutral-500">{project.location}</p>
+            <p className="m-0 text-sm font-medium tracking-[0.24em] text-neutral-500">{project.location}</p>
 
-            <h4 className="mt-2 text-[2.05rem] font-bold leading-tight text-[#E4611F]">{project.title}</h4>
+            <div className="h-4 w-full shrink-0 md:h-5" aria-hidden />
 
-            <button
-              type="button"
-              className="group relative mt-4 inline-flex h-14 select-none items-stretch overflow-hidden rounded-full border-2 border-transparent bg-transparent px-3 text-sm font-semibold text-[#E4611F] transition-[color,border-color] duration-300 ease-out hover:border-[#E4611F] hover:text-white focus-visible:border-[#E4611F] focus-visible:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E4611F] focus-visible:ring-offset-2"
-            >
-              <span
-                className="pointer-events-none absolute inset-0 origin-left scale-x-0 bg-[#E4611F] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-x-100 group-focus-visible:scale-x-100"
-                aria-hidden
-              />
-              <span className="relative z-10 inline-flex items-center gap-2 group-hover:flex-row-reverse group-focus-visible:flex-row-reverse">
-                <svg
-                  viewBox="0 0 48 48"
-                  className="h-11 w-11 shrink-0 transition-transform duration-200 group-hover:scale-110 group-focus-visible:scale-110"
-                  fill="none"
-                  aria-hidden
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g className="origin-center transition-opacity duration-300 ease-out group-hover:opacity-0 group-focus-visible:opacity-0">
-                    <rect width="48" height="48" rx="24" fill="#E4611F" />
-                    <rect x="11" y="22" width="10" height="4" rx="2" fill="#fff" />
-                    <path d="M24 16C24 14.5 25.7 13.6 27 14.5L36.5 21C37.7 21.8 37.7 23.6 36.5 24.4L27 30.9C25.7 31.8 24 30.9 24 29.4V16Z" fill="#fff" />
-                  </g>
-                  <g className="opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 group-focus-visible:opacity-100" fill="currentColor">
-                    <rect x="11" y="22" width="10" height="4" rx="2" />
-                    <path d="M24 16C24 14.5 25.7 13.6 27 14.5L36.5 21C37.7 21.8 37.7 23.6 36.5 24.4L27 30.9C25.7 31.8 24 30.9 24 29.4V16Z" />
-                  </g>
-                </svg>
-                <span>Read more</span>
-              </span>
-            </button>
+            <span className="inline-flex rounded bg-neutral-700 px-3 py-1.5 text-xs font-semibold leading-snug text-white">
+              {project.category}
+            </span>
+
+            <h4 className="mt-3 text-[2.05rem] font-bold leading-tight text-[#E4611F]">{project.title}</h4>
           </article>
         ))}
       </div>

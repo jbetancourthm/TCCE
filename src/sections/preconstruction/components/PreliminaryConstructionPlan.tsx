@@ -10,6 +10,8 @@ const PRELIMINARY_GALLERY_IMAGES = [
   '/images/preconstruction/preliminary/second3.png',
 ] as const
 
+const PRELIMINARY_PLANNING_VIDEO_SRC = '/videos/preliminary/Carmel_Church.mp4'
+
 export default function PreliminaryConstructionPlan() {
   const { galleryOpen, galleryIndex, openGalleryAt, closeGallery } = usePreliminaryPlanGallery()
 
@@ -108,12 +110,17 @@ export default function PreliminaryConstructionPlan() {
             <ContactUsPillButton className="mt-8" />
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-transparent bg-neutral-100">
-            <img
-              src="/images/preconstruction/preliminary/third1.png"
-              alt="Preconstruction planning"
-              className="h-full w-full min-h-[22rem] rounded-2xl object-cover"
-            />
+          <div className="overflow-hidden rounded-2xl border border-transparent bg-neutral-100 max-md:flex max-md:min-h-0 max-md:items-center max-md:justify-center md:min-h-[22rem]">
+            <video
+              className="block w-full rounded-2xl max-md:h-auto max-md:max-h-[85vh] max-md:min-h-0 max-md:object-contain max-md:object-center md:h-full md:min-h-[22rem] md:object-cover"
+              autoPlay
+              loop
+              muted
+              playsInline
+              aria-label="Preconstruction planning"
+            >
+              <source src={PRELIMINARY_PLANNING_VIDEO_SRC} type="video/mp4" />
+            </video>
           </div>
         </div>
       </div>
