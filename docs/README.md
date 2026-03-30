@@ -1,10 +1,11 @@
-# Documentación del proyecto TCCE
+# TCCE project documentation
 
-Índice de la documentación técnica del repositorio.
+Index of technical documentation for this repository.
 
-| Documento | Contenido |
-|-----------|-----------|
-| [**Manual completo del frontend**](./MANUAL_FRONTEND.md) | Arquitectura, módulos, hooks, flujos, eventos, estilos, build y convenciones. Lectura principal para desarrollo. |
-| [**Seguridad y cumplimiento (front)**](./SEGURIDAD_FRONTEND.md) | Cabeceras HTTP, CSP, formulario de contacto, variables `VITE_*`, relación con el backend y checklist. |
+| Document | Contents |
+|----------|----------|
+| [**Frontend manual**](./MANUAL_FRONTEND.md) | Architecture, modules (including About on the landing), hooks (`useMinWidthLg`, `useMinWidth951`), flows, events, **§26 responsive breakpoints**, styles, build, and conventions. Primary reference for development. |
+| [**Frontend security**](./FRONTEND_SECURITY.md) | HTTP headers, CSP, contact form, `VITE_*` variables, backend relationship, and checklist. |
+| [**Backend (contact API)**](./BACKEND.md) | Express mailer: endpoints, env vars, validation, rate limits, CORS, Nodemailer/Gmail, file layout, ops checklist. |
 
-El [**README**](../README.md) en la raíz resume el proyecto, scripts y enlaces esenciales.
+The root [**README**](../README.md) summarizes the project, scripts, and essential links.

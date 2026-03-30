@@ -1,116 +1,117 @@
-# Manual completo del frontend — TCCE Landing Page
+# TCCE landing — complete frontend manual
 
-Documentación detallada de la aplicación React/Vite que compone la landing corporativa. Está pensada para incorporación de desarrolladores, auditorías técnicas y mantenimiento a largo plazo.
-
----
-
-## Tabla de contenidos
-
-1. [Visión general del producto](#1-visión-general-del-producto)
-2. [Stack tecnológico](#2-stack-tecnológico)
-3. [Requisitos y scripts](#3-requisitos-y-scripts)
-4. [Variables de entorno](#4-variables-de-entorno)
-5. [Estructura de carpetas](#5-estructura-de-carpetas)
-6. [Punto de entrada y arranque](#6-punto-de-entrada-y-arranque)
-7. [Aplicación de página única (Landing)](#7-aplicación-de-página-única-landing)
-8. [Patrón de módulos por sección](#8-patrón-de-módulos-por-sección)
-9. [Módulo: Home](#9-módulo-home)
-10. [Módulo: Expertise](#10-módulo-expertise)
-11. [Módulo: Preconstruction](#11-módulo-preconstruction)
-12. [Módulo: Construction Management](#12-módulo-construction-management)
-13. [Módulo: Safety](#13-módulo-safety)
-14. [Módulos: About, Projects, Careers](#14-módulos-about-projects-careers)
-15. [Componentes y hooks compartidos](#15-componentes-y-hooks-compartidos)
-16. [Contacto: modal, contexto y API](#16-contacto-modal-contexto-y-api)
-17. [Metadatos y cabecera del documento](#17-metadatos-y-cabecera-del-documento)
-18. [Eventos personalizados (`window`)](#18-eventos-personalizados-window)
-19. [Configuración de desarrollo](#19-configuración-de-desarrollo)
-20. [Estilos, Tailwind y activos estáticos](#20-estilos-tailwind-y-activos-estáticos)
-21. [Iconos y utilidades gráficas](#21-iconos-y-utilidades-gráficas)
-22. [Build, preview y artefactos](#22-build-preview-y-artefactos)
-23. [Seguridad (enlace)](#23-seguridad-enlace)
-24. [Convenciones y extensiones recomendadas](#24-convenciones-y-extensiones-recomendadas)
-25. [Glosario](#25-glosario)
+Detailed documentation of the React/Vite app that powers the corporate landing. It is intended for developer onboarding, technical reviews, and long-term maintenance.
 
 ---
 
-## 1. Visión general del producto
+## Table of contents
 
-La aplicación es una **landing de una sola página** (con scroll entre bloques) que presenta:
-
-- **Home** con vídeo de fondo y llamadas a la acción.
-- Bloque **Our Expertise**, donde el usuario elige entre dos grandes líneas (**Preconstruction** y **Construction Management**) mediante tarjetas; el contenido expandido incrusta las “páginas” de esos módulos.
-- Conmutación a **Safety** dentro del mismo ancla `#expertise`, sustituyendo el contenido por el módulo de seguridad.
-- **Footer** con navegación, contacto y enlaces a secciones.
-
-No hay enrutador tipo React Router en el front: la navegación es **scroll a IDs** y **estado local** (`LandingPage`, tarjetas, pestañas).
-
-**Nota de alcance:** existen módulos **About**, **Projects** y **Careers** con `pages/` y `components/`, pero **no están montados** hoy en `LandingPage.tsx`. El header intenta hacer scroll a IDs como `about`, `projects` o `careers`; hasta que existan elementos con esos `id` en el DOM, ese scroll no tendrá efecto. Conviene montarlos en `LandingPage` o alinear los IDs con la estructura real.
+1. [Product overview](#1-product-overview)
+2. [Tech stack](#2-tech-stack)
+3. [Requirements and scripts](#3-requirements-and-scripts)
+4. [Environment variables](#4-environment-variables)
+5. [Folder structure](#5-folder-structure)
+6. [Entry point and bootstrap](#6-entry-point-and-bootstrap)
+7. [Single-page landing app](#7-single-page-landing-app)
+8. [Section module pattern](#8-section-module-pattern)
+9. [Module: Home](#9-module-home)
+10. [Module: Expertise](#10-module-expertise)
+11. [Module: Preconstruction](#11-module-preconstruction)
+12. [Module: Construction Management](#12-module-construction-management)
+13. [Module: Safety](#13-module-safety)
+14. [Module: About (and Projects / Careers status)](#14-module-about-and-projects--careers-status)
+15. [Shared components and hooks](#15-shared-components-and-hooks)
+16. [Contact: modal, context, and API](#16-contact-modal-context-and-api)
+17. [Document metadata and head](#17-document-metadata-and-head)
+18. [Custom `window` events](#18-custom-window-events)
+19. [Development configuration](#19-development-configuration)
+20. [Styles, Tailwind, and static assets](#20-styles-tailwind-and-static-assets)
+21. [Icons and graphics utilities](#21-icons-and-graphics-utilities)
+22. [Build, preview, and artifacts](#22-build-preview-and-artifacts)
+23. [Security (link)](#23-security-link)
+24. [Conventions and recommended extensions](#24-conventions-and-recommended-extensions)
+25. [Glossary](#25-glossary)
+26. [Responsive breakpoints](#26-responsive-breakpoints)
 
 ---
 
-## 2. Stack tecnológico
+## 1. Product overview
 
-| Capa | Tecnología |
-|------|------------|
+The app is a **single-page landing** (scroll between blocks) that includes:
+
+- **Home** with background video and calls to action.
+- **Our Expertise**, where the user picks between two lines (**Preconstruction** and **Construction Management**) via cards; expanded content embeds those modules’ “pages”.
+- Switching within the same **`#expertise`** anchor between **Our Expertise**, **Safety**, and **About** according to `activeModule` on `LandingPage` (`landing:set-module` event).
+- **Footer** with navigation, contact, and section links.
+
+There is no React Router–style router: navigation is **scroll to element IDs** and **local state** (`LandingPage`, cards, tabs).
+
+**Current scope:** the **About** module is **mounted** and replaces `#expertise` content when the user chooses About (header, footer, or hero). **Projects** and **Careers** remain intent links (e.g. scroll to `#careers`); if that `id` is missing in the DOM, scroll has no effect until those sections are integrated.
+
+---
+
+## 2. Tech stack
+
+| Layer | Technology |
+|-------|-------------|
 | UI | React 19 |
-| Renderizado | `react-dom` (`createRoot`) |
+| Rendering | `react-dom` (`createRoot`) |
 | Build / dev server | Vite 7 |
-| Lenguaje | TypeScript |
-| Estilos | Tailwind CSS 4 (PostCSS) |
-| Toasts (contacto) | `sonner` |
-| Head del documento | `react-helmet-async` |
+| Language | TypeScript |
+| Styles | Tailwind CSS 4 (PostCSS) |
+| Toasts (contact) | `sonner` |
+| Document head | `react-helmet-async` |
 
-El **backend** del formulario de contacto es un proyecto **Node + Express** aparte, en la carpeta `backend/` (no forma parte del bundle del front).
+The contact form **backend** is a separate **Node + Express** project in `backend/` (not part of the frontend bundle). See **[BACKEND.md](./BACKEND.md)** for API and environment details.
 
 ---
 
-## 3. Requisitos y scripts
+## 3. Requirements and scripts
 
-### Requisitos
+### Requirements
 
-- **Node.js**: la versión debe cumplir el rango que exige Vite (el build puede advertir si la versión es antigua).
-- **npm** (o compatible) para instalar dependencias.
+- **Node.js**: must satisfy Vite’s supported range (build may warn if the version is old).
+- **npm** (or compatible) to install dependencies.
 
-### Scripts (raíz del repo, `package.json`)
+### Scripts (repo root, `package.json`)
 
-| Script | Descripción |
+| Script | Description |
 |--------|-------------|
-| `npm run dev` | Servidor de desarrollo Vite (HMR). |
-| `npm run build` | `tsc --noEmit` + `vite build` → salida en `dist/`. |
-| `npm run preview` | Sirve la carpeta `dist/` para probar el build. |
+| `npm run dev` | Vite dev server (HMR). |
+| `npm run build` | `tsc --noEmit` + `vite build` → output in `dist/`. |
+| `npm run preview` | Serves `dist/` to verify the production build. |
 
 ---
 
-## 4. Variables de entorno
+## 4. Environment variables
 
-Definidas en **`.env`**, **`.env.local`**, etc. (no commitear secretos).
+Defined in **`.env`**, **`.env.local`**, etc. (do not commit secrets).
 
-| Variable | Obligatoria | Descripción |
-|----------|-------------|-------------|
-| `VITE_CONTACT_API_URL` | No (hay fallback en dev) | URL base del API de contacto **sin** barra final. En desarrollo, si falta, se usa `http://localhost:3001` y se muestra un `console.warn`. |
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `VITE_CONTACT_API_URL` | No (dev fallback exists) | Contact API base URL **without** trailing slash. In development, if missing, `http://localhost:3001` is used and a `console.warn` is shown. |
 
-Toda variable **`VITE_*`** es **pública** en el cliente. Ver [SEGURIDAD_FRONTEND.md](./SEGURIDAD_FRONTEND.md).
+Every **`VITE_*`** variable is **public** in the browser. See [FRONTEND_SECURITY.md](./FRONTEND_SECURITY.md).
 
-Plantilla recomendada: **`.env.example`** en la raíz del front.
+Recommended template: **`.env.example`** at the frontend root.
 
 ---
 
-## 5. Estructura de carpetas
+## 5. Folder structure
 
-Árbol conceptual del código fuente (`src/`):
+Conceptual tree of source code (`src/`):
 
 ```
 src/
-├── App.tsx                 # Raíz React: HelmetProvider + SecurityHead + LandingPage
-├── main.tsx                # Bootstrap: favicon dinámico + createRoot
-├── style.css               # Entrada global de estilos (Tailwind)
-├── vite-env.d.ts           # Tipos de import.meta.env
+├── App.tsx                 # React root: HelmetProvider + SecurityHead + LandingPage
+├── main.tsx                # Bootstrap: dynamic favicon + createRoot
+├── style.css               # Global styles entry (Tailwind)
+├── vite-env.d.ts           # import.meta.env types
 ├── app/
-│   └── LandingPage.tsx     # Orquestación: home, expertise/safety, footer, provider de contacto
+│   └── LandingPage.tsx     # Orchestrates home, expertise/safety/about, footer, contact provider
 ├── config/
-│   └── devExpandSections.ts  # Flag EXPAND_ALL_SECTIONS
-├── sections/               # Un subdirectorio por “módulo” de negocio
+│   └── devExpandSections.ts  # EXPAND_ALL_SECTIONS flag
+├── sections/               # One subdirectory per business “module”
 │   ├── home/
 │   ├── expertise/
 │   ├── preconstruction/
@@ -121,202 +122,237 @@ src/
 │   └── careers/
 ├── shared/
 │   ├── components/         # Header, Footer, Container, ContactUs*, SecurityHead
-│   ├── hooks/              # useScrollToSection, useMinWidthMd
+│   ├── hooks/              # useScrollToSection, useMinWidthMd, useMinWidthLg, useMinWidth951
 │   └── services/           # sendContactMessage
 └── utils/
-    ├── icons/              # SVG como componentes React
-    └── graphics/           # SVG complejos / watermarks
+    ├── icons/              # SVG as React components
+    └── graphics/           # Complex SVG / watermarks
 ```
 
-**`public/`** (raíz del proyecto): archivos servidos tal cual (`favicon.svg`, `_headers`, etc.).
+**`public/`** (project root): files served as static assets (`favicon.svg`, `_headers`, etc.).
 
 ---
 
-## 6. Punto de entrada y arranque
+## 6. Entry point and bootstrap
 
 ### `index.html`
 
-- Contenedor raíz: `<div id="app"></div>`.
-- Carga el módulo `src/main.tsx`.
-- Incluye meta **charset**, **viewport**, **referrer**, **description** y **title** (alineados con `SecurityHead`).
+- Root container: `<div id="app"></div>`.
+- Loads `src/main.tsx`.
+- Includes **charset**, **viewport**, **referrer**, **description**, and **title** meta (aligned with `SecurityHead`).
 
 ### `main.tsx`
 
-1. **`setHeaderLogoAsFavicon()`**: renderiza el componente SVG `Logo` con `renderToStaticMarkup`, construye un `data:image/svg+xml` y asigna `link[rel="icon"]` para unificar favicon con la marca.
+1. **`setHeaderLogoAsFavicon()`**: renders the SVG `Logo` with `renderToStaticMarkup`, builds a `data:image/svg+xml`, and sets `link[rel="icon"]` to match branding.
 2. **`createRoot(document.getElementById('app')).render(<App />)`**.
 
-Si falta `#app`, se lanza un error explícito.
+If `#app` is missing, an explicit error is thrown.
 
 ---
 
-## 7. Aplicación de página única (Landing)
+## 7. Single-page landing app
 
 ### `App.tsx`
 
-- **`HelmetProvider`**: contexto para `react-helmet-async`.
-- **`SecurityHead`**: metadatos del documento (ver sección 17).
-- **`LandingPage`**: contenido principal.
+- **`HelmetProvider`**: context for `react-helmet-async`.
+- **`SecurityHead`**: document metadata (see section 17).
+- **`LandingPage`**: main content.
 
 ### `LandingPage.tsx`
 
-- Envuelve todo en **`ContactUsModalProvider`** (modal global + toasts).
-- **`<main className="scroll-smooth">`**: scroll suave al usar `scrollIntoView`.
-- **`#home`**: `HomeSection` (export default desde `sections/home`).
-- **`#expertise`**: según estado:
+- Wraps everything in **`ContactUsModalProvider`** (global modal + toasts).
+- **`<main className="scroll-smooth">`**: smooth scroll when using `scrollIntoView`.
+- **`#home`**: `HomeSection` (default export from `sections/home`).
+- **`#expertise`**: by state:
   - `activeModule === 'safety'` → `SafetySection`
-  - en caso contrario → `ExpertiseSection`
+  - `activeModule === 'about'` → `AboutSection` (default export from `about` module)
+  - otherwise → `ExpertiseSection`
 - **`Footer`**.
 
-Estado **`activeModule`**: `'expertise' | 'safety'`, por defecto `'expertise'`. Se actualiza escuchando el evento **`landing:set-module`** (ver sección 18).
+**`activeModule`**: `'expertise' | 'safety' | 'about'`, default `'expertise'`. Updated by listening for **`landing:set-module`** (section 18).
 
 ---
 
-## 8. Patrón de módulos por sección
+## 8. Section module pattern
 
-Cada módulo bajo `src/sections/<nombre>/` sigue una convención común:
+Each module under `src/sections/<name>/` follows a common convention:
 
-| Pieza | Rol |
-|-------|-----|
-| **`pages/*Page.tsx`** | Componente de “página” o contenedor de alto nivel exportado por el módulo. |
-| **`components/*.tsx`** | UI reutilizable dentro del módulo. |
-| **`hooks/*.ts`** | Lógica de estado y efectos; a menudo un **barrel** `use<Nombre>.ts` reexporta hooks con tabla JSDoc. |
-| **`index.ts`** | Export público del módulo (`default` o named), consumido por `LandingPage` o por otros módulos. |
+| Piece | Role |
+|-------|------|
+| **`pages/*Page.tsx`** | Top-level “page” or container exported by the module. |
+| **`components/*.tsx`** | UI reused inside the module. |
+| **`hooks/*.ts`** | State and effects; often a **barrel** `use<Name>.ts` re-exports hooks with a JSDoc table. |
+| **`index.ts`** | Public export (`default` or named), consumed by `LandingPage` or other modules. |
 
-No todos los módulos tienen los cuatro niveles; los placeholders (About, Projects, Careers) son mínimos.
-
----
-
-## 9. Módulo: Home
-
-**Ruta:** `src/sections/home/`
-
-| Archivo | Descripción |
-|---------|-------------|
-| `index.ts` | Export default: `HomePage`. |
-| `pages/HomePage.tsx` | `Header`, `Hero`, indicador de scroll fijo. |
-| `components/Hero.tsx` | Vídeo a pantalla completa, titulares, botones móvil/desktop (sin navegación cableada aún). |
-| `hooks/useHomeScrollIndicator.ts` | Tras scroll, oculta el indicador y lo vuelve a mostrar tras 5 s de inactividad. |
-| `hooks/useHome.ts` | Barrel: reexporta `useHomeScrollIndicator`. |
+Not every module has all four levels; **Projects** and **Careers** may stay minimal until fully integrated into the landing.
 
 ---
 
-## 10. Módulo: Expertise
+## 9. Module: Home
 
-**Ruta:** `src/sections/expertise/`
+**Path:** `src/sections/home/`
 
-| Archivo | Descripción |
-|---------|-------------|
-| `index.ts` | Export default: `ExpertisePage`. |
-| `pages/ExpertisePage.tsx` | Delega en `ExpertiseSectionContent`. |
-| `components/ExpertiseSectionContent.tsx` | Imagen “Our Expertise” + `ExpertiseCardsSection`. |
-| `components/ExpertiseCardsSection.tsx` | Grid de dos tarjetas; al expandir muestra `PreconstructionPage` o `ConstructionManagementPage`; respeta `EXPAND_ALL_SECTIONS`. |
-| `hooks/useExpertiseCards.ts` | Estado `activeCard`, derivados para imágenes/alturas, listener `expertise:open-card`. |
-| `hooks/useExpertise.ts` | Barrel documentado. |
-
-**Datos en componente:** textos de Preconstruction abierto, rutas de imágenes de tarjetas y mapas `CARD_IMAGES_OPEN` / `cardImageWhenExpanded` viven en `ExpertiseCardsSection.tsx` (contenido presentacional).
+| File | Description |
+|------|-------------|
+| `index.ts` | Default export: `HomePage`. |
+| `pages/HomePage.tsx` | `Header`, `Hero`, fixed scroll indicator. |
+| `components/Hero.tsx` | Full-screen video, headlines, CTAs (Our Expertise / About — Who we are) via scroll + `landing:set-module` / `about:set-tab`; responsive layout uses **`xl`** on part of the floating block. |
+| `hooks/useHomeScrollIndicator.ts` | After scroll, hides indicator and shows it again after 5 s idle. |
+| `hooks/useHome.ts` | Barrel: re-exports `useHomeScrollIndicator`. |
 
 ---
 
-## 11. Módulo: Preconstruction
+## 10. Module: Expertise
 
-**Ruta:** `src/sections/preconstruction/`
+**Path:** `src/sections/expertise/`
+
+| File | Description |
+|------|-------------|
+| `index.ts` | Default export: `ExpertisePage`. |
+| `pages/ExpertisePage.tsx` | Delegates to `ExpertiseSectionContent`. |
+| `components/ExpertiseSectionContent.tsx` | “Our Expertise” image + `ExpertiseCardsSection`. |
+| `components/ExpertiseCardsSection.tsx` | Two-card grid; expands to `PreconstructionPage` or `ConstructionManagementPage`; honors `EXPAND_ALL_SECTIONS`. **Responsive:** with one card active, 4:1 / 1:4 column split only from **`min-width: 1700px`**; below that, **single column** (stacked) to avoid clipped titles on the narrow card. |
+| `hooks/useExpertiseCards.ts` | `activeCard` state, image/height helpers, `expertise:open-card` listener. |
+| `hooks/useExpertise.ts` | Documented barrel. |
+
+**Data in component:** open Preconstruction copy, card image paths, and `CARD_IMAGES_OPEN` / `cardImageWhenExpanded` live in `ExpertiseCardsSection.tsx` (presentational).
+
+---
+
+## 11. Module: Preconstruction
+
+**Path:** `src/sections/preconstruction/`
 
 | Export (index) | `PreconstructionPage` (named). |
-|----------------|--------------------------------|
-| `pages/PreconstructionPage.tsx` | Pestañas o todo expandido según `EXPAND_ALL_SECTIONS`; `ProjectsCostEstimating` / `PreliminaryConstructionPlan`. |
-| `components/PreconstructionTitleBlock.tsx` | Título y switch de dos pestañas. |
-| `components/ProjectsCostEstimating.tsx` | Carruseles (earthwork, underground, aerial). |
-| `components/PreliminaryConstructionPlan.tsx` | Plan + galería miniaturas. |
-| `components/PreliminaryGalleryModal.tsx` | Modal de galería (portal). |
-| `hooks/usePreconstructionTabs.ts` | Pestaña `0 \| 1`. |
-| `hooks/useProjectsCostEstimatingCarousels.ts` | Tres carruseles con aspect ratio del primer slide. |
-| `hooks/usePreliminaryPlanGallery.ts` | Apertura/cierre e índice del modal desde el plan. |
-| `hooks/usePreliminaryGalleryModal.ts` | Scroll, body lock, Escape, navegación del modal. |
-| `hooks/usePreconstruction.ts` | Barrel documentado. |
+|----------------|----------------------------------|
+| `pages/PreconstructionPage.tsx` | Tabs or fully expanded per `EXPAND_ALL_SECTIONS`; `ProjectsCostEstimating` / `PreliminaryConstructionPlan`. |
+| `components/PreconstructionTitleBlock.tsx` | Title and two-tab switch. |
+| `components/ProjectsCostEstimating.tsx` | Carousels (earthwork, underground, aerial). **Aerial:** up to **`xl` (1280px)** video and carousel are **stacked**; video text overlay uses “compact” mode only from **`xl`** so copy is not clipped in stacked layouts. |
+| `components/PreliminaryConstructionPlan.tsx` | Plan + thumbnail gallery. |
+| `components/PreliminaryGalleryModal.tsx` | Gallery modal (portal). |
+| `hooks/usePreconstructionTabs.ts` | Tab `0 \| 1`. |
+| `hooks/useProjectsCostEstimatingCarousels.ts` | Three carousels with first-slide aspect ratio. |
+| `hooks/usePreliminaryPlanGallery.ts` | Open/close and modal index from plan. |
+| `hooks/usePreliminaryGalleryModal.ts` | Scroll, body lock, Escape, modal navigation. |
+| `hooks/usePreconstruction.ts` | Documented barrel. |
 
-**Consumo:** `ExpertiseCardsSection` importa `{ PreconstructionPage }` desde `sections/preconstruction`.
+**Consumption:** `ExpertiseCardsSection` imports `{ PreconstructionPage }` from `sections/preconstruction`.
 
 ---
 
-## 12. Módulo: Construction Management
+## 12. Module: Construction Management
 
-**Ruta:** `src/sections/construction-management/`
+**Path:** `src/sections/construction-management/`
 
 | Export (index) | `ConstructionManagementPage` (named). |
 |----------------|----------------------------------------|
-| `pages/ConstructionManagementPage.tsx` | Intro + switch de 3 pestañas o todo expandido. |
-| `components/ConstructionManagementIntro.tsx` | Metodología + imagen. |
-| `components/ConstructionManagementSwitch.tsx` | Píldora de tres opciones; tipo `ConstructionTab` desde hook. |
-| `components/FieldOperations.tsx` | Carrusel de tarjetas de campo + `RelatedProjectsSection`. |
-| `components/VirtualDesign.tsx` | Tres tarjetas expandibles (touch/hover). |
-| `components/PerformanceMonitoring.tsx` | Igual patrón que Virtual Design. |
-| `components/RelatedProjectsSection.tsx` | Listado paginado (datos mock). |
+| `pages/ConstructionManagementPage.tsx` | Intro + three-tab switch or fully expanded. |
+| `components/ConstructionManagementIntro.tsx` | Methodology + image. |
+| `components/ConstructionManagementSwitch.tsx` | Three-option pill; `ConstructionTab` type from hook. |
+| `components/FieldOperations.tsx` | Field cards carousel + `RelatedProjectsSection`. |
+| `components/VirtualDesign.tsx` | Three expandable cards (touch/hover). |
+| `components/PerformanceMonitoring.tsx` | Same pattern as Virtual Design. |
+| `components/RelatedProjectsSection.tsx` | Paginated list (mock data). |
 | `hooks/useConstructionManagementTabs.ts` | `activeTab` `0 \| 1 \| 2`. |
-| `hooks/useTouchExpandableCards.ts` | Compartido por Virtual Design y Performance Monitoring. |
-| `hooks/useFieldOperationsCarousel.ts` | Datos de tarjetas + paginación + expansión móvil. |
-| `hooks/useRelatedProjectsPagination.ts` | Paginación de proyectos relacionados. |
-| `hooks/useConstructionManagement.ts` | Barrel documentado. |
+| `hooks/useTouchExpandableCards.ts` | Shared by Virtual Design and Performance Monitoring; **`useMinWidthLg`** → desktop hover vs mobile tap. |
+| `hooks/useFieldOperationsCarousel.ts` | Card data + pagination + touch expand; **`useMinWidthLg`** (1024px) for 3-up vs 1-up slides and hover/tap behavior. |
+| `hooks/useRelatedProjectsPagination.ts` | Related projects pagination. |
+| `hooks/useConstructionManagement.ts` | Documented barrel. |
+
+**Responsive (Construction Management):** three-column grids / card rows, intro two-column layout, **Related Projects**, and most “desktop” content use Tailwind **`lg` (1024px)**. The tab **switch** stays **horizontal** like classic desktop; below `lg`, label text may wrap with tighter padding to avoid overflow. See also section 26.
 
 ---
 
-## 13. Módulo: Safety
+## 13. Module: Safety
 
-**Ruta:** `src/sections/safety/`
+**Path:** `src/sections/safety/`
 
 | Export (index) | Default: `SafetyPage`. |
 |----------------|------------------------|
-| `pages/SafetyPage.tsx` | Contenedor mínimo → `SafetySectionContent`. |
-| `components/SafetySectionContent.tsx` | Título, switch de tres pestañas, contenido condicional. |
-| `components/SafetyPlanning.tsx` | Contenido pestaña 0. |
-| `components/SafetyConstruction.tsx` | Carrusel + texto. |
-| `components/TotallySafe.tsx` | Contenido pestaña 2. |
-| `hooks/useSafetySectionTabs.ts` | Estado y `pillTransform` para el switch. |
-| `hooks/useSafetyConstructionCarousel.ts` | Carrusel de imágenes. |
-| `hooks/useSafetyPlanningMedia.ts` | Rutas y entradas de imagen para Safety Planning (hero + marquesina). |
-| `hooks/useSafety.ts` | Barrel documentado: exporta hooks y datos centralizados del módulo. |
+| `pages/SafetyPage.tsx` | Thin wrapper → `SafetySectionContent`. |
+| `components/SafetySectionContent.tsx` | Title, three-tab switch, conditional content. |
+| `components/SafetyPlanning.tsx` | Tab 0 content. |
+| `components/SafetyConstruction.tsx` | Carousel + copy. |
+| `components/TotallySafe.tsx` | Tab 2 content. |
+| `hooks/useSafetySectionTabs.ts` | State and `pillTransform` for the switch. |
+| `hooks/useSafetyConstructionCarousel.ts` | Image carousel; **`useMinWidth951`** aligns 3-up vs 1-up pages with CSS layout (~950px / 951px). |
+| `hooks/useSafetyPlanningMedia.ts` | Image paths and entries for Safety Planning (hero + marquee). |
+| `hooks/useSafety.ts` | Documented barrel: hooks and centralized module data. |
 
-**Convención:** el estado, efectos y datos reutilizables de cada subsección Safety deben añadirse bajo `src/sections/safety/hooks/` y reexportarse desde `useSafety.ts` cuando convenga al resto del módulo.
+**Convention:** reusable state, effects, and data for each Safety subsection should live under `src/sections/safety/hooks/` and be re-exported from `useSafety.ts` when useful.
 
----
-
-## 14. Módulos: About, Projects, Careers
-
-**Rutas:** `src/sections/about|projects|careers/`
-
-Cada uno expone un **default** desde su `index.ts` hacia `*Page.tsx` → `*SectionContent.tsx` con **placeholders** (títulos y bloques grises).
-
-**Hooks:** `useAbout.ts`, `useProjects.ts`, `useCareers.ts` son **stubs** preparados para lógica futura.
-
-**Integración pendiente:** montar estas secciones en `LandingPage` con `<section id="about">` (etc.) para alinear con el header y `useScrollToSection`.
+**Responsive (Safety):** the two-tone intro under “SAFETY”, the three-tab **switch**, and internal layouts for **Safety Planning**, **Safety Construction**, and **Totally Safe** align around **`min-width: 951px`**: below that, mobile-style **single column** (carousel one image per slide where applicable); from **951px**, two- or three-column layouts as designed. **`useMinWidth951`** keeps the Safety Construction carousel in sync.
 
 ---
 
-## 15. Componentes y hooks compartidos
+## 14. Module: About (and Projects / Careers status)
+
+### About — implemented on the landing
+
+**Path:** `src/sections/about/`
+
+About renders **inside `#expertise`** when `LandingPage` has `activeModule === 'about'` (there is no separate `<section id="about">` in the main DOM).
+
+| File | Description |
+|------|-------------|
+| `index.ts` | Default export → `AboutPage`. |
+| `pages/AboutPage.tsx` | Wrapper → `AboutSectionContent`. |
+| `components/AboutSectionContent.tsx` | `Container`; mounts in order: Who we are, Core Values, Our Culture, Workforce & people, Our Leadership; uses `useAboutSubnavScroll`. |
+| `components/WhoWeAre.tsx` | About hero + image; `id="about-section-0"`. |
+| `components/CoreValues.tsx` | Values + two images; `about-section-1`. |
+| `components/OurCulture.tsx` | Culture three-column grid on desktop; `about-section-2`. |
+| `components/WorkforceAndPeople.tsx` | Copy + capabilities + image; `about-section-3`. |
+| `components/OurLeadership.tsx` | Image + copy + principles; `about-section-4`. |
+| `components/AboutBlockKicker.tsx` | “About” kicker with decorative line. |
+| `components/AboutImageFrame.tsx` | Shared image frame. |
+| `hooks/useAboutMedia.ts` | Path constants under `/images/about/`. |
+| `hooks/useAboutSubnavScroll.ts` | Listens for **`about:set-tab`** with `tab: 0…4` and smooth-scrolls to `about-section-{tab}`. |
+| `hooks/useAbout.ts` | Documented barrel. |
+
+**Responsive (About):** two- or three-column grids (text + image, Culture, etc.) become **single column** below **`min-width: 1061px`** (`min-[1061px]:…` in components) to avoid large whitespace gaps and awkward titles on wide tablets. Who we are uses **`items-start`** instead of vertically centering columns on desktop.
+
+### Projects and Careers
+
+**Paths:** `src/sections/projects/`, `src/sections/careers/`
+
+Still available as modules by folder convention; **full** `LandingPage` integration (dedicated section + stable `id`) may be pending per roadmap. Header/footer may link to `#careers` or other anchors when they exist in the DOM.
+
+---
+
+## 15. Shared components and hooks
 
 ### `shared/components/Container.tsx`
 
-Wrapper de ancho máximo y padding horizontal responsive (`px-4` … `xl:px-10`), usado en múltiples secciones.
+Max-width wrapper with responsive horizontal padding (`px-4` … `xl:px-10`), used across sections.
 
 ### `shared/components/Header.tsx`
 
-- Navegación mega-menú / móvil.
-- Estado: ítem activo, visibilidad al scroll, menú móvil abierto.
-- Integración con **`useScrollToSection`**, **`useContactUsModal`**, eventos **`landing:set-module`** y **`expertise:open-card`**.
-- Datos de menús en constantes (`navItems`, `navPanels`, etc.).
+- Mega-menu navigation (desktop) / mobile drawer (hamburger).
+- **Desktop breakpoint:** utilities with **`min-[1355px]:`** (full nav, phone, Contact Us, mega panel, hide hamburger). Below **1355px** viewport width, mobile layout is used; crossing that threshold runs `matchMedia('(min-width: 1355px)')` to close the menu and reset mobile accordions.
+- State: active item, scroll visibility, mobile menu open, mobile accordions (`mobileExpandedParent`).
+- Includes **Careers** item (`chevron: false`) and mega panels only for `about`, `safety`, `projects` (`NavPanelItemId` typing / guards so `careers` never indexes panels).
+- Integrates **`useScrollToSection`**, **`useContactUsModal`**, **`landing:set-module`**, **`expertise:open-card`**, **`about:set-tab`**, **`safety:set-tab`**, etc., per menu item.
+- Menu data in constants (`navItems`, `navPanels`, Preconstruction / CM link maps, etc.).
+- **Right CTAs:** on desktop the `tel:` link and Contact Us button sit in a `flex` row with a wide **`gap`**; the button avoids negative margins in that range so it does not overlap the number.
 
 ### `shared/components/Footer.tsx`
 
-- Navegación interna vía `useScrollToSection` y `useContactUsModal`.
-- **`openConstructionProjects`**: combina módulo expertise, tarjeta construction y scroll a `#construction-management-projects`.
-- Botones sociales placeholder (sin URL externa).
+- Internal navigation via `useScrollToSection` and `useContactUsModal`.
+- **Layout:** mobile-style centered column blocks until **`xl` (~1280px)**; from **`xl`**, wide link row and bottom legal/social strip use **`justify-between`**.
+- **`openConstructionProjects`:** sets expertise module, construction card, scroll to `#construction-management-projects`.
+- Social buttons are placeholders (no external URLs).
+
+### Home (`Hero.tsx`) — quick note
+
+- Buttons can route to Our Expertise / About (Who we are sub-tab) via `scrollTo` + events; the floating headline/CTA block uses **`xl`** in part of the layout to align with header/footer.
 
 ### `shared/components/ContactUsPillButton.tsx`
 
-Botón reutilizable que abre el modal de contacto (`useContactUsModal`).
+Reusable button opening the contact modal (`useContactUsModal`).
 
 ### `shared/components/SecurityHead.tsx`
 
-Metadatos con `Helmet` (ver sección 17 y doc de seguridad).
+Metadata via `Helmet` (section 17 and security doc).
 
 ### `shared/hooks/useScrollToSection.ts`
 
@@ -324,51 +360,63 @@ Metadatos con `Helmet` (ver sección 17 y doc de seguridad).
 
 ### `shared/hooks/useMinWidthMd.ts`
 
-Media query `min-width` breakpoint `md` de Tailwind (768px), para comportamiento responsive (carruseles, tarjetas táctiles, etc.).
+**`min-width: 768px`** (Tailwind `md`). Still used where “tablet” behavior should align to 768px (some carousels outside Construction Management).
+
+### `shared/hooks/useMinWidthLg.ts`
+
+**`min-width: 1024px`** (Tailwind `lg`). Used by **Construction Management** (`useFieldOperationsCarousel`, `useTouchExpandableCards`) to separate desktop (hover, three columns) from compact layout (tap, single column).
+
+### `shared/hooks/useMinWidth951.ts`
+
+**`min-width: 951px`**, aligned with arbitrary breakpoints in the **Safety** module (internal layouts and Safety Construction carousel).
 
 ---
 
-## 16. Contacto: modal, contexto y API
+## 16. Contact: modal, context, and API
 
-### Contexto
+### Context
 
-- **`ContactUsModalProvider`**: provee `open`, `close`, `isOpen`.
-- **`useContactUsModal()`**: obligatorio bajo el provider (lanza si falta).
+- **`ContactUsModalProvider`**: provides `open`, `close`, `isOpen`.
+- **`useContactUsModal()`**: required under the provider (throws if missing).
 
 ### Modal (`ContactUsModalDialog`)
 
-- Portal a `document.body`, `role="dialog"`, `aria-modal`, título con `useId`.
-- Bloqueo de scroll del `body` al abrir; **Escape** cierra salvo envío en curso.
-- Formulario: nombre, email, mensaje + honeypot; límites `CONTACT_FORM_*_MAX`.
-- **`sendContactMessage`** en `shared/services/sendContactMessage.ts`: `POST` JSON a `{API_URL}/api/contact`.
+- Portal to `document.body`, `role="dialog"`, `aria-modal`, title via `useId`.
+- Locks `body` scroll when open; **Escape** closes unless submit in progress.
+- Form: name, email, message + honeypot; limits `CONTACT_FORM_*_MAX`.
+- **`sendContactMessage`** in `shared/services/sendContactMessage.ts`: JSON `POST` to `{API_URL}/api/contact`. Server contract: **[BACKEND.md](./BACKEND.md)**.
 
-### Constantes exportadas (tests / consistencia)
+### Exported constants (tests / consistency)
 
-`CONTACT_FORM_NAME_MAX`, `CONTACT_FORM_EMAIL_MAX`, `CONTACT_FORM_MESSAGE_MAX` en el provider.
-
----
-
-## 17. Metadatos y cabecera del documento
-
-- **`SecurityHead`**: título por defecto, descripción, `html lang="en"`, referrer, viewport, theme-color, color-scheme.
-- **`index.html`**: coherencia en primer paint.
-
-Las cabeceras HTTP de seguridad (CSP, X-Frame-Options, etc.) se documentan en **[SEGURIDAD_FRONTEND.md](./SEGURIDAD_FRONTEND.md)**.
+`CONTACT_FORM_NAME_MAX`, `CONTACT_FORM_EMAIL_MAX`, `CONTACT_FORM_MESSAGE_MAX` on the provider.
 
 ---
 
-## 18. Eventos personalizados (`window`)
+## 17. Document metadata and head
 
-| Evento | Payload (`detail`) | Quién escucha | Quién dispara |
-|--------|-------------------|---------------|---------------|
-| `landing:set-module` | `{ module: 'expertise' \| 'safety' }` | `LandingPage` | Header, Footer |
-| `expertise:open-card` | `{ card: 0 \| 1 }` | `ExpertiseCardsSection` (hook) | Header, Footer |
+- **`SecurityHead`**: default title, description, `html lang="en"`, referrer, viewport, theme-color, color-scheme.
+- **`index.html`**: consistent first paint.
 
-Patrón: **`window.dispatchEvent(new CustomEvent(...))`** y **`addEventListener`** con cleanup en `useEffect`.
+HTTP security headers (CSP, X-Frame-Options, etc.) are documented in **[FRONTEND_SECURITY.md](./FRONTEND_SECURITY.md)**.
 
 ---
 
-## 19. Configuración de desarrollo
+## 18. Custom `window` events
+
+| Event | Payload (`detail`) | Main listener | Main dispatcher |
+|--------|---------------------|---------------|-----------------|
+| `landing:set-module` | `{ module: 'expertise' \| 'safety' \| 'about' }` | `LandingPage` | Header, Footer, Hero |
+| `expertise:open-card` | `{ card: 0 \| 1 }` | `useExpertiseCards` | Header, Footer |
+| `about:set-tab` | `{ tab: 0 \| 1 \| 2 \| 3 \| 4 }` | `useAboutSubnavScroll` | Header (mega About) |
+| `safety:set-tab` | `{ tab: 0 \| 1 \| 2 }` | `useSafetySectionTabs` | Header (mega Safety) |
+| `preconstruction:set-tab` | `{ tab: 0 \| 1 }` | Preconstruction tab hooks | Header (expertise links) |
+| `construction-management:set-tab` | `{ tab: 0 \| 1 \| 2 }` | `useConstructionManagementTabs` | Header (expertise links) |
+
+Pattern: **`window.dispatchEvent(new CustomEvent(...))`** and **`addEventListener`** with cleanup in `useEffect`. Exact payloads may grow in other modules; search `CustomEvent` in `src/` when adding integrations.
+
+---
+
+## 19. Development configuration
 
 ### `src/config/devExpandSections.ts`
 
@@ -376,66 +424,85 @@ Patrón: **`window.dispatchEvent(new CustomEvent(...))`** y **`addEventListener`
 export const EXPAND_ALL_SECTIONS = false
 ```
 
-Si se pone **`true`**:
+If set to **`true`**:
 
-- **Preconstruction** y **Construction Management** muestran **todas** las subsecciones a la vez (sin depender solo de pestañas/tarjetas).
-- **Expertise** muestra el grid en modo “expandido” según la lógica de `ExpertiseCardsSection`.
+- **Preconstruction** and **Construction Management** show **all** subsections at once (not only tabs/cards).
+- **Expertise** shows the grid in “expanded” mode per `ExpertiseCardsSection`.
 
-Útil para diseño y QA de contenido largo sin clicks repetidos.
-
----
-
-## 20. Estilos, Tailwind y activos estáticos
-
-- **Entrada CSS:** `src/style.css` con directivas Tailwind v4 (`@import "tailwindcss"` según configuración del proyecto).
-- **PostCSS / Tailwind:** configuración en raíz (`postcss.config`, dependencias en `package.json`).
-- **Imágenes y vídeo:** rutas bajo **`/public`** referenciadas como **`/images/...`**, **`/videos/...`** en JSX.
-- **Favicon:** además de `/favicon.svg`, `main.tsx` puede sobrescribir con data URL del logo.
+Useful for design and QA of long content without repeated clicks.
 
 ---
 
-## 21. Iconos y utilidades gráficas
+## 20. Styles, Tailwind, and static assets
 
-- **`src/utils/icons/`**: componentes React (SVG inline) por dominio (`header`, `footer`, `carousel`, `contact`, etc.).
-- **`src/utils/graphics/`**: SVG más grandes (p. ej. watermark del plan preliminar).
-- **`utils/icons/index.ts`**: barrel opcional de exportaciones.
-
----
-
-## 22. Build, preview y artefactos
-
-- **`npm run build`** genera **`dist/`** con HTML, JS y CSS hasheados.
-- **`vite.config.ts`**: plugin `@vitejs/plugin-react`.
-- **Tamaño de bundle:** Vite puede advertir si un chunk supera ~500 kB; valorar code-splitting futuro si crece mucho.
+- **CSS entry:** `src/style.css` with Tailwind v4 directives (`@import "tailwindcss"` per project setup).
+- **PostCSS / Tailwind:** root config (`postcss.config`, dependencies in `package.json`).
+- **Images and video:** paths under **`/public`** referenced as **`/images/...`**, **`/videos/...`** in JSX.
+- **Favicon:** in addition to `/favicon.svg`, `main.tsx` may override with a logo data URL.
 
 ---
 
-## 23. Seguridad (enlace)
+## 21. Icons and graphics utilities
 
-Documento dedicado: **[SEGURIDAD_FRONTEND.md](./SEGURIDAD_FRONTEND.md)** (CSP, formulario, env, backend cruzado, checklist).
-
----
-
-## 24. Convenciones y extensiones recomendadas
-
-1. **Nuevos hooks de módulo:** archivo `useAlgoDescriptivo.ts` + entrada en el barrel `use<NombreModulo>.ts` con tabla JSDoc.
-2. **Nuevas secciones en la landing:** añadir `<section id="...">` en `LandingPage` y comprobar enlaces del header/footer.
-3. **Nuevo consumo de API:** servicio en `shared/services/`, sin secretos en `VITE_*`, validación y mensajes de error genéricos en prod.
-4. **Imágenes:** preferir `public/` o imports estáticos; documentar si se usa CDN y actualizar CSP.
-5. **Accesibilidad:** mantener roles ARIA en modales, foco y teclado al estilo de `ContactUsModalProvider` y galerías existentes.
+- **`src/utils/icons/`**: inline SVG React components by domain (`header`, `footer`, `carousel`, `contact`, etc.).
+- **`src/utils/graphics/`**: larger SVGs (e.g. preliminary plan watermark).
+- **`utils/icons/index.ts`**: optional export barrel.
 
 ---
 
-## 25. Glosario
+## 22. Build, preview, and artifacts
 
-| Término | Significado en este proyecto |
-|---------|------------------------------|
-| **SPA** | Single Page Application; una sola carga HTML y navegación por scroll/estado. |
-| **Barrel** | Archivo `index` o `useX.ts` que solo reexporta módulos para imports cortos y documentación centralizada. |
-| **Honeypot** | Campo oculto que los bots suelen rellenar; el servidor rechaza si no está vacío. |
-| **Portal** | Renderizado de nodos React fuera del árbol padre (`createPortal` → `document.body`). |
-| **CSP** | Content-Security-Policy: directiva HTTP que limita orígenes de scripts, estilos, imágenes, etc. |
+- **`npm run build`** outputs **`dist/`** with hashed HTML, JS, and CSS.
+- **`vite.config.ts`**: `@vitejs/plugin-react`.
+- **Bundle size:** Vite may warn if a chunk exceeds ~500 kB; consider future code-splitting if growth continues.
 
 ---
 
-*Última actualización alineada con la estructura del repositorio TCCE (landing + backend de contacto). Ajustar este manual cuando se integren About, Projects y Careers en la landing o se añadan rutas nuevas.*
+## 23. Security (link)
+
+Dedicated doc: **[FRONTEND_SECURITY.md](./FRONTEND_SECURITY.md)** (CSP, form, env, backend cross-reference, checklist).
+
+---
+
+## 24. Conventions and recommended extensions
+
+1. **New module hooks:** file `useDescriptiveName.ts` + barrel entry in `use<ModuleName>.ts` with JSDoc table.
+2. **New landing sections:** add `<section id="...">` in `LandingPage` and verify header/footer links. **About** does not use a separate section `id`: it lives under `#expertise` with `activeModule === 'about'`.
+3. **New API usage:** service in `shared/services/`, no secrets in `VITE_*`, validation and generic error messages in prod.
+4. **Images:** prefer `public/` or static imports; document CDN usage and update CSP.
+5. **Accessibility:** keep ARIA roles on modals, focus and keyboard behavior consistent with `ContactUsModalProvider` and existing galleries.
+
+---
+
+## 25. Glossary
+
+| Term | Meaning in this project |
+|------|-------------------------|
+| **SPA** | Single Page Application; one HTML load and navigation by scroll/state. |
+| **Barrel** | `index` or `useX.ts` that only re-exports for short imports and centralized docs. |
+| **Honeypot** | Hidden field bots often fill; server rejects if non-empty. |
+| **Portal** | React nodes rendered outside the parent tree (`createPortal` → `document.body`). |
+| **CSP** | Content-Security-Policy: HTTP directive limiting script, style, image origins, etc. |
+
+---
+
+## 26. Responsive breakpoints
+
+Quick reference for **pixel thresholds** that do not always match Tailwind’s `sm` / `md` / `lg` / `xl` names. Exact values live in component classes; this table captures product intent.
+
+| Area | Threshold (approx.) | Behavior |
+|------|---------------------|----------|
+| **Header** | **1355px** | Full mega row vs hamburger + drawer; menu closes when switching to desktop. |
+| **Footer** | **1280px (`xl`)** | Wide row layout vs mobile-style stacking. |
+| **Hero (home)** | **1280px (`xl`)** in part of layout | Aligns with header/footer for some absolute blocks. |
+| **Expertise — cards** | **1700px** | 4:1 / 1:4 split only from this width; below, **single column**. |
+| **Preconstruction — Aerial** | **1280px (`xl`)** | Video + carousel row; compact text overlay from `xl`. |
+| **Construction Management** | **1024px (`lg`)** | Three columns, “desktop” carousel, Related Projects 3-col, `useMinWidthLg`. |
+| **About** | **1061px** | 2/3 column grids only from this width; below, **single column**. |
+| **Safety** | **951px** | Intro, tabs, three subsections’ bodies + `useMinWidth951` on Construction carousel. |
+
+If you change a value (e.g. header width), update **this table** and related constants/hooks (`matchMedia`, `useMinWidth*`).
+
+---
+
+*Last updated: About integrated into the landing; responsive behavior documented (header 1355px, About 1061px, Safety 951px, CM `lg`, Expertise cards 1700px); hooks `useMinWidthLg` and `useMinWidth951`; events `about:set-tab` / `safety:set-tab` / nested tabs. Roadmap: Projects and Careers on `LandingPage` if dedicated sections are required.*

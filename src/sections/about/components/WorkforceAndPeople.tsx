@@ -27,7 +27,7 @@ export default function WorkforceAndPeople() {
       className="scroll-mt-28 pt-16 md:scroll-mt-32 md:pt-20"
       aria-labelledby="about-workforce-heading"
     >
-      <div className="grid grid-cols-1 gap-10 md:grid-cols-[45fr_55fr] md:items-start md:gap-12 lg:gap-14">
+      <div className="grid grid-cols-1 gap-10 min-[1061px]:grid-cols-[45fr_55fr] min-[1061px]:items-start min-[1061px]:gap-12 lg:gap-14">
         <div className="min-w-0 text-left">
           <p className="text-xl font-bold uppercase text-neutral-800 md:text-2xl lg:text-3xl">
             Workforce &amp; people
@@ -54,7 +54,7 @@ export default function WorkforceAndPeople() {
               early stages through execution—ensuring consistency, reliability, and performance in the field.
             </p>
           </div>
-          <div className="mt-8 flex justify-center md:justify-start">
+          <div className="mt-8 flex justify-center min-[1061px]:justify-start">
             <ContactUsPillButton />
           </div>
         </div>

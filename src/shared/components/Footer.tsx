@@ -75,7 +75,7 @@ export default function Footer() {
       <div className="bg-[#06070c] text-white">
         <div className="mx-auto w-[94%] max-w-[120rem] py-6">
           <div className="mt-8 border-b-2 border-[#E4611F]/60 pb-8">
-            <div className="flex w-full justify-center px-2 md:hidden">
+            <div className="flex w-full justify-center px-2 xl:hidden">
               <div className="flex max-w-full flex-row flex-nowrap items-start gap-8 sm:gap-11">
                 <div className="box-border flex shrink-0 flex-col items-start gap-3">
                   <HeaderLogo
@@ -109,8 +109,8 @@ export default function Footer() {
               </div>
             </div>
 
-            <div className="hidden flex-wrap items-center justify-between gap-6 md:flex">
-              <nav className="ml-4 flex flex-wrap items-center gap-28 text-base font-semibold md:gap-44">
+            <div className="hidden flex-wrap items-center justify-between gap-6 xl:flex">
+              <nav className="ml-4 flex flex-wrap items-center gap-28 text-base font-semibold xl:gap-44">
                 {footerNavItems.map((item) => (
                   <button key={item.id} type="button" onClick={() => handleNavClick(item.id)} className={navLinkClass}>
                     {item.label}
@@ -129,7 +129,7 @@ export default function Footer() {
           </div>
 
           <div className="mb-10 pt-6">
-            <div className="flex flex-col items-center gap-5 text-center text-base md:hidden">
+            <div className="flex flex-col items-center gap-5 text-center text-base xl:hidden">
               <span className="inline-flex max-w-[20rem] items-start justify-center gap-2">
                 <FooterLocationIcon className="mt-0.5 h-5 w-5 shrink-0 text-white" />
                 <span>
@@ -153,8 +153,8 @@ export default function Footer() {
               <div className="hidden" aria-hidden />
             </div>
 
-            <div className="hidden flex-wrap items-center justify-between gap-6 md:flex">
-              <div className="flex flex-wrap items-center gap-12 text-sm text-white md:gap-16">
+            <div className="hidden flex-wrap items-center justify-between gap-6 xl:flex">
+              <div className="flex flex-wrap items-center gap-12 text-sm text-white xl:gap-16">
                 <HeaderLogo className="h-12 w-auto text-white" aria-label="TOTAL Civil Construction" role="img" />
                 <span className="inline-flex items-center gap-2">
                   <FooterLocationIcon className="h-5 w-5 text-white" />

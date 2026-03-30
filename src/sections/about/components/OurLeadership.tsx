@@ -37,7 +37,7 @@ export default function OurLeadership() {
         </h2>
       </header>
 
-      <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-2 md:items-start md:gap-12 lg:gap-14">
+      <div className="mt-12 grid grid-cols-1 gap-10 min-[1061px]:grid-cols-2 min-[1061px]:items-start min-[1061px]:gap-12 lg:gap-14">
         <div className="min-w-0">
           <AboutImageFrame
             src={ABOUT_LEADERSHIP_IMAGE}

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useMinWidthMd } from '../../../shared/hooks/useMinWidthMd'
+import { useMinWidth951 } from '../../../shared/hooks/useMinWidth951'
 import { SAFETY_CONSTRUCTION_CAROUSEL_ITEMS } from './useSafetyConstructionMedia'
 
 const SAFETY_CONSTRUCTION_DESKTOP_PAGES = [
@@ -18,12 +18,12 @@ const SAFETY_CONSTRUCTION_DESKTOP_PAGES = [
 /**
  * Carrusel de la sección Safety Construction.
  *
- * - En escritorio (`md+`): dos “páginas” de tres tarjetas cada una (solapamiento intencional en la tarjeta central).
- * - En móvil: un slide por imagen (cinco páginas).
+ * - En escritorio (`min-width: 951px`): dos “páginas” de tres tarjetas cada una (solapamiento intencional en la tarjeta central).
+ * - Por debajo: un slide por imagen (cinco páginas).
  * - Si cambia el breakpoint y el índice actual queda fuera de rango, lo recorta al último slide válido.
  */
 export function useSafetyConstructionCarousel() {
-  const isDesktop = useMinWidthMd()
+  const isDesktop = useMinWidth951()
 
   const pages = useMemo(
     () => (isDesktop ? SAFETY_CONSTRUCTION_DESKTOP_PAGES : SAFETY_CONSTRUCTION_CAROUSEL_ITEMS.map((c) => [c])),

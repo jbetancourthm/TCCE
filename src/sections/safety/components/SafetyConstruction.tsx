@@ -29,7 +29,7 @@ export default function SafetyConstruction() {
 
   return (
     <div className="mt-16 text-left">
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-[1fr_1.05fr] md:items-start">
+      <div className="grid grid-cols-1 gap-8 min-[951px]:grid-cols-[1fr_1.05fr] min-[951px]:items-start">
         <div className="min-w-0">
           <h3 className="text-4xl mb-6 font-bold tracking-tight text-neutral-700">Safety Construction</h3>
           <p className="mt-3 text-[1.85rem] leading-tight text-neutral-600 md:text-[2.2rem]">
@@ -66,7 +66,7 @@ export default function SafetyConstruction() {
         <p className="font-semibold text-neutral-700">Operational Practices</p>
         <div className="h-4" aria-hidden />
 
-        <div className="flex flex-col md:hidden">
+        <div className="flex flex-col min-[951px]:hidden">
           {OPERATIONAL_PRACTICE_ITEMS.map((text, idx) => (
             <OperationalPracticeLine
               key={text}
@@ -76,7 +76,7 @@ export default function SafetyConstruction() {
           ))}
         </div>
 
-        <div className="hidden items-start gap-10 md:grid md:grid-cols-2">
+        <div className="hidden items-start gap-10 min-[951px]:grid min-[951px]:grid-cols-2">
           <div>
             {OPERATIONAL_PRACTICE_ITEMS.slice(0, 4).map((text, idx) => (
               <OperationalPracticeLine
@@ -134,7 +134,7 @@ export default function SafetyConstruction() {
             >
               {pages.map((page, idx) => (
                 <div key={`safety-construction-page-${idx}`} className="w-full shrink-0">
-                  <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:items-start">
+                  <div className="grid grid-cols-1 gap-4 min-[951px]:grid-cols-3 min-[951px]:items-start">
                     {page.map((item) => (
                       <div
                         key={`page-${idx}-img-${item.id}`}

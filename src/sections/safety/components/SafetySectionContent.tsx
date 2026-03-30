@@ -16,12 +16,12 @@ export default function SafetySectionContent() {
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-neutral-600">Safety</p>
           </div>
 
-          <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-[1fr_1.2fr] md:gap-12">
-            <div className="max-md:pl-0 md:pl-14">
-              <h2 className="mt-8 mb-8 text-left text-4xl font-bold tracking-tight text-neutral-700 md:mt-14 md:mb-16">
+          <div className="mt-10 grid grid-cols-1 gap-10 min-[951px]:grid-cols-[1fr_1.2fr] min-[951px]:gap-12">
+            <div className="max-[950px]:pl-0 min-[951px]:pl-14">
+              <h2 className="mt-8 mb-8 text-left text-4xl font-bold tracking-tight text-neutral-700 min-[951px]:mt-14 min-[951px]:mb-16">
                 SAFETY
               </h2>
-              <p className="mt-6 max-w-[24rem] text-left text-[1.35rem] font-semibold leading-[1.2] text-neutral-700 max-md:max-w-none md:mt-8 md:text-[1.75rem]">
+              <p className="mt-6 max-w-[24rem] text-left text-[1.35rem] font-semibold leading-[1.2] text-neutral-700 max-[950px]:max-w-none min-[951px]:mt-8 min-[951px]:text-[1.75rem]">
                 Safety is how we plan, communicate, and execute.
               </p>
             </div>

@@ -29,7 +29,7 @@ export default function CoreValues() {
       className="scroll-mt-28 pt-16 md:scroll-mt-32 md:pt-20"
       aria-labelledby="about-core-values-heading"
     >
-      <div className="grid grid-cols-1 gap-10 md:grid-cols-[45fr_55fr] md:items-start md:gap-12 lg:gap-14">
+      <div className="grid grid-cols-1 gap-10 min-[1061px]:grid-cols-[45fr_55fr] min-[1061px]:items-start min-[1061px]:gap-12 lg:gap-14">
         <div className="min-w-0">
           <AboutBlockKicker />
           <h2
@@ -51,7 +51,7 @@ export default function CoreValues() {
           </div>
         </div>
 
-        <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5">
+        <div className="grid min-w-0 grid-cols-1 gap-4 min-[1061px]:grid-cols-2 min-[1061px]:gap-5">
           <AboutImageFrame
             src={ABOUT_CORE_VALUES_IMAGES.left}
             alt="Construction site with TCCE field presence"

@@ -9,12 +9,12 @@ export default function WhoWeAre() {
       className="scroll-mt-28 pt-0 md:scroll-mt-32"
       aria-labelledby="about-who-we-are-heading"
     >
-      <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-12 lg:gap-14">
-        <div className="order-2 min-w-0 md:order-1">
+      <div className="grid grid-cols-1 items-start gap-10 min-[1061px]:grid-cols-2 min-[1061px]:gap-12 lg:gap-14">
+        <div className="order-2 min-w-0 min-[1061px]:order-1">
           <AboutImageFrame src={ABOUT_WHO_WE_ARE_IMAGE} alt="TCCE team and equipment at a civil construction site" />
         </div>
 
-        <div className="order-1 min-w-0 md:order-2">
+        <div className="order-1 min-w-0 min-[1061px]:order-2">
           <AboutBlockKicker />
           <h2
             id="about-who-we-are-heading"

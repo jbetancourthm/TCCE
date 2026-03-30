@@ -16,7 +16,7 @@ export default function ConstructionManagementIntro() {
   return (
     <div
       id="construction-management-methodology"
-      className="col-span-full mx-auto grid w-[90%] min-w-0 mt-10 max-w-[95rem] grid-cols-1 gap-1 md:grid-cols-[1.1fr_1fr] md:gap-x-6 lg:gap-x-8"
+      className="col-span-full mx-auto grid w-[90%] min-w-0 mt-10 max-w-[95rem] grid-cols-1 gap-1 lg:grid-cols-[1.1fr_1fr] lg:gap-x-6 xl:gap-x-8"
     >
       <div className="hidden h-[12rem] w-full max-w-2xl overflow-hidden rounded-2xl border border-transparent bg-neutral-100 md:block md:h-[28rem]">
         <img
@@ -26,7 +26,7 @@ export default function ConstructionManagementIntro() {
         />
       </div>
 
-      <div className="flex min-w-0 flex-col gap-10 text-left max-md:mt-0 md:mt-10 md:gap-12">
+      <div className="flex min-w-0 flex-col gap-10 text-left max-lg:mt-0 lg:mt-10 lg:gap-12">
         <div>
           <p className="flex items-center gap-4 text-sm font-semibold uppercase tracking-[0.25em] text-neutral-700">
             <span aria-hidden className="h-[3px] w-18 bg-neutral-500" />
@@ -44,7 +44,7 @@ export default function ConstructionManagementIntro() {
           </ul>
         </div>
 
-        <div className="h-[12rem] w-full max-w-2xl overflow-hidden rounded-2xl border border-transparent bg-neutral-100 md:hidden">
+        <div className="h-[12rem] w-full max-w-2xl overflow-hidden rounded-2xl border border-transparent bg-neutral-100 lg:hidden">
           <img
             src={CM_INTRO_IMG.src}
             alt=""

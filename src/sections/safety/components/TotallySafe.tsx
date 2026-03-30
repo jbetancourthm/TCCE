@@ -19,7 +19,7 @@ function TotallySafeImageCard({ src, alt }: { src: string; alt: string }) {
 function CorePhilosophyCopy() {
   return (
     <>
-      <p className="mb-4 text-center text-[1.2rem] font-semibold text-neutral-700 max-md:text-left">Core Philosophy</p>
+      <p className="mb-4 text-center text-[1.2rem] font-semibold text-neutral-700 max-[950px]:text-left">Core Philosophy</p>
       <p className="mt-[0.4rem] flex items-start gap-1.5">
         <NavItemCaret className="mt-[0.15rem] h-4 w-4 shrink-0 -rotate-90 text-[#E4611F]" />
         <span>Plan the work</span>
@@ -43,7 +43,7 @@ function CorePhilosophyCopy() {
 function HowWeApplyCopy() {
   return (
     <>
-      <p className="mb-4 text-center text-[1.2rem] font-semibold text-neutral-700 max-md:text-left">How We Apply It</p>
+      <p className="mb-4 text-center text-[1.2rem] font-semibold text-neutral-700 max-[950px]:text-left">How We Apply It</p>
       <p className="mt-3">When a change occurs, our teams follow a clear and disciplined process:</p>
       <div className="h-4" aria-hidden />
       <p className="mt-[0.4rem] flex items-start gap-1.5">
@@ -73,7 +73,7 @@ function HowWeApplyCopy() {
 function SafetyLeadershipCopy() {
   return (
     <>
-      <p className="mb-4 text-center text-[1.2rem] font-semibold text-neutral-700 max-md:text-left">Safety Leadership</p>
+      <p className="mb-4 text-center text-[1.2rem] font-semibold text-neutral-700 max-[950px]:text-left">Safety Leadership</p>
       <p className="mt-3">Safety is a shared responsibility.</p>
       <div className="h-6" aria-hidden />
       <p>
@@ -93,7 +93,7 @@ const [card0, card1, card2] = SAFETY_TOTALLY_SAFE_CARD_IMAGES
 export default function TotallySafe() {
   return (
     <div className="mt-16 text-left">
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-[1fr_1.05fr]">
+      <div className="grid grid-cols-1 gap-8 min-[951px]:grid-cols-[1fr_1.05fr]">
         <div>
           <h3 className="mb-6 text-4xl font-bold tracking-tight text-neutral-700">Totally Safe</h3>
           <p className="mt-3 text-[2.2rem] leading-tight text-neutral-600">A Mindset That Defines How We Work.</p>
@@ -120,7 +120,7 @@ export default function TotallySafe() {
       </div>
 
       {/* Móvil: texto → imagen por bloque; Contact al final */}
-      <div className="mt-8 flex flex-col gap-8 text-[1rem] leading-relaxed text-neutral-600 md:hidden">
+      <div className="mt-8 flex flex-col gap-8 text-[1rem] leading-relaxed text-neutral-600 min-[951px]:hidden">
         <div>
           <CorePhilosophyCopy />
         </div>
@@ -137,7 +137,7 @@ export default function TotallySafe() {
       </div>
 
       {/* Escritorio: fila de 3 imágenes + 3 columnas de texto */}
-      <div className="mt-8 hidden md:block">
+      <div className="mt-8 hidden min-[951px]:block">
         <div className="grid grid-cols-3 gap-4">
           {SAFETY_TOTALLY_SAFE_CARD_IMAGES.map((item) => (
             <TotallySafeImageCard key={item.key} src={item.src} alt={item.alt} />

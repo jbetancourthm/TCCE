@@ -41,8 +41,11 @@ function cardImageWhenExpanded(cardIndex: number, active: number) {
 }
 
 const CARD_H_FULL = 'h-80 md:h-130'
-/** Solo móvil: mitad de altura cuando la otra card está abierta; en md+ misma altura que siempre. */
-const CARD_H_HALF = 'h-40 md:h-130'
+/**
+ * Card inactiva con layout partido: en columna (hasta ~1700px) altura corta como móvil;
+ * en dos columnas con fracción estrecha, misma altura de fila que la activa.
+ */
+const CARD_H_HALF = 'h-40 min-[1700px]:md:h-130'
 
 export default function ExpertiseCardsSection() {
   const { activeCard, setActiveCard, showExpandedCardImages, activeForImages, useSplitHeights } = useExpertiseCards()
@@ -55,8 +58,8 @@ export default function ExpertiseCardsSection() {
             EXPAND_ALL_SECTIONS || activeCard === null
               ? 'md:grid-cols-2'
               : activeCard === 0
-                ? 'md:grid-cols-[4fr_1fr]'
-                : 'md:grid-cols-[1fr_4fr]'
+                ? 'grid-cols-1 min-[1700px]:grid-cols-[minmax(0,4fr)_minmax(0,1fr)]'
+                : 'grid-cols-1 min-[1700px]:grid-cols-[minmax(0,1fr)_minmax(0,4fr)]'
           }`}
         >
           {cards.map((card, index) => {

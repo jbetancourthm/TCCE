@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useMinWidthMd } from '../../../shared/hooks/useMinWidthMd'
+import { useMinWidthLg } from '../../../shared/hooks/useMinWidthLg'
 
 /**
  * Tarjetas con texto expandible en móvil (tap) y hover en desktop (Virtual Design, Performance Monitoring).
  */
 export function useTouchExpandableCards() {
-  const isDesktop = useMinWidthMd()
+  const isDesktop = useMinWidthLg()
   const [mobileExpandedKey, setMobileExpandedKey] = useState<string | null>(null)
 
   useEffect(() => {

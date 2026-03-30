@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useMinWidthMd } from '../../../shared/hooks/useMinWidthMd'
+import { useMinWidthLg } from '../../../shared/hooks/useMinWidthLg'
 
 const cards = [
   {
@@ -50,7 +50,7 @@ export type FieldOperationsCard = (typeof cards)[number]
  * Carrusel de páginas (desktop: grupos de 3 tarjetas; móvil: una por slide) y expansión táctil por tarjeta.
  */
 export function useFieldOperationsCarousel() {
-  const isDesktop = useMinWidthMd()
+  const isDesktop = useMinWidthLg()
   const pages = isDesktop ? DESKTOP_PAGES : cards.map((c) => [c])
   const pageCount = pages.length
 

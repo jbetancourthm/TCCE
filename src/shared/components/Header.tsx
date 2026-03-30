@@ -239,13 +239,14 @@ export default function Header() {
   }
 
   useEffect(() => {
-    const mq = window.matchMedia('(min-width: 768px)')
+    const mq = window.matchMedia('(min-width: 1355px)')
     const onMq = () => {
       if (mq.matches) {
         setIsMobileMenuOpen(false)
         setMobileExpandedParent(null)
       }
     }
+    onMq()
     mq.addEventListener('change', onMq)
     return () => mq.removeEventListener('change', onMq)
   }, [])
@@ -343,9 +344,9 @@ export default function Header() {
           setExpertisePreconSubHover(null)
         }}
       >
-        <div className="flex min-h-[3.75rem] flex-col sm:min-h-[4.15rem] xl:grid xl:min-h-[4.5rem] xl:grid-cols-[auto_minmax(0,1fr)_auto] xl:items-stretch xl:gap-x-3 xl:min-h-[4.75rem] xl:gap-x-6">
-          <div className="flex min-h-[inherit] w-full flex-1 items-center gap-3 sm:gap-4 xl:contents xl:min-h-0">
-          <div className="ml-3 flex min-w-0 shrink-0 items-center gap-2.5 sm:ml-6 sm:gap-3 xl:ml-10 xl:row-start-1 xl:col-start-1 md:min-h-[4.5rem] xl:min-h-[4.75rem]">
+        <div className="flex min-h-[3.75rem] flex-col sm:min-h-[4.15rem] min-[1355px]:grid min-[1355px]:min-h-[4.5rem] min-[1355px]:grid-cols-[auto_minmax(0,1fr)_auto] min-[1355px]:items-stretch min-[1355px]:gap-x-3 min-[1355px]:min-h-[4.75rem] min-[1355px]:gap-x-6">
+          <div className="flex min-h-[inherit] w-full flex-1 items-center gap-3 sm:gap-4 min-[1355px]:contents min-[1355px]:min-h-0">
+          <div className="ml-3 flex min-w-0 shrink-0 items-center gap-2.5 sm:ml-6 sm:gap-3 min-[1355px]:ml-10 min-[1355px]:row-start-1 min-[1355px]:col-start-1 md:min-h-[4.5rem] min-[1355px]:min-h-[4.75rem]">
             <button
               type="button"
               onClick={() => scrollTo('home')}
@@ -358,11 +359,11 @@ export default function Header() {
 
           <nav
             aria-label="Navegación escritorio"
-            className="hidden min-w-0 xl:row-start-1 xl:col-start-2 xl:flex xl:min-h-0 xl:min-w-0 xl:h-full xl:items-center"
+            className="hidden min-w-0 min-[1355px]:row-start-1 min-[1355px]:col-start-2 min-[1355px]:flex min-[1355px]:min-h-0 min-[1355px]:min-w-0 min-[1355px]:h-full min-[1355px]:items-center"
           >
             <div
               ref={desktopNavRowRef}
-              className="flex w-full min-w-0 flex-nowrap items-center justify-center gap-x-6 sm:gap-x-8 md:gap-x-10 lg:gap-x-12 xl:gap-x-14"
+              className="flex w-full min-w-0 flex-nowrap items-center justify-center gap-x-6 sm:gap-x-8 md:gap-x-10 lg:gap-x-12 min-[1355px]:gap-x-14"
             >
             {navItems.map((item, index) => (
               <button
@@ -388,25 +389,25 @@ export default function Header() {
             </div>
           </nav>
 
-          <div className="ml-auto flex min-w-0 shrink-0 items-center gap-2 sm:gap-4 xl:row-start-1 xl:col-start-3 xl:mr-10 xl:ml-0 xl:min-h-[4.5rem] xl:justify-end xl:min-h-[4.75rem] xl:gap-10">
+          <div className="ml-auto flex min-w-0 shrink-0 items-center gap-2 sm:gap-4 min-[1355px]:row-start-1 min-[1355px]:col-start-3 min-[1355px]:mr-10 min-[1355px]:ml-0 min-[1355px]:min-h-[4.75rem] min-[1355px]:shrink-0 min-[1355px]:justify-end min-[1355px]:gap-14">
             <a
               href="tel:+13014597484"
-              className="hidden min-w-0 max-w-[min(11rem,42vw)] items-center gap-2 text-sm font-sans text-white/90 transition hover:text-white xl:inline-flex xl:max-w-none"
+              className="hidden min-w-0 max-w-[min(11rem,42vw)] items-center gap-2 text-sm font-sans text-white/90 transition hover:text-white min-[1355px]:inline-flex min-[1355px]:max-w-none min-[1355px]:shrink-0 min-[1355px]:gap-2.5"
               aria-label="Llamar (301) 459 7484"
             >
               <HeaderPhoneIcon className="shrink-0 text-white" />
-              <span className="truncate">(301) 459 7484</span>
+              <span className="whitespace-nowrap">(301) 459 7484</span>
             </a>
             <button
               type="button"
-              className="hidden xl:inline-block -ml-3 min-w-[8.5rem] origin-center rounded-lg border border-white bg-transparent px-5 py-1.5 text-xs font-sans font-medium text-white transition-all duration-200 ease-out hover:scale-[1.04] hover:border-[#E4611F] hover:text-[#E4611F] sm:-ml-4 sm:min-w-[9.75rem] sm:px-5 sm:py-2 sm:text-sm xl:min-w-[10.5rem] xl:px-8"
+              className="hidden min-[1355px]:inline-flex min-[1355px]:shrink-0 min-[1355px]:min-w-[10.5rem] min-[1355px]:items-center min-[1355px]:justify-center min-[1355px]:px-8 min-[1355px]:py-2 min-[1355px]:text-sm origin-center rounded-lg border border-white bg-transparent px-5 py-1.5 text-xs font-sans font-medium text-white transition-all duration-200 ease-out hover:scale-[1.04] hover:border-[#E4611F] hover:text-[#E4611F]"
               onClick={() => openContactModal()}
             >
               Contact Us
             </button>
             <button
               type="button"
-              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white p-1.5 text-white transition hover:border-[#E4611F] hover:text-[#E4611F] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E4611F] xl:hidden"
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white p-1.5 text-white transition hover:border-[#E4611F] hover:text-[#E4611F] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E4611F] min-[1355px]:hidden"
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-header-nav"
               aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
@@ -425,7 +426,7 @@ export default function Header() {
           </div>
 
         <div
-          className={`hidden transition-all duration-200 xl:row-start-2 xl:col-start-2 xl:col-end-3 xl:block xl:min-w-0 ${
+          className={`hidden transition-all duration-200 min-[1355px]:row-start-2 min-[1355px]:col-start-2 min-[1355px]:col-end-3 min-[1355px]:block min-[1355px]:min-w-0 ${
             isDesktopMegaItem(activeItem) ? 'max-h-[min(34rem,90vh)] opacity-100' : 'pointer-events-none max-h-0 opacity-0'
           }`}
         >
@@ -590,7 +591,7 @@ export default function Header() {
           id="mobile-header-nav"
           aria-label="Navegación principal"
           aria-hidden={!isMobileMenuOpen}
-          className={`xl:hidden border-t transition-all duration-200 motion-reduce:transition-none ${
+          className={`min-[1355px]:hidden border-t transition-all duration-200 motion-reduce:transition-none ${
             isMobileMenuOpen
               ? 'max-h-[min(32rem,85vh)] overflow-y-auto border-white/20 pt-1 opacity-100'
               : 'pointer-events-none max-h-0 overflow-hidden border-transparent py-0 opacity-0'

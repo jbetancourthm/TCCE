@@ -15,7 +15,7 @@ export default function OurCulture() {
       className="scroll-mt-28 pt-16 md:scroll-mt-32 md:pt-20"
       aria-labelledby="about-our-culture-heading"
     >
-      <div className="grid grid-cols-1 gap-10 md:grid-cols-3 md:items-start md:gap-8 lg:gap-12">
+      <div className="grid grid-cols-1 gap-10 min-[1061px]:grid-cols-3 min-[1061px]:items-start min-[1061px]:gap-8 lg:gap-12">
         <div className="min-w-0">
           <h2
             id="about-our-culture-heading"

@@ -1,57 +1,58 @@
-# TCCE — Total Civil Construction (Landing)
+# TCCE — Total Civil Construction (landing)
 
-Sitio corporativo tipo **landing de una sola página** (React 19 + Vite 7 + TypeScript + Tailwind CSS 4). Incluye secciones de Home, Expertise (Preconstruction / Construction Management), Safety, footer y modal global de contacto contra un API Node opcional.
+Corporate **single-page landing** site (React 19 + Vite 7 + TypeScript + Tailwind CSS 4). Includes Home, Expertise (Preconstruction / Construction Management), Safety, footer, and a global contact modal against an optional Node API.
 
-## Documentación
+## Documentation
 
-| Recurso | Descripción |
-|---------|-------------|
-| **[docs/README.md](./docs/README.md)** | Índice de toda la documentación técnica. |
-| **[docs/MANUAL_FRONTEND.md](./docs/MANUAL_FRONTEND.md)** | Manual detallado del frontend: arquitectura, módulos, hooks, eventos, build y convenciones. |
-| **[docs/SEGURIDAD_FRONTEND.md](./docs/SEGURIDAD_FRONTEND.md)** | Seguridad del cliente, CSP, cabeceras, formulario de contacto y checklist de producción. |
+| Resource | Description |
+|----------|-------------|
+| **[docs/README.md](./docs/README.md)** | Index of all technical documentation. |
+| **[docs/MANUAL_FRONTEND.md](./docs/MANUAL_FRONTEND.md)** | Full frontend manual: architecture, modules, hooks, events, build, and conventions. |
+| **[docs/FRONTEND_SECURITY.md](./docs/FRONTEND_SECURITY.md)** | Client security, CSP, headers, contact form, and production checklist. |
+| **[docs/BACKEND.md](./docs/BACKEND.md)** | Contact API (Express): `/api/contact`, env vars, Gmail/Nodemailer, rate limits, CORS. |
 
-## Requisitos
+## Requirements
 
-- **Node.js** compatible con Vite 7 (revisar avisos de `npm run build` si la versión es antigua).
-- **npm** u otro gestor compatible.
+- **Node.js** compatible with Vite 7 (watch `npm run build` warnings if the version is outdated).
+- **npm** or another compatible package manager.
 
-## Scripts (frontend — raíz del repo)
+## Scripts (frontend — repo root)
 
 ```bash
 npm install
-npm run dev      # http://localhost:5173 (por defecto)
-npm run build    # TypeScript + bundle en dist/
-npm run preview  # Sirve dist/ para pruebas de producción
+npm run dev      # http://localhost:5173 (default)
+npm run build    # TypeScript + bundle to dist/
+npm run preview  # Serves dist/ for production-like tests
 ```
 
-## Variables de entorno (frontend)
+## Environment variables (frontend)
 
-Copia **`.env.example`** a **`.env.local`** y ajusta:
+Copy **`.env.example`** to **`.env.local`** and adjust:
 
-- **`VITE_CONTACT_API_URL`**: URL base del API de contacto (pública en el bundle). Sin definir en dev se usa `http://localhost:3001`.
+- **`VITE_CONTACT_API_URL`**: public contact API base URL (exposed in the bundle). If unset in dev, `http://localhost:3001` is used.
 
-**No** coloques secretos en variables `VITE_*`.
+Do **not** put secrets in `VITE_*` variables.
 
-## Backend de contacto (opcional)
+## Contact backend (optional)
 
-En la carpeta **`backend/`** hay un servidor **Express** que expone `POST /api/contact` (validación Zod, rate limit, Helmet, CORS). Ver `backend/.env.example` y el manual de seguridad para alinear orígenes y despliegue.
+The **`backend/`** folder contains an **Express** server exposing `POST /api/contact` (Zod validation, rate limit, Helmet, CORS). See **`docs/BACKEND.md`**, **`backend/.env.example`**, and **`docs/FRONTEND_SECURITY.md`** for configuration and deployment alignment.
 
-## Estructura rápida
+## Quick structure
 
 ```
-├── backend/           # API de correo / contacto
-├── docs/              # Documentación técnica
-├── public/            # Estáticos y cabeceras (p. ej. _headers para Netlify)
+├── backend/           # Mail / contact API
+├── docs/              # Technical documentation
+├── public/            # Static assets and headers (e.g. _headers for Netlify)
 ├── src/
 │   ├── app/           # LandingPage
-│   ├── sections/      # Módulos por dominio (home, expertise, …)
-│   ├── shared/        # Header, Footer, contacto, hooks y servicios
-│   └── utils/         # Iconos y gráficos
+│   ├── sections/      # Domain modules (home, expertise, …)
+│   ├── shared/        # Header, Footer, contact, hooks, services
+│   └── utils/         # Icons and graphics
 ├── index.html
 ├── vite.config.ts
-└── vercel.json        # Cabeceras de seguridad en Vercel
+└── vercel.json        # Security headers on Vercel
 ```
 
-## Licencia y uso
+## License and use
 
-Repositorio **privado** (`"private": true` en `package.json`). Uso interno según política de TCCE.
+**Private** repository (`"private": true` in `package.json`). Internal use per TCCE policy.

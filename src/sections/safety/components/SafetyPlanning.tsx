@@ -146,7 +146,7 @@ export default function SafetyPlanning() {
   return (
     <div className="mt-16">
       {/* Móvil: orden imagen entre intro y resto; sin grid que iguale filas a la altura de la foto */}
-      <div className="flex flex-col gap-8 md:hidden">
+      <div className="flex flex-col gap-8 min-[951px]:hidden">
         <div className="text-left">
           <SafetyPlanningHeading />
           <SafetyPlanningIntro />
@@ -162,7 +162,7 @@ export default function SafetyPlanning() {
       </div>
 
       {/* Escritorio: dos columnas flex; el texto fluye seguido en la izquierda (sin hueco gigante) */}
-      <div className="hidden gap-8 md:flex md:flex-row md:items-start">
+      <div className="hidden gap-8 min-[951px]:flex min-[951px]:flex-row min-[951px]:items-start">
         <div className="flex min-w-0 flex-1 flex-col gap-8 text-left">
           <div>
             <SafetyPlanningHeading />

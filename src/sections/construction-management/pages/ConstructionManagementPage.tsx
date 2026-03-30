@@ -10,7 +10,7 @@ export default function ConstructionManagementPage() {
   const { activeTab, setActiveTab } = useConstructionManagementTabs()
 
   return (
-    <section className="mt-0 grid grid-cols-1 gap-y-10 md:grid-cols-2">
+    <section className="mt-0 grid grid-cols-1 gap-y-10 lg:grid-cols-2">
       <ConstructionManagementIntro />
 
       <div className="col-span-full mt-10 flex flex-col items-center text-center">

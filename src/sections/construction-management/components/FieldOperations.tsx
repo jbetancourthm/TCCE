@@ -45,7 +45,7 @@ export default function FieldOperations() {
             >
               {pages.map((page, pageIdx) => (
                 <div key={`field-page-${pageIdx}`} className="w-full shrink-0">
-                  <div className="flex items-stretch gap-6">
+                  <div className="flex flex-col items-stretch gap-6 lg:flex-row">
                     {page.map((card) => {
                       const expandedTouch = !isDesktop && mobileExpandedKey === card.key
                       return (
@@ -56,7 +56,7 @@ export default function FieldOperations() {
                           aria-expanded={isDesktop ? undefined : expandedTouch}
                           aria-label={isDesktop ? undefined : `${expandedTouch ? 'Contraer' : 'Ampliar'}: ${card.label}`}
                           data-expanded={expandedTouch ? 'true' : undefined}
-                          className="group relative h-[17.5rem] min-w-0 w-full cursor-default overflow-hidden rounded-3xl bg-neutral-200 max-md:cursor-pointer md:h-[20rem] md:flex-1"
+                          className="group relative h-[17.5rem] min-w-0 w-full cursor-default overflow-hidden rounded-3xl bg-neutral-200 max-lg:cursor-pointer lg:h-[20rem] lg:flex-1"
                           onClick={isDesktop ? undefined : () => toggleCard(card.key)}
                           onKeyDown={
                             isDesktop
@@ -71,11 +71,11 @@ export default function FieldOperations() {
                         >
                           <img src={card.image} alt={card.label} className="pointer-events-none absolute inset-0 h-full w-full object-cover" />
                           <div
-                            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-black/15 to-transparent transition-opacity duration-300 max-md:group-data-[expanded=true]:from-black/85 max-md:group-data-[expanded=true]:via-black/55 md:group-hover:from-black/85 md:group-hover:via-black/55"
+                            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-black/15 to-transparent transition-opacity duration-300 max-lg:group-data-[expanded=true]:from-black/85 max-lg:group-data-[expanded=true]:via-black/55 lg:group-hover:from-black/85 lg:group-hover:via-black/55"
                             aria-hidden
                           />
                           <div
-                            className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 max-md:group-data-[expanded=true]:bg-black/40 md:group-hover:bg-black/40"
+                            className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 max-lg:group-data-[expanded=true]:bg-black/40 lg:group-hover:bg-black/40"
                             aria-hidden
                           />
                           {!isDesktop && !expandedTouch ? (
@@ -89,11 +89,11 @@ export default function FieldOperations() {
                               </span>
                             </div>
                           ) : null}
-                          <div className="pointer-events-none absolute inset-0 z-10 px-4 text-center md:px-6">
-                            <div className="absolute inset-x-0 bottom-7 transition-transform duration-500 ease-out [transition-delay:180ms] max-md:group-data-[expanded=true]:translate-y-[-11rem] max-md:group-data-[expanded=true]:[transition-delay:0ms] md:group-hover:translate-y-[-12rem] md:group-hover:[transition-delay:0ms]">
+                          <div className="pointer-events-none absolute inset-0 z-10 px-4 text-center lg:px-6">
+                            <div className="absolute inset-x-0 bottom-7 transition-transform duration-500 ease-out [transition-delay:180ms] max-lg:group-data-[expanded=true]:translate-y-[-11rem] max-lg:group-data-[expanded=true]:[transition-delay:0ms] lg:group-hover:translate-y-[-12rem] lg:group-hover:[transition-delay:0ms]">
                               <span className="block text-2xl font-semibold text-white drop-shadow">{card.label}</span>
                             </div>
-                            <p className="absolute inset-x-8 top-[6.55rem] max-h-0 overflow-hidden text-pretty opacity-0 transition-[max-height,opacity,transform] duration-300 ease-out [transition-delay:0ms] max-md:group-data-[expanded=true]:max-h-[13rem] max-md:group-data-[expanded=true]:translate-y-0 max-md:group-data-[expanded=true]:opacity-100 max-md:group-data-[expanded=true]:[transition-delay:380ms] md:inset-x-12 md:top-[7.35rem] md:group-hover:max-h-[15rem] md:group-hover:translate-y-0 md:group-hover:opacity-100 md:group-hover:[transition-delay:380ms] text-[0.6875rem] leading-snug text-white/95 md:text-xs md:leading-snug translate-y-2">
+                            <p className="absolute inset-x-8 top-[6.55rem] max-h-0 overflow-hidden text-pretty opacity-0 transition-[max-height,opacity,transform] duration-300 ease-out [transition-delay:0ms] max-lg:group-data-[expanded=true]:max-h-[13rem] max-lg:group-data-[expanded=true]:translate-y-0 max-lg:group-data-[expanded=true]:opacity-100 max-lg:group-data-[expanded=true]:[transition-delay:380ms] lg:inset-x-12 lg:top-[7.35rem] lg:group-hover:max-h-[15rem] lg:group-hover:translate-y-0 lg:group-hover:opacity-100 lg:group-hover:[transition-delay:380ms] text-[0.6875rem] leading-snug text-white/95 lg:text-xs lg:leading-snug translate-y-2">
                               {card.description}
                             </p>
                           </div>
