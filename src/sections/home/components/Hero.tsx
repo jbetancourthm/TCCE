@@ -1,6 +1,23 @@
 import Container from '../../../shared/components/Container'
+import useScrollToSection from '../../../shared/hooks/useScrollToSection'
 
 export default function Hero() {
+  const scrollTo = useScrollToSection()
+
+  const goToOurExpertise = () => {
+    window.dispatchEvent(new CustomEvent('landing:set-module', { detail: { module: 'expertise' } }))
+    scrollTo('expertise')
+  }
+
+  /** Pestaña 0 = Who we are (mismo orden que el subnav de About en el header). */
+  const goToAboutWhoWeAre = () => {
+    window.dispatchEvent(new CustomEvent('landing:set-module', { detail: { module: 'about' } }))
+    scrollTo('expertise')
+    window.setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('about:set-tab', { detail: { tab: 0 } }))
+    }, 160)
+  }
+
   return (
     <div className="relative min-h-[100svh] overflow-hidden bg-neutral-950">
       <video
@@ -47,12 +64,14 @@ export default function Hero() {
         <div className="relative z-[3] mt-5 flex w-full max-w-lg flex-row gap-3 self-center px-1 pb-4 md:hidden">
           <button
             type="button"
+            onClick={goToOurExpertise}
             className="min-w-0 flex-1 basis-0 rounded-xl border border-white bg-transparent px-3 py-2.5 text-center text-xs font-medium text-white shadow-[0_1px_4px_rgba(0,0,0,0.35)] transition-colors duration-200 hover:bg-white hover:text-orange-500 hover:shadow-none sm:text-sm"
           >
             View Services
           </button>
           <button
             type="button"
+            onClick={goToAboutWhoWeAre}
             className="min-w-0 flex-1 basis-0 rounded-xl border border-transparent bg-orange-500 px-3 py-2.5 text-center text-xs font-medium text-white transition-colors duration-200 hover:bg-orange-700 sm:text-sm"
           >
             Explore Our Process
@@ -68,12 +87,14 @@ export default function Hero() {
         <div className="pointer-events-auto flex flex-wrap justify-end gap-4 sm:gap-5">
           <button
             type="button"
+            onClick={goToOurExpertise}
             className="min-w-[13rem] rounded-xl border border-white bg-transparent px-12 py-2 text-sm font-medium text-white shadow-[0_1px_4px_rgba(0,0,0,0.35)] transition-colors duration-200 hover:bg-white hover:text-orange-500 hover:shadow-none sm:min-w-[15rem] md:min-w-[11rem] md:px-14 md:py-3"
           >
             View Services
           </button>
           <button
             type="button"
+            onClick={goToAboutWhoWeAre}
             className="min-w-[13rem] rounded-xl border border-transparent bg-orange-500 px-8 py-2 text-sm font-medium text-white transition-colors duration-200 hover:bg-orange-700 sm:min-w-[15rem] md:min-w-[11rem] md:px-10 md:py-3"
           >
             Explore Our Process

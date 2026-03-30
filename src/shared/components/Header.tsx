@@ -25,7 +25,10 @@ const navItems = [
   { label: 'Projects', id: 'projects', chevron: true },
   { label: 'About', id: 'about', chevron: true },
   { label: 'Safety', id: 'safety', chevron: true },
+  { label: 'Careers', id: 'careers', chevron: false },
 ] as const
+
+const NAV_ITEMS_WITH_DESKTOP_MEGA = new Set(['expertise', 'about', 'safety'])
 
 const EXPERTISE_PRECONSTRUCTION_LINKS = [
   { label: 'Engineering-Led Insight', section: 'engineering' as const },
@@ -215,6 +218,13 @@ export default function Header() {
       scrollTo('expertise')
       return
     }
+    if (itemId === 'careers') {
+      setActiveItem(null)
+      setExpertiseMenuHover(null)
+      setExpertisePreconSubHover(null)
+      scrollTo('careers')
+      return
+    }
   }
 
   useEffect(() => {
@@ -279,7 +289,7 @@ export default function Header() {
   }, [])
 
   useLayoutEffect(() => {
-    if (!activeItem || activeItem === 'projects') {
+    if (!activeItem || !NAV_ITEMS_WITH_DESKTOP_MEGA.has(activeItem)) {
       setDesktopMegaPadPx(0)
       return
     }
@@ -319,9 +329,9 @@ export default function Header() {
           setExpertisePreconSubHover(null)
         }}
       >
-        <div className="flex min-h-[3.75rem] flex-col sm:min-h-[4.15rem] md:grid md:min-h-[4.5rem] md:grid-cols-[auto_minmax(0,1fr)_auto] md:items-stretch md:gap-x-3 lg:min-h-[4.75rem] lg:gap-x-6">
-          <div className="flex min-h-[inherit] w-full flex-1 items-center gap-3 sm:gap-4 md:contents md:min-h-0">
-          <div className="ml-3 flex min-w-0 shrink-0 items-center gap-2.5 sm:ml-6 sm:gap-3 md:ml-10 md:row-start-1 md:col-start-1 md:min-h-[4.5rem] lg:min-h-[4.75rem]">
+        <div className="flex min-h-[3.75rem] flex-col sm:min-h-[4.15rem] lg:grid lg:min-h-[4.5rem] lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-stretch lg:gap-x-3 lg:min-h-[4.75rem] lg:gap-x-6">
+          <div className="flex min-h-[inherit] w-full flex-1 items-center gap-3 sm:gap-4 lg:contents lg:min-h-0">
+          <div className="ml-3 flex min-w-0 shrink-0 items-center gap-2.5 sm:ml-6 sm:gap-3 lg:ml-10 lg:row-start-1 lg:col-start-1 md:min-h-[4.5rem] lg:min-h-[4.75rem]">
             <button
               type="button"
               onClick={() => scrollTo('home')}
@@ -334,11 +344,11 @@ export default function Header() {
 
           <nav
             aria-label="Navegación escritorio"
-            className="hidden min-w-0 md:row-start-1 md:col-start-2 md:flex md:min-h-0 md:min-w-0 md:h-full md:items-center"
+            className="hidden min-w-0 lg:row-start-1 lg:col-start-2 lg:flex lg:min-h-0 lg:min-w-0 lg:h-full lg:items-center"
           >
             <div
               ref={desktopNavRowRef}
-              className="flex w-full min-w-0 flex-nowrap items-center justify-center gap-x-12 sm:gap-x-16 md:gap-x-20 lg:gap-x-24 xl:gap-x-28 2xl:gap-x-32"
+              className="flex w-full min-w-0 flex-nowrap items-center justify-center gap-x-6 sm:gap-x-8 md:gap-x-10 lg:gap-x-12 xl:gap-x-14"
             >
             {navItems.map((item, index) => (
               <button
@@ -364,10 +374,10 @@ export default function Header() {
             </div>
           </nav>
 
-          <div className="ml-auto flex min-w-0 shrink-0 items-center gap-2 sm:gap-4 md:row-start-1 md:col-start-3 md:mr-10 md:ml-0 md:min-h-[4.5rem] md:justify-end lg:min-h-[4.75rem] md:gap-10">
+          <div className="ml-auto flex min-w-0 shrink-0 items-center gap-2 sm:gap-4 lg:row-start-1 lg:col-start-3 lg:mr-10 lg:ml-0 lg:min-h-[4.5rem] lg:justify-end lg:min-h-[4.75rem] lg:gap-10">
             <a
               href="tel:+13014597484"
-              className="hidden min-w-0 max-w-[min(11rem,42vw)] items-center gap-2 text-sm font-sans text-white/90 transition hover:text-white sm:inline-flex md:max-w-none"
+              className="hidden min-w-0 max-w-[min(11rem,42vw)] items-center gap-2 text-sm font-sans text-white/90 transition hover:text-white lg:inline-flex lg:max-w-none"
               aria-label="Llamar (301) 459 7484"
             >
               <HeaderPhoneIcon className="shrink-0 text-white" />
@@ -375,14 +385,14 @@ export default function Header() {
             </a>
             <button
               type="button"
-              className="hidden md:inline-block -ml-3 min-w-[8.5rem] origin-center rounded-lg border border-white bg-transparent px-5 py-1.5 text-xs font-sans font-medium text-white transition-all duration-200 ease-out hover:scale-[1.04] hover:border-[#E4611F] hover:text-[#E4611F] sm:-ml-4 sm:min-w-[9.75rem] sm:px-5 sm:py-2 sm:text-sm md:min-w-[10.5rem] md:px-8"
+              className="hidden lg:inline-block -ml-3 min-w-[8.5rem] origin-center rounded-lg border border-white bg-transparent px-5 py-1.5 text-xs font-sans font-medium text-white transition-all duration-200 ease-out hover:scale-[1.04] hover:border-[#E4611F] hover:text-[#E4611F] sm:-ml-4 sm:min-w-[9.75rem] sm:px-5 sm:py-2 sm:text-sm lg:min-w-[10.5rem] lg:px-8"
               onClick={() => openContactModal()}
             >
               Contact Us
             </button>
             <button
               type="button"
-              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white p-1.5 text-white transition hover:border-[#E4611F] hover:text-[#E4611F] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E4611F] md:hidden"
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white p-1.5 text-white transition hover:border-[#E4611F] hover:text-[#E4611F] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E4611F] lg:hidden"
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-header-nav"
               aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
@@ -400,12 +410,12 @@ export default function Header() {
           </div>
 
         <div
-          className={`hidden transition-all duration-200 md:row-start-2 md:col-start-2 md:col-end-3 md:block md:min-w-0 ${
-            activeItem && activeItem !== 'projects' ? 'max-h-[min(34rem,90vh)] opacity-100' : 'pointer-events-none max-h-0 opacity-0'
+          className={`hidden transition-all duration-200 lg:row-start-2 lg:col-start-2 lg:col-end-3 lg:block lg:min-w-0 ${
+            activeItem && NAV_ITEMS_WITH_DESKTOP_MEGA.has(activeItem) ? 'max-h-[min(34rem,90vh)] opacity-100' : 'pointer-events-none max-h-0 opacity-0'
           }`}
         >
           <div ref={desktopMegaTrackRef} className="w-full py-5">
-            {activeItem && activeItem !== 'projects' ? (
+            {activeItem && NAV_ITEMS_WITH_DESKTOP_MEGA.has(activeItem) ? (
               <div className="text-white" style={{ paddingLeft: desktopMegaPadPx }}>
                 <div
                   className={`grid justify-items-start gap-6 ${
@@ -565,7 +575,7 @@ export default function Header() {
           id="mobile-header-nav"
           aria-label="Navegación principal"
           aria-hidden={!isMobileMenuOpen}
-          className={`md:hidden border-t transition-all duration-200 motion-reduce:transition-none ${
+          className={`lg:hidden border-t transition-all duration-200 motion-reduce:transition-none ${
             isMobileMenuOpen
               ? 'max-h-[min(32rem,85vh)] overflow-y-auto border-white/20 pt-1 opacity-100'
               : 'pointer-events-none max-h-0 overflow-hidden border-transparent py-0 opacity-0'

@@ -10,6 +10,7 @@ const footerNavItems = [
   { label: 'Projects', id: 'projects' },
   { label: 'About', id: 'about' },
   { label: 'Safety', id: 'safety' },
+  { label: 'Careers', id: 'careers' },
 ] as const
 
 export default function Footer() {
@@ -45,6 +46,10 @@ export default function Footer() {
     if (id === 'expertise') {
       setLandingModule('expertise')
       scrollTo('expertise')
+      return
+    }
+    if (id === 'careers') {
+      scrollTo('careers')
       return
     }
     scrollTo(id)
