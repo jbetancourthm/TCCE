@@ -87,6 +87,7 @@ export default function Header() {
   const [expertisePreconSubHover, setExpertisePreconSubHover] = useState<null | 'projects' | 'preliminary'>(null)
   const [isHeaderVisible, setIsHeaderVisible] = useState(true)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [mobileExpandedParent, setMobileExpandedParent] = useState<null | 'expertise' | 'about' | 'safety'>(null)
   const [desktopMegaPadPx, setDesktopMegaPadPx] = useState(0)
   const desktopNavRowRef = useRef<HTMLDivElement>(null)
   const desktopMegaTrackRef = useRef<HTMLDivElement>(null)
@@ -230,7 +231,10 @@ export default function Header() {
   useEffect(() => {
     const mq = window.matchMedia('(min-width: 768px)')
     const onMq = () => {
-      if (mq.matches) setIsMobileMenuOpen(false)
+      if (mq.matches) {
+        setIsMobileMenuOpen(false)
+        setMobileExpandedParent(null)
+      }
     }
     mq.addEventListener('change', onMq)
     return () => mq.removeEventListener('change', onMq)
@@ -329,9 +333,9 @@ export default function Header() {
           setExpertisePreconSubHover(null)
         }}
       >
-        <div className="flex min-h-[3.75rem] flex-col sm:min-h-[4.15rem] lg:grid lg:min-h-[4.5rem] lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-stretch lg:gap-x-3 lg:min-h-[4.75rem] lg:gap-x-6">
-          <div className="flex min-h-[inherit] w-full flex-1 items-center gap-3 sm:gap-4 lg:contents lg:min-h-0">
-          <div className="ml-3 flex min-w-0 shrink-0 items-center gap-2.5 sm:ml-6 sm:gap-3 lg:ml-10 lg:row-start-1 lg:col-start-1 md:min-h-[4.5rem] lg:min-h-[4.75rem]">
+        <div className="flex min-h-[3.75rem] flex-col sm:min-h-[4.15rem] xl:grid xl:min-h-[4.5rem] xl:grid-cols-[auto_minmax(0,1fr)_auto] xl:items-stretch xl:gap-x-3 xl:min-h-[4.75rem] xl:gap-x-6">
+          <div className="flex min-h-[inherit] w-full flex-1 items-center gap-3 sm:gap-4 xl:contents xl:min-h-0">
+          <div className="ml-3 flex min-w-0 shrink-0 items-center gap-2.5 sm:ml-6 sm:gap-3 xl:ml-10 xl:row-start-1 xl:col-start-1 md:min-h-[4.5rem] xl:min-h-[4.75rem]">
             <button
               type="button"
               onClick={() => scrollTo('home')}
@@ -344,7 +348,7 @@ export default function Header() {
 
           <nav
             aria-label="Navegación escritorio"
-            className="hidden min-w-0 lg:row-start-1 lg:col-start-2 lg:flex lg:min-h-0 lg:min-w-0 lg:h-full lg:items-center"
+            className="hidden min-w-0 xl:row-start-1 xl:col-start-2 xl:flex xl:min-h-0 xl:min-w-0 xl:h-full xl:items-center"
           >
             <div
               ref={desktopNavRowRef}
@@ -374,10 +378,10 @@ export default function Header() {
             </div>
           </nav>
 
-          <div className="ml-auto flex min-w-0 shrink-0 items-center gap-2 sm:gap-4 lg:row-start-1 lg:col-start-3 lg:mr-10 lg:ml-0 lg:min-h-[4.5rem] lg:justify-end lg:min-h-[4.75rem] lg:gap-10">
+          <div className="ml-auto flex min-w-0 shrink-0 items-center gap-2 sm:gap-4 xl:row-start-1 xl:col-start-3 xl:mr-10 xl:ml-0 xl:min-h-[4.5rem] xl:justify-end xl:min-h-[4.75rem] xl:gap-10">
             <a
               href="tel:+13014597484"
-              className="hidden min-w-0 max-w-[min(11rem,42vw)] items-center gap-2 text-sm font-sans text-white/90 transition hover:text-white lg:inline-flex lg:max-w-none"
+              className="hidden min-w-0 max-w-[min(11rem,42vw)] items-center gap-2 text-sm font-sans text-white/90 transition hover:text-white xl:inline-flex xl:max-w-none"
               aria-label="Llamar (301) 459 7484"
             >
               <HeaderPhoneIcon className="shrink-0 text-white" />
@@ -385,14 +389,14 @@ export default function Header() {
             </a>
             <button
               type="button"
-              className="hidden lg:inline-block -ml-3 min-w-[8.5rem] origin-center rounded-lg border border-white bg-transparent px-5 py-1.5 text-xs font-sans font-medium text-white transition-all duration-200 ease-out hover:scale-[1.04] hover:border-[#E4611F] hover:text-[#E4611F] sm:-ml-4 sm:min-w-[9.75rem] sm:px-5 sm:py-2 sm:text-sm lg:min-w-[10.5rem] lg:px-8"
+              className="hidden xl:inline-block -ml-3 min-w-[8.5rem] origin-center rounded-lg border border-white bg-transparent px-5 py-1.5 text-xs font-sans font-medium text-white transition-all duration-200 ease-out hover:scale-[1.04] hover:border-[#E4611F] hover:text-[#E4611F] sm:-ml-4 sm:min-w-[9.75rem] sm:px-5 sm:py-2 sm:text-sm xl:min-w-[10.5rem] xl:px-8"
               onClick={() => openContactModal()}
             >
               Contact Us
             </button>
             <button
               type="button"
-              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white p-1.5 text-white transition hover:border-[#E4611F] hover:text-[#E4611F] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E4611F] lg:hidden"
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white p-1.5 text-white transition hover:border-[#E4611F] hover:text-[#E4611F] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E4611F] xl:hidden"
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-header-nav"
               aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
@@ -400,6 +404,7 @@ export default function Header() {
                 setIsMobileMenuOpen((open) => {
                   const next = !open
                   if (next) setActiveItem(null)
+                  if (!next) setMobileExpandedParent(null)
                   return next
                 })
               }}
@@ -410,7 +415,7 @@ export default function Header() {
           </div>
 
         <div
-          className={`hidden transition-all duration-200 lg:row-start-2 lg:col-start-2 lg:col-end-3 lg:block lg:min-w-0 ${
+          className={`hidden transition-all duration-200 xl:row-start-2 xl:col-start-2 xl:col-end-3 xl:block xl:min-w-0 ${
             activeItem && NAV_ITEMS_WITH_DESKTOP_MEGA.has(activeItem) ? 'max-h-[min(34rem,90vh)] opacity-100' : 'pointer-events-none max-h-0 opacity-0'
           }`}
         >
@@ -575,7 +580,7 @@ export default function Header() {
           id="mobile-header-nav"
           aria-label="Navegación principal"
           aria-hidden={!isMobileMenuOpen}
-          className={`lg:hidden border-t transition-all duration-200 motion-reduce:transition-none ${
+          className={`xl:hidden border-t transition-all duration-200 motion-reduce:transition-none ${
             isMobileMenuOpen
               ? 'max-h-[min(32rem,85vh)] overflow-y-auto border-white/20 pt-1 opacity-100'
               : 'pointer-events-none max-h-0 overflow-hidden border-transparent py-0 opacity-0'
@@ -584,18 +589,37 @@ export default function Header() {
           <ul className="flex flex-col pb-2">
             {navItems.map((item) => (
               <li key={item.id}>
-                <button
-                  type="button"
-                  className="flex w-full items-center justify-between gap-2 py-3.5 text-left text-sm font-sans text-white/90 transition hover:text-white"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false)
-                    runNavItemAction(item.id)
-                  }}
-                >
-                  <span>{item.label}</span>
-                  {'chevron' in item && item.chevron ? <NavItemCaret className="h-4 w-4 shrink-0 opacity-70" /> : null}
-                </button>
-                {item.id === 'about' ? (
+                <div className="flex w-full items-center justify-between gap-2">
+                  <button
+                    type="button"
+                    className="flex-1 py-3.5 text-left text-sm font-sans text-white/90 transition hover:text-white"
+                    onClick={() => {
+                      setIsMobileMenuOpen(false)
+                      setMobileExpandedParent(null)
+                      runNavItemAction(item.id)
+                    }}
+                  >
+                    {item.label}
+                  </button>
+                  {item.id === 'about' || item.id === 'safety' || item.id === 'expertise' ? (
+                    <button
+                      type="button"
+                      aria-expanded={mobileExpandedParent === item.id}
+                      aria-label={`Mostrar submenú de ${item.label}`}
+                      className="inline-flex h-8 w-8 shrink-0 items-center justify-center text-white/80 transition hover:text-white"
+                      onClick={() => {
+                        setMobileExpandedParent((current) => (current === item.id ? null : item.id))
+                      }}
+                    >
+                      <NavItemCaret
+                        className={`h-4 w-4 shrink-0 transition-transform duration-200 ${
+                          mobileExpandedParent === item.id ? 'rotate-180 opacity-100' : 'opacity-70'
+                        }`}
+                      />
+                    </button>
+                  ) : null}
+                </div>
+                {item.id === 'about' && mobileExpandedParent === 'about' ? (
                   <ul className="mb-2 space-y-1 border-l border-white/20 pl-3">
                     {ABOUT_SUBNAV_ITEMS.map((label, idx) => (
                       <li key={label}>
@@ -613,7 +637,7 @@ export default function Header() {
                     ))}
                   </ul>
                 ) : null}
-                {item.id === 'safety' ? (
+                {item.id === 'safety' && mobileExpandedParent === 'safety' ? (
                   <ul className="mb-2 space-y-1 border-l border-white/20 pl-3">
                     {SAFETY_SUBNAV_ITEMS.map((label, idx) => (
                       <li key={label}>
@@ -631,7 +655,7 @@ export default function Header() {
                     ))}
                   </ul>
                 ) : null}
-                {item.id === 'expertise' ? (
+                {item.id === 'expertise' && mobileExpandedParent === 'expertise' ? (
                   <ul className="mb-2 space-y-3 border-l border-white/20 pl-3">
                     <li>
                       <p className="py-1 text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-white/55">
