@@ -1,20 +1,25 @@
 import Container from '../../../shared/components/Container'
+import { useAboutSubnavScroll } from '../hooks/useAbout'
+import CoreValues from './CoreValues'
+import OurCulture from './OurCulture'
+import OurLeadership from './OurLeadership'
+import WhoWeAre from './WhoWeAre'
+import WorkforceAndPeople from './WorkforceAndPeople'
 
 export default function AboutSectionContent() {
-  return (
-    <div className="flex min-h-screen items-center bg-neutral-100 text-slate-900">
-      <Container className="py-16">
-        <h2 className="text-4xl font-semibold tracking-tight">About</h2>
-        <p className="mt-3 max-w-2xl text-slate-600">
-          Placeholder de la sección. Aquí irá la historia / valores / experiencia con el estilo del diseño.
-        </p>
+  useAboutSubnavScroll()
 
-        <div className="mt-10 grid gap-4 md:grid-cols-2">
-          <div className="h-64 rounded-3xl bg-slate-200" />
-          <div className="h-64 rounded-3xl bg-slate-200" />
+  return (
+    <div className="bg-white text-neutral-700">
+      <Container className="py-12 md:py-14">
+        <div className="mx-auto w-[90%] pb-8 text-left md:pb-12">
+          <WhoWeAre />
+          <CoreValues />
+          <OurCulture />
+          <WorkforceAndPeople />
+          <OurLeadership />
         </div>
       </Container>
     </div>
   )
 }
-

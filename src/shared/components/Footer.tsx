@@ -19,7 +19,7 @@ export default function Footer() {
   const scrollTo = useScrollToSection()
   const { open: openContactModal } = useContactUsModal()
 
-  const setLandingModule = (module: 'expertise' | 'safety') => {
+  const setLandingModule = (module: 'expertise' | 'safety' | 'about') => {
     window.dispatchEvent(new CustomEvent('landing:set-module', { detail: { module } }))
   }
 
@@ -37,6 +37,11 @@ export default function Footer() {
     }
     if (id === 'safety') {
       setLandingModule('safety')
+      scrollTo('expertise')
+      return
+    }
+    if (id === 'about') {
+      setLandingModule('about')
       scrollTo('expertise')
       return
     }

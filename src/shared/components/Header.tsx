@@ -11,6 +11,15 @@ const BRAND_ORANGE = '#E4611F'
 /** Orden = pestaña 0, 1, 2 del switch en Safety. */
 const SAFETY_SUBNAV_ITEMS = ['Safety Planning', 'Safety Construction', 'Totally Safe'] as const
 
+/** Orden = pestaña 0…4 del switch en About. */
+const ABOUT_SUBNAV_ITEMS = [
+  'Who we are',
+  'Core Values',
+  'Our Culture',
+  'Workforce & people',
+  'Our Leadership',
+] as const
+
 const navItems = [
   { label: 'Our Expertise', id: 'expertise', chevron: true },
   { label: 'Projects', id: 'projects', chevron: true },
@@ -79,7 +88,7 @@ export default function Header() {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-  const setLandingModule = (module: 'expertise' | 'safety') => {
+  const setLandingModule = (module: 'expertise' | 'safety' | 'about') => {
     window.dispatchEvent(new CustomEvent('landing:set-module', { detail: { module } }))
   }
 
@@ -111,6 +120,15 @@ export default function Header() {
     setActiveItem(null)
   }
 
+  const goToAboutTab = (tab: 0 | 1 | 2 | 3 | 4) => {
+    setLandingModule('about')
+    scrollTo('expertise')
+    window.setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('about:set-tab', { detail: { tab } }))
+    }, 160)
+    setActiveItem(null)
+  }
+
   const runNavItemAction = (itemId: (typeof navItems)[number]['id']) => {
     if (itemId === 'expertise') {
       setLandingModule('expertise')
@@ -123,6 +141,11 @@ export default function Header() {
     }
     if (itemId === 'safety') {
       setLandingModule('safety')
+      scrollTo('expertise')
+      return
+    }
+    if (itemId === 'about') {
+      setLandingModule('about')
       scrollTo('expertise')
       return
     }
@@ -286,6 +309,24 @@ export default function Header() {
                   <span>{item.label}</span>
                   {'chevron' in item && item.chevron ? <NavItemCaret className="h-4 w-4 shrink-0 opacity-70" /> : null}
                 </button>
+                {item.id === 'about' ? (
+                  <ul className="mb-2 space-y-1 border-l border-white/20 pl-3">
+                    {ABOUT_SUBNAV_ITEMS.map((label, idx) => (
+                      <li key={label}>
+                        <button
+                          type="button"
+                          className="w-full py-2 text-left text-xs font-medium text-white/80 transition hover:text-white"
+                          onClick={() => {
+                            setIsMobileMenuOpen(false)
+                            goToAboutTab(idx as 0 | 1 | 2 | 3 | 4)
+                          }}
+                        >
+                          {label}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
                 {item.id === 'safety' ? (
                   <ul className="mb-2 space-y-1 border-l border-white/20 pl-3">
                     {SAFETY_SUBNAV_ITEMS.map((label, idx) => (
@@ -383,6 +424,11 @@ export default function Header() {
                                 }
                                 if (activeItem === 'safety' && itemIndex >= 0 && itemIndex <= 2) {
                                   goToSafetyTab(itemIndex as 0 | 1 | 2)
+                                  return
+                                }
+                                if (activeItem === 'about' && itemIndex >= 0 && itemIndex <= 4) {
+                                  goToAboutTab(itemIndex as 0 | 1 | 2 | 3 | 4)
+                                  return
                                 }
                               }}
                               className={`origin-left transform-gpu whitespace-pre-line text-left text-sm font-medium text-white/90 transition duration-150 ease-out hover:scale-[1.03] hover:text-white ${
