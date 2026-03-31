@@ -1,16 +1,13 @@
-const API_URL = (import.meta.env.VITE_CONTACT_API_URL ?? 'http://localhost:3001').replace(/\/$/, '')
+import emailjs from '@emailjs/browser'
 
-if (import.meta.env.DEV && !import.meta.env.VITE_CONTACT_API_URL) {
-  console.warn(
-    '[contact] VITE_CONTACT_API_URL no está definida; usando http://localhost:3001 (solo desarrollo).',
-  )
-}
+const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID ?? ''
+const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID ?? 'template_zom3mye'
+const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY ?? ''
 
 export type ContactMessagePayload = {
   name: string
   email: string
   message: string
-  /** Honeypot: debe ir vacío */
   website?: string
 }
 
@@ -18,40 +15,27 @@ export async function sendContactMessage(payload: ContactMessagePayload): Promis
   ok: boolean
   message?: string
 }> {
-  const controller = new AbortController()
-  const timeoutId = window.setTimeout(() => controller.abort(), 15_000)
+  if (!SERVICE_ID || !PUBLIC_KEY) {
+    throw new Error('EmailJS no está configurado. Contacta al administrador.')
+  }
 
   try {
-    const res = await fetch(`${API_URL}/api/contact`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: payload.name,
-        email: payload.email,
-        message: payload.message,
-        website: payload.website ?? '',
-      }),
-      credentials: 'omit',
-      mode: 'cors',
-      signal: controller.signal,
-    })
+    await emailjs.send(
+      SERVICE_ID,
+      TEMPLATE_ID,
+      {
+        Name: payload.name,
+        Email: payload.email,
+        Additional: payload.message,
+      },
+      PUBLIC_KEY,
+    )
 
-    const data: { ok?: boolean; message?: string; error?: string } = await res.json().catch(() => ({}))
-
-    if (!res.ok) {
-      throw new Error(typeof data.error === 'string' ? data.error : 'Error al enviar el mensaje')
-    }
-
-    return { ok: true, message: typeof data.message === 'string' ? data.message : undefined }
+    return { ok: true, message: 'Mensaje enviado correctamente' }
   } catch (err) {
-    if (err instanceof Error && err.name === 'AbortError') {
-      throw new Error('La solicitud tardó demasiado. Revisa tu conexión.')
-    }
-    if (err instanceof TypeError) {
+    if (err instanceof Error) {
       throw new Error('No se pudo enviar el mensaje. Intenta de nuevo en unos minutos.')
     }
     throw err
-  } finally {
-    window.clearTimeout(timeoutId)
   }
 }
